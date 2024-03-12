@@ -27,6 +27,7 @@ COPY pyproject.toml poetry.lock README.md ./
 COPY quant ./quant
 
 RUN source ${PYTHON_VENV_DIR}/bin/activate \
+    && pip install --upgrade pip \ 
     && pip install poetry==1.8.1 toml \
     && poetry install && rm -rf $POETRY_CACHE_DIR
 

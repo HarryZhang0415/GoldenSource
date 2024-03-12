@@ -43,7 +43,8 @@
 				"k--kato.intellij-idea-keybindings",
 				"eamodio.gitlens",
 				"esbenp.prettier-vscode",
-				"yzhang.markdown-all-in-one"
+				"yzhang.markdown-all-in-one",
+				"GitHub.copilot"
 			]
 		}
 	}
