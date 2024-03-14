@@ -138,9 +138,9 @@ class Test(unittest.TestCase):
         self.assertEqual(cfg1.log_path, Configurator.DEFAULT_LOG_PATH)
         self.assertEqual(cfg1.local_data_path, Configurator.DEFAULT_LOCAL_DATA_PATH)
         
-        cfg2 = Configurator().parse(["--home-path=/root/src/quant"])
-        home_path = os.path.join(os.path.expanduser("~"), "quant")
-        self.assertEqual(cfg2.config_path, os.path.join(home_path, "etc"))
+        cfg2 = Configurator().parse(["--home-path=/root/build/quant/"])
+        home_path = os.environ.get("PROJECT_BUILD_DIR")
+        self.assertEqual(cfg2.config_path, os.path.join(home_path, "cfg"))
         self.assertEqual(cfg2.log_path, os.path.join(home_path, "log"))
         self.assertEqual(cfg2.local_data_path, os.path.join(home_path, "data"))
 

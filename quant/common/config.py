@@ -9,6 +9,10 @@ from quant.utils.data_types import ndict
 from quant.utils.patterns import ReadOnlyDescriptor
 from quant.utils.environment import env_get
 
+def execfile(filename, globals=None, locals=None):
+    with open(filename) as f:
+        code = compile(f.read(), "somefile.py", 'exec')
+        exec(code, globals, locals)
 
 class ConfigurationError(Exception):
     """
@@ -36,7 +40,7 @@ class Configurator(object):
     keys_to_remove = ("__builtins__",)
     value_types_to_remove = (types.ModuleType, type)
 
-    DEFAULT_ROOT_PATH = os.getenv("PROJECT_SRC_DIR")
+    DEFAULT_ROOT_PATH = os.getenv("PROJECT_BUILD_DIR")
     DEFAULT_CONFIG_PATH = join(DEFAULT_ROOT_PATH, "cfg")
     DEFAULT_LOG_PATH    = join(DEFAULT_ROOT_PATH, "log")
     DEFAULT_LOCAL_DATA_PATH = join(DEFAULT_ROOT_PATH, "data")
@@ -45,7 +49,7 @@ class Configurator(object):
     @classmethod
     def set_default_root_path(cls, path):
         cls.DEFAULT_ROOT_PATH = expandvars(expanduser(normpath(path)))
-        cls.DEFAULT_CONFIG_PATH = join(cls.DEFAULT_ROOT_PATH, 'etc')
+        cls.DEFAULT_CONFIG_PATH = join(cls.DEFAULT_ROOT_PATH, 'cfg')
         cls.DEFAULT_LOG_PATH = join(cls.DEFAULT_ROOT_PATH, 'log')
         cls.DEFAULT_LOCAL_DATA_PATH = join(cls.DEFAULT_ROOT_PATH, 'data')
 
@@ -57,7 +61,7 @@ class Configurator(object):
         self._parser.add_argument("--config-file", metavar="CONFIG_FILE", dest="_config_file", default="", type=str)
         self._parser.add_argument("--core-config-file", metavar="CORE_CONFIG_FILE", dest="_core_config_file", default="", type=str)
         self._parser.add_argument("-l", "--log-file-path", metavar="LOG", dest="_log_path", default="", type=str)
-        self._parser.add_argument("-log-to-stdout", "_log_to_stdout", default=False, action="store_true")
+        self._parser.add_argument("-log-to-stdout", dest="_log_to_stdout", default=False, action="store_true")
         self._parser.add_argument("--home-path", metavar="PATH", dest="_home_path", default="", type=str)
         self._parser.add_argument("--pricing-environment", metavar="ENV", dest='_pricing_environment', default="", type=str)
         self._parser.add_argument("_extra", metavar="EXTRA", nargs="*")
@@ -161,11 +165,6 @@ class Configurator(object):
             kwargs['default'] = value
 
         return value
-    
-    def _execfile(input, overrides):
-        with open(input) as f:
-            code = compile(f.read(), input, 'exec')
-            exec(code, overrides)
         
     def _parse_config(self):
         """
@@ -213,7 +212,7 @@ class Configurator(object):
 
         # Read the core config file
         core_config = {}
-        self._execfile(self.config_file, core_config)
+        execfile(self.core_config_file, core_config)
         self._apply_config_overrides(self._config, core_config)
 
         overrides = {}
@@ -222,17 +221,11 @@ class Configurator(object):
             sys.argv = ["--core-config-file={}".format(self.core_config_file)]
             if self.log_to_stdout:
                 sys.argv.append("--log-to-stdout")
-            self._execfile(self.config_file, overrides)
+            execfile(self.config_file, overrides)
             sys.argv = sys_args
         
         # Apply the overrides
         self._apply_config_overrides(self._config, overrides)
-
-        try:
-            db_dict = pickle.load(open(self._config['db_config']['pickle_file_location'], 'rb'))
-            self._apply_config_overrides(self._config, db_dict)
-        except:
-            pass
 
         pricing_overrides = {}
         if not self.pricing_environment:
@@ -240,7 +233,7 @@ class Configurator(object):
         if self.pricing_environment:
             pricing_env_file = join(self.config_path, 'pricing_environment.{}.cfg'.format(self.pricing_environment))
             if exists(pricing_env_file):
-                self._execfile(pricing_env_file, pricing_overrides)
+                execfile(pricing_env_file, pricing_overrides)
         
         self._apply_config_overrides(self._config, pricing_overrides)
 
