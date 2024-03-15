@@ -1,6 +1,6 @@
 import functools
 import time
-from quant.error.parse import BadConfigException
+from GoldenSource.error.parse import BadConfigException
 
 class Singleton(type):
     """

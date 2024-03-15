@@ -1,6 +1,6 @@
 import unittest
-import quant.common.graph as graph
-from quant.common.graph import set_value, is_fixed, SetScope
+import GoldenSource.common.graph as graph
+from GoldenSource.common.graph import set_value, is_fixed, SetScope
 
 class Rectangle(graph.GraphObject):
     init_length = 5

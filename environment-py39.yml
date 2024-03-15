@@ -1,4 +1,4 @@
-name: quant
+name: GoldenSource
 
 channels:
   - conda-forge

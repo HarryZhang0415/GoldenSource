@@ -1,7 +1,7 @@
 // For format details, see https://aka.ms/devcontainer.json. For config options, see the
 // README at: https://github.com/devcontainers/templates/tree/main/src/docker-existing-dockerfile
 {
-	"name": "quant repo dev container",
+	"name": "GoldenSource repo dev container",
 	"build": {
 		// Sets the run context to one level up instead of the .devcontainer folder.
 		"context": "..",
@@ -16,8 +16,8 @@
 		"source=C:\\Users\\Harry\\.ssh,target=/root/.ssh/,type=bind"
 		// "source=C:\\Users\\Harry\\.ssh,target=/root/.ssh/,readonly,type=bind"
 	],
-	"workspaceMount": "source=C:\\Git\\quant,target=/root/src/quant,type=bind",
-	"workspaceFolder": "/root/src/quant",
+	"workspaceMount": "source=C:\\Git\\GoldenSource,target=/root/src/GoldenSource,type=bind",
+	"workspaceFolder": "/root/src/GoldenSource",
 
 	// Features to add to the dev container. More info: https://containers.dev/features.
 	// "features": {},
@@ -44,7 +44,8 @@
 				"eamodio.gitlens",
 				"esbenp.prettier-vscode",
 				"yzhang.markdown-all-in-one",
-				"GitHub.copilot"
+				"GitHub.copilot",
+				"ZeroCInc.slice"
 			]
 		}
 	}

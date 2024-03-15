@@ -5,9 +5,9 @@ import sys
 import pickle
 from os.path import normpath, expanduser, expandvars, join, exists
 
-from quant.utils.data_types import ndict
-from quant.utils.patterns import ReadOnlyDescriptor
-from quant.utils.environment import env_get
+from GoldenSource.utils.data_types import ndict
+from GoldenSource.utils.patterns import ReadOnlyDescriptor
+from GoldenSource.utils.environment import env_get
 
 def execfile(filename, globals=None, locals=None):
     with open(filename) as f:

@@ -1,5 +1,5 @@
 [tool.poetry]
-name = "quant"
+name = "GoldenSource"
 version = "0.1.0"
 description = ""
 authors = ["harryzhang <harryzhang0415@gmail.com>"]

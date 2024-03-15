@@ -1,4 +1,4 @@
-from quant.utils.patterns import TimeIt
+from GoldenSource.utils.patterns import TimeIt
 import time
 #TO-DO
 with TimeIt(
