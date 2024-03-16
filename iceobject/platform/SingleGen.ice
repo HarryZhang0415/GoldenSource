@@ -1,7 +1,7 @@
 #pragma once
 
 module GS {
-    module dataobject{
+    module dataobjects{
         struct IFixed{
             long val;
         };

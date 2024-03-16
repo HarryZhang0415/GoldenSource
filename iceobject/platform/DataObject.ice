@@ -11,7 +11,7 @@ module GS {
             string symbol = "";
             GS::enums::instr::InstrumentType type;
             int expiryDate = 0;
-            GS::dataobject::IFixed Strike;
+            GS::dataobjects::IFixed Strike;
             GS::enums::instr::CallPut optType;
             string rootSymbolList = "";
             long secId = 0;

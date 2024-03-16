@@ -5,12 +5,12 @@
 #include <EventEnum.ice>
 
 module GS {
-    module dataobject {
+    module dataobjects {
         module event_scanner {
 
             class EventTrigger {
                 string m_desc;
-                GS::dataobject::IDateTime m_time;
+                GS::dataobjects::IDateTime m_time;
             };
             sequence<EventTrigger> EventTriggerSequence;
         };
@@ -21,7 +21,7 @@ module GS {
             ///////////////////////////////////////////////////////
 
             class EventInfo {
-                GS::dataobject::IDateTime m_timestamp;
+                GS::dataobjects::IDateTime m_timestamp;
                 GS::enums::event::EventType m_type = GS::enums::event::EventType::etChanged;
                 GS::enums::event::EventLevel m_level = GS::enums::event::EventLevel::elDebug2;
                 string m_msg = "";
