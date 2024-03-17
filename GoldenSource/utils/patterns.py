@@ -120,7 +120,7 @@ class TimeIt(object):
             assert self._on_enter.__code__.co_argcount == 0, 'on_enter must have 0 arguments'
         if self._on_exit:
             assert callable(self._on_exit), 'on_exit must be callable'
-            assert self._on_exit.__code__.co_argcount == 0, 'on_exit must have 1 argument'
+            assert self._on_exit.__code__.co_argcount == 1, 'on_exit must have 1 argument'
         
         if not (self._on_enter or self._on_exit) and self._tag is not None:
             assert isinstance(level, str), 'level must be a string'
