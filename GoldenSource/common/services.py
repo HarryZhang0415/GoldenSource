@@ -147,7 +147,7 @@ def read_date(dt=None):
         return dateutil.parser.parse(dt).date()
     return None
 
-@cache_result
+@cache_result # Due to no hash issue for calendar
 def nearest_business_day(offset=0, refdate=datetime.date.today(), calendar=None):
     """
     Returns the nearest business day to the date specified.
@@ -155,7 +155,7 @@ def nearest_business_day(offset=0, refdate=datetime.date.today(), calendar=None)
     day = refdate + datetime.timedelta(offset)
     return next_business_day(0, day, calendar)
 
-# @cache_result
+@cache_result # Due to no hash issue for calendar
 def next_business_day(offset=0, refdate=datetime.date.today(), calendar=None):
     """
     Returns the nth business day from refdate taking the calendar into account.

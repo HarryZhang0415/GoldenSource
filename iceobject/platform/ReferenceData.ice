@@ -21,9 +21,10 @@ module GS {
                 string descr = "";
                 GS::dataobjects::IFixed open_weight;
             };
+
             dictionary<GS::dataobjects::IDate, GS::dataobjects::reference::Holiday> HolidayDict;
 
-            struct Calendar {
+            class Calendar {
                 GS::dataobjects::reference::CalendarId calendar_id;
                 GS::dataobjects::reference::HolidayDict holidays;
             };
