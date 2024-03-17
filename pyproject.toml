@@ -12,6 +12,7 @@ numpy = "^1.26.4"
 scipy = "^1.12.0"
 zeroc-ice = "^3.7.10"
 tzlocal = "^5.2"
+jupyter = "^1.0.0"
 
 
 [build-system]
