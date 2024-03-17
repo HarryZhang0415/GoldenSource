@@ -1,3 +1,4 @@
+import os
 from datetime import datetime, timedelta, date
 import unittest
 
@@ -7,12 +8,18 @@ import GS.dataobjects.reference as do_ref
 from GoldenSource.common.domain import Domain
 from GoldenSource.common.services import TimeService
 from GoldenSource.ice import ice_factory
+from GoldenSource.common.config import LocalConfigurator
 
+class TestConfigurator(LocalConfigurator):
+    def parse(self, args=None, fail_on_err=False):
+        args = ['--home-path', os.environ.get("PROJECT_BUILD_DIR")]
+        return super(TestConfigurator, self).parse(args, fail_on_err)
 
+# @unittest.skip
 class Test(unittest.TestCase):
     def setUp(self) -> None:
         self.day_offset = timedelta(1)
-        self.time = Domain().get_service(TimeService)
+        self.time = Domain(TestConfigurator).get_service(TimeService)
         self.time.set_reference_date(date(2014, 7, 6))
         cal = do_ref.Calendar()
         cal.holidays = {

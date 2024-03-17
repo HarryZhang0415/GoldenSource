@@ -1,13 +1,19 @@
-import unittest
-import sys
+import unittest, os
 
 from GoldenSource.common.domain import Domain
 from GoldenSource.common.services import LoggerService
+from GoldenSource.common.config import LocalConfigurator
 
-
+class TestConfigurator(LocalConfigurator):
+    def parse(self, args=None, fail_on_err=False):
+        args = ['--home-path', os.environ.get("PROJECT_BUILD_DIR")]
+        return super(TestConfigurator, self).parse(args, fail_on_err)
+    
+# @unittest.skip
 class Test(unittest.TestCase):
     def setUp(self) -> None:
-        self.logger_service = Domain().get_service(LoggerService)
+        self.logger_service = Domain(TestConfigurator).get_service(LoggerService)
+    
     @unittest.skip
     def test_log(self):
         self.logger_service.log('debug2', 'DEBUG2')
