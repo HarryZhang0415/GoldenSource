@@ -8,8 +8,6 @@ DATE_FMT = "%Y-%m-%d"
 TIME_FMT = "%H:%M:%S.%f"
 RUNID_FMT = "%H%M"
 
-
-@cache_result
 def make_idate(idate=None):
     if idate is None:
         return IDate()
@@ -28,6 +26,45 @@ def make_idate(idate=None):
     else:
         idate = date2idate(idate)
     return idate
+
+def make_idatetime(idt=None, itime=None, irunid=None):
+    if idt is None:
+        idt = IDateTime()
+    if type(idt) is IDateTime:
+        return idt
+    
+    if itime is None and irunid is None:
+        idt = datetime_to_idatetime(combine(idt))
+
+    elif itime is not None:
+        idt = datetime_to_idatetime(combine(idt, itime))
+    else:
+        idt = datetime_to_idatetime(combine(idt, datetime.strptime(str(irunid).zfill(4), RUNID_FMT).time()))
+    return idt
+
+def combine(idt, itime=None):
+    time = datetime.now()
+
+    if idt is None:
+        idate = time.date()
+    
+    if type(idate) is not datetime.date:
+        if type(idt) is datetime:
+            if itime is None:
+                return idt
+            else:
+                idt = idt.date()
+        elif type(idt) is pandas.Timestamp:
+            if itime is None:
+                return idate.to_pydatetime()
+            else:
+                idate = idate.to_datetime().date()
+        else:
+            idate = datetime.strptime(str(idt), DATE_FMT).date()
+
+    if itime is None:
+        return datetime.combine(idate2date(idt), datetime.min.time())
+    return datetime.combine(idate2date(idt), itime)
 
 def date2idate(date):
     if date is None:
