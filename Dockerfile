@@ -45,3 +45,4 @@ ENV VIRTUAL_ENV=${PYTHON_VENV_DIR} \
 ENV PYTHONPATH=${ICEOBJECT_BUILD}:${PROJECT_SRC_DIR}:${PYTHONPATH}
 
 RUN python iceobject/python/slice2py.py --source_dir ${ICEOBJECT_SRC} --destination_dir ${ICEOBJECT_BUILD}
+RUN python -m unittest discover -s . -p "*_test.py" --verbose
