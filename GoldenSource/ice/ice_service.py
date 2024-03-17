@@ -108,10 +108,10 @@ class IceService(Service):
                 if k not in config:
                     config[k] = v
         
-        props = Ice.createproperties()
+        props = Ice.createProperties()
         for key, value in config.items():
-            if k not in config:
-                config[k] = v
+            props.setProperty(key, value)
+        props.setProperty('Ice.ImplicitContext', 'Shared')
 
         init_data = Ice.InitializationData()
         init_data.properties = props
