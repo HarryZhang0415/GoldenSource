@@ -7,12 +7,12 @@ from GoldenSource.common.config import Configurator
 from GoldenSource.common.services import LoggerService
 from GoldenSource.utils.patterns import Singleton
 
-class Domain(dict):
+class Domain(dict, metaclass=Singleton):
     """
     The domain holds the configuration of the currently running application
     Its second and foremost use is the instantiation and resgistation of services
     """
-    __metaclass__ = Singleton
+    # __metaclass__ = Singleton // Python 2.7
 
     def __init__(self, configurator_type=Configurator, logger_type=LoggerService):
         """

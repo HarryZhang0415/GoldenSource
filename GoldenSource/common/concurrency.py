@@ -261,11 +261,14 @@ class Threadpool(list):
             worker.join(2)
 
 
-class ThreadpoolService(Service):
+class ThreadpoolService(Service, metaclass=patterns.Singleton):
     """
     Threading service, providing a common threading interface to multitasking. Note that this uses threading underneath, not multiprocessing
+
+    https://realpython.com/python-metaclasses/#custom-metaclasses
+    
     """
-    __metaclass__ = patterns.Singleton
+    # __metaclass__ = patterns.Singleton // python 2.7
     DEFAULT_POOL_NAME = "DEFAULT"
     DEFAULT_POOL_SIZE = 5
     _THREAD_COUNT = 'number'

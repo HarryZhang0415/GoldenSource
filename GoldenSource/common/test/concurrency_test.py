@@ -16,7 +16,6 @@ class TestConfigurator(LocalConfigurator):
         args = ['--home-path', os.environ.get("PROJECT_BUILD_DIR")]
         return super(TestConfigurator, self).parse(args, fail_on_err)
 
-@unittest.skip("Not Working With unittest discover")
 class Test(unittest.TestCase):
     @classmethod
     def setUpClass(cls):
@@ -49,7 +48,7 @@ class Test(unittest.TestCase):
         Meant to be called in a separate thread to illustrate the threading behaviors.
         Note the suntax of the decorator with optional pool name to use as an argument.
         """
-        time.sleep(1)
+        time.sleep(3)
         self.values[k] = v
         return v
 
@@ -75,7 +74,6 @@ class Test(unittest.TestCase):
 
         self.assertEqual(self.values, {"val1": 1, "val2": 2})
 
-    @unittest.skip("Not working as expected")
     def test_threadify(self):
         self.values = {}
 
@@ -85,12 +83,11 @@ class Test(unittest.TestCase):
         self.parallel_set_with_delay("val1", 1)
         self.parallel_set_with_delay("val2", 2)
 
-        # self.assertIsNone(self.values.get("val1"))
-        # self.assertIsNone(self.values.get("val2"))
+        self.assertIsNone(self.values.get("val1"))
+        self.assertIsNone(self.values.get("val2"))
 
         self.pool.wait_completion()
 
-        # time.sleep(3)
 
         self.assertEqual(self.values.get("val1"), 1)
         self.assertEqual(self.values.get("val2"), 2)
@@ -259,7 +256,6 @@ class Reader(threading.Thread):
         self.exit_time = time.time()
         self._rw_lock.reader_release()
 
-@unittest.skip("Not Working With unittest discover")
 class RWLockTestCase(unittest.TestCase):
     def test_readers_nonexclusive_access(self):
         (buffer_, rw_lock, threads) = self._init_variables()
@@ -385,11 +381,10 @@ class TestTrigger(Trigger):
     def trigger(self, domain):
         self._obj.success = True
     
-@unittest.skip("Not Working With unittest discover")
 class MonitorServiceTestCase(unittest.TestCase):
     def setUp(self) -> None:
         super(MonitorServiceTestCase, self).setUp()
-        self.domain = Domain(LocalConfigurator)
+        self.domain = Domain(TestConfigurator)
         self.thp_svc = self.domain.get_service(ThreadpoolService)
         self.mon_svc = self.domain.get_service(MonitorService)
         self.success = False
