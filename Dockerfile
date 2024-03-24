@@ -21,7 +21,7 @@ COPY cfg/${ENV}/. cfg/.
 WORKDIR ${PYTHON_VENV_DIR}
 
 RUN apt-get update \
-    && apt-get -y install gcc g++ vim \
+    && apt-get -y install gcc g++ vim unixodbc \
     && rm -rf /var/lib/apt/lists/* 
 
 RUN python -m venv .

@@ -78,3 +78,12 @@ def to_posix_micros(dt, tz=None):
     else:
         utc_dt = to_timezone(dt, timezone=timezone)
     return calendar.timegm(utc_dt.timetuple()) * 1000000 + utc_dt.microsecond
+
+def now(timezone=None):
+    """
+    Returns the current time in the specified timezone.
+    If no timezone is specified, the time is assumed to be local time-zone.
+    :param timezone: Target time-zone. Defaults to the local time-zone as default by the to_timezone method
+    :return: datetime.datetime
+    """
+    return to_timezone(datetime.now(), timezone)
