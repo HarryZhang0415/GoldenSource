@@ -2,7 +2,7 @@
 
 #include <SingleGen.ice>
 #include <Exchanges.ice>
-#include <DataObject.ice>
+#include <DataObjects.ice>
 #include <ReferenceEnums.ice>
 
 module GS {
