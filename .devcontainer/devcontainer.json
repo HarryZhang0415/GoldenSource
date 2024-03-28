@@ -47,7 +47,9 @@
 				"GitHub.copilot",
 				"ZeroCInc.slice",
 				"ms-toolsai.jupyter",
-				"ms-toolsai.vscode-jupyter-slideshow"
+				"ms-toolsai.vscode-jupyter-slideshow",
+				"twxs.cmake",
+				"ms-vscode.cmake-tools"
 			]
 		}
 	}
