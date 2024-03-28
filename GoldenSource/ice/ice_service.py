@@ -426,3 +426,96 @@ class IceService(Service):
         return proxy_info
 
 
+class IceProxyService(Service):
+    DEFAULT_PROXY_NAMES = []
+    DEFAULT_PROXY_TYPE = None
+
+    def __init__(self, domain) -> None:
+        super().__init__(domain)
+        self._ice_service = domain.get_service(IceService)
+
+        self._lock = threading.RLock()
+        self._proxy = None
+        self._proxy_names = domain.get_param(self.__class__.__name__, 'proxy_names', as_type=list, default=self.DEFAULT_PROXY_NAMES)
+        self._proxy_type = domain.get_param(self.__class__.__name__, 'proxy_type', as_type=list, default=self.DEFAULT_PROXY_TYPE)
+        assert self._proxy_names, "No proxy names defined for {}".format(self.__class__.__name__)
+
+    @property
+    def proxy(self):
+        self._assert_proxy()
+        return self._proxy
+    
+    def _on_reconnect(self):
+        pass
+
+    def _on_disconnect(self):
+        pass
+
+    def _next_proxy_name(self):
+        proxy_name = self._proxy_names.pop(0)
+        self._proxy_names.append(proxy_name)
+        return proxy_name
+    
+    def _assert_proxy(self):
+       with self._lock:
+            if self._proxy is not None:
+               try:
+                   self._proxy.ice_ping()
+               except:
+                   self._proxy = None
+                   self._on_disconnect()
+            if self._proxy is None:
+                proxy_name = self._next_proxy_name()
+                self._proxy = self._ice_service.get_proxy(proxy_name, self._proxy_type)
+
+                try:
+                    self._proxy.ice_ping()
+                except:
+                    self._proxy = None
+                
+                if self._proxy is None:
+                    raise ProxyNotConnectedException("Proxy not connected [{!s}]".format(proxy_name))
+                else:
+                    self._on_reconnect()
+
+    @staticmethod
+    def assert_proxy(method):
+        @functools.wraps(method)
+        def method_wrapper(self, *args, **kwargs):
+            self._assert_proxy()
+            return method(self, *args, **kwargs)
+        
+        return method_wrapper
+    
+class ListenerProxyCache(Service, metaclass=Singleton):
+    """
+    Keeps a cache of the subscribed proxies
+    """
+    def __init__(self, domain) -> None:
+        super(ListenerProxyCache, self).__init__(domain)
+        self._proxies = {}
+        self._lock = Lock()
+    
+    def get_proxy(self, identity, proxy_type, current):
+        key = (identity, proxy_type)
+        if key in self._proxies:
+            return self._proxies[key]
+        
+        with self._lock:
+            if key in self._proxies:
+                return self._proxies[key]
+            
+            base = current.con.createProxy(identity)
+            prx = proxy_type.checkedCast(base)
+            self._proxies[key] = prx
+            return prx
+    
+    def remove_proxy(self, identity, proxy_type):
+        """
+        Removes a proxy from the cache
+        """
+        with self._lock:
+            key = (identity, proxy_type)
+            if key in self._proxies:
+                del self._proxies[key]
+    
