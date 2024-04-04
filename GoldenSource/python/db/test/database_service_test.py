@@ -4,7 +4,6 @@ import datetime
 
 import pytz
 
-from GoldenSource.python.common.services.logger_service import NullLoggerService
 from GoldenSource.python.db.database_service import DatabaseService
 from GoldenSource.python.common.domain import Domain
 from GoldenSource.python.time import now

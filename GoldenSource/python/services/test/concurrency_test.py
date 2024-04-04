@@ -6,8 +6,9 @@ import time
 import unittest 
 import os
 
-from GoldenSource.python.common.services.logger_service import NullLoggerService
-from GoldenSource.python.common.concurrency import ThreadpoolService, MonitorService, Trigger, Threadify, RWLock
+from GoldenSource.python.common.concurrency import Trigger, RWLock
+from GoldenSource.python.services.monitor_service import MonitorService
+from GoldenSource.python.services.threadpool_service import ThreadpoolService, Threadify
 from GoldenSource.python.common.domain import Domain
 from GoldenSource.python.common.config import LocalConfigurator
 

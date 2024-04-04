@@ -1,17 +1,11 @@
 import contextlib
-import functools
 import multiprocessing
 import sys
 import time
 from datetime import datetime
 from threading import Thread, Condition, Lock, Event, RLock
 from queue import Queue, Empty
-from collections import defaultdict
-
-from GoldenSource.python.common.services import Service
-from GoldenSource.python.common.services.logger_service import NullLoggerService
 from GoldenSource.python.common.domain import Domain
-from GoldenSource.python.utils import patterns
 
 
 class CountDownLatch(object):
@@ -261,57 +255,6 @@ class Threadpool(list):
         for worker in self:
             worker.join(2)
 
-
-class ThreadpoolService(Service, metaclass=patterns.Singleton):
-    """
-    Threading service, providing a common threading interface to multitasking. Note that this uses threading underneath, not multiprocessing
-
-    https://realpython.com/python-metaclasses/#custom-metaclasses
-    
-    """
-    # __metaclass__ = patterns.Singleton // python 2.7
-    DEFAULT_POOL_NAME = "DEFAULT"
-    DEFAULT_POOL_SIZE = 5
-    _THREAD_COUNT = 'number'
-    _QUEUE_SIZE = 'queue'
-    _BLOCKING_QUEUE = 'blocking_queue'
-
-    def __init__(self, domain):
-        super(ThreadpoolService, self).__init__(domain)
-        self._domain = domain
-        self._default_thread_count = domain.get_param('threading', self._THREAD_COUNT, default=self.DEFAULT_POOL_SIZE)
-        self._default_queue_size = domain.get_param('threading', self._QUEUE_SIZE, default=0)
-        self._default_blocking_queue = domain.get_param('threading', self._BLOCKING_QUEUE, default=False)
-        self._pools = {}
-
-    def __getitem__(self, name):
-        return self.get_pool(name)
-
-    def get_pool(self, name=DEFAULT_POOL_NAME, **kwargs):
-        if name not in self._pools:
-            thread_count = kwargs.get(
-                self._THREAD_COUNT
-                , self._domain.get_param('threading', name, self._THREAD_COUNT, default=self._default_thread_count)
-            )
-            queue_size = kwargs.get(
-                self._QUEUE_SIZE
-                , self._domain.get_param('threading', name, self._QUEUE_SIZE, default=self._default_queue_size)
-            )
-            blocking_queue = kwargs.get(
-                self._BLOCKING_QUEUE
-                , self._domain.get_param('threading', name, self._BLOCKING_QUEUE, default=self._default_blocking_queue)
-            )
-            self._pools[name] = Threadpool(name, thread_count, queue_size, blocking=blocking_queue)
-        return self._pools[name]
-
-    def wait_completion(self):
-        for pool in self._pools.values():
-            pool.wait_completion()
-
-    def shutdown(self):
-        for pool in self._pools.values():
-            pool.terminate()
-
 class AllocatingThreadpool(list):
     SLOTS_MULT = 100
     """Pool of threads with tasks allocated to each thread according to abstract allocation logic"""
@@ -380,25 +323,6 @@ class AssignedThreadpool(AllocatingThreadpool):
                     self._worker_by_subject[subject] = worker
                     self._load_by_worker[worker] += new_work
         return worker
-
-#TO-DO Not Working As of now.
-class Threadify(object):
-    """
-    Convenient decorator to implicitly call a given function or method on a given threadpool. Uses the ThreadPoolService under the hood
-    The wrapped function will return a Future.
-    """
-
-    def __init__(self, pool_name=ThreadpoolService.DEFAULT_POOL_NAME):
-        self.pool_name = pool_name
-
-    def __call__(self, func):
-        @functools.wraps(func)
-        def wrapper(*args, **kwargs):
-            pool = Domain().get_service(ThreadpoolService).get_pool(self.pool_name)
-            return pool.add_task(func, *args, **kwargs)
-
-        return wrapper
-
 
 def spawn(f):
     def fun(q_in, q_out):
@@ -642,56 +566,3 @@ class Trigger(object):
     
     def __str__(self):
         return "{}".format(self.__class__.__name__)
-    
-class MonitorService(Service):
-    """
-    MonitorService monitors a set of jobs and subsequently runs one or more triggers following the completion 
-    of all the jobs.
-    """
-    def __init__(self, domain):
-        super(MonitorService, self).__init__(domain)
-        self._domain = domain
-        self._logger = domain.logger_service.get_logger(self.__class__.__name__)
-        self._triggers = defaultdict(set)
-        self._triggers_lock = defaultdict(RLock)
-        self._monitors = defaultdict(set)
-        self._monitors_lock = defaultdict(RLock)
-
-    def add_trigger(self, monitor_id, trigger):
-        with self._triggers_lock[monitor_id]:
-            self._triggers[monitor_id].add(trigger)
-
-    def remove_trigger(self, monitor_id, trigger):
-        with self._triggers_lock[monitor_id]:
-            self._triggers[monitor_id].add(trigger)
-
-    def monitor(self, monitor_id, jobs):
-        with self._monitors_lock[monitor_id]:
-            self._monitors[monitor_id].add(jobs)
-
-    def monitor_all(self, monitor_id, jobs):
-        with self._monitors_lock[monitor_id]:
-            self._monitors[monitor_id].update(jobs)
-
-    def _on_jobs_done(self, monitor_id):
-        with self._triggers_lock[monitor_id]:
-            for trigger in self._triggers[monitor_id]:
-                try:
-                    trigger.trigger(self._domain)
-                except:
-                    self._logger.exception("Error while triggering {!s} marking the end of {!s}".format(trigger, monitor_id))
-                else:
-                    self._logger.info("Trigger {!s} successfully executed marking the end of {!s}".format(trigger, monitor_id))
-    
-    def job_done(self, monitor_id, job):
-        with self._monitors_lock[monitor_id]:
-            try:
-                self._logger.debug('{} completed'.format(job))
-                self._monitors[monitor_id].remove(job)
-            except KeyError:
-                self._logger.warn('{} has already finished'.format(job))
-            except:
-                self._logger.exception('Error while removing {} from the monitor'.format(job))
-            finally:
-                if not self._monitors[monitor_id]:
-                    self._on_jobs_done(monitor_id)
