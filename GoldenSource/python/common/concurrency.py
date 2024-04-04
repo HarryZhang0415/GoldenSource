@@ -8,7 +8,8 @@ from threading import Thread, Condition, Lock, Event, RLock
 from queue import Queue, Empty
 from collections import defaultdict
 
-from GoldenSource.python.common.services import Service, NullLoggerService
+from GoldenSource.python.common.services import Service
+from GoldenSource.python.common.services.logger_service import NullLoggerService
 from GoldenSource.python.common.domain import Domain
 from GoldenSource.python.utils import patterns
 

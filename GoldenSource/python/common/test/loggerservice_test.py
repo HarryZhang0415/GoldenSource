@@ -1,7 +1,7 @@
 import unittest, os
 
 from GoldenSource.python.common.domain import Domain
-from GoldenSource.python.common.services import LoggerService
+from GoldenSource.python.common.services.logger_service import LoggerService
 from GoldenSource.python.common.config import LocalConfigurator
 
 class TestConfigurator(LocalConfigurator):

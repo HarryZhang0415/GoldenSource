@@ -5,7 +5,8 @@ import threading
 from GoldenSource.python.error.parse import BadConfigException
 from GoldenSource.python.common.domain import Domain
 from GoldenSource.python.common.config import Configurator
-from GoldenSource.python.common.services import LoggerService, Service
+from GoldenSource.python.common.services import Service
+from GoldenSource.python.common.services.logger_service import LoggerService
 from GoldenSource.python.ice.overrides import override_str_repr
 
 
