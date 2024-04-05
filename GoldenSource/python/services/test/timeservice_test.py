@@ -6,7 +6,7 @@ import GS.dataobjects as do
 import GS.dataobjects.reference as do_ref
 
 from GoldenSource.python.common.domain import Domain
-from GoldenSource.python.common.services import TimeService
+from GoldenSource.python.services.time_service import TimeService
 from GoldenSource.python.ice import ice_factory
 from GoldenSource.python.common.config import LocalConfigurator
 

@@ -4,7 +4,7 @@ import traceback
 import sys
 
 from GoldenSource.python.common.config import Configurator
-from GoldenSource.python.common.services import LoggerService
+from GoldenSource.python.services.logger_service import LoggerService
 from GoldenSource.python.utils.patterns import Singleton
 
 class Domain(dict, metaclass=Singleton):

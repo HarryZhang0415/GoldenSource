@@ -2,24 +2,13 @@ import os
 import sys
 import threading
 
-from GoldenSource.python.error.parse import BadConfigException
 from GoldenSource.python.common.domain import Domain
 from GoldenSource.python.common.config import Configurator
-from GoldenSource.python.common.services import LoggerService, Service
+from GoldenSource.python.common.application import Application
+from GoldenSource.python.services.logger_service import LoggerService
 from GoldenSource.python.ice.overrides import override_str_repr
 
 
-class Application(Service):
-    def __init__(self, domain) -> None:
-        super(Application, self).__init__(domain)
-        self.domain = domain
-        self.app_name = self.domain.get_param("app", "full_name")
-        self.app_pid = os.getpid()
-        self.logger_service = self.domain.logger_service
-        self.logger = self.logger_service.get_logger(self.__class__.__name__)
-
-    def run(self):
-        raise BadConfigException("app.run_class must be specified in the configuration file in order to use the Runner")
 
 class Runner(object):
     """
