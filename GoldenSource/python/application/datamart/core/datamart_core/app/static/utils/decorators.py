@@ -1,9 +1,9 @@
-"""Decorators for the GoldenSource Market static assets."""
+"""Decorators for the DataMart Market static assets."""
 
 from functools import wraps
 from typing import Any, Callable, Optional, TypeVar, overload
 
-from datamart_core.app.model.abstract.error import GoldenSourceError
+from datamart_core.app.model.abstract.error import DataMartError
 from datamart_core.env import Env
 from pydantic import ValidationError, validate_call
 from typing_extensions import ParamSpec
@@ -80,13 +80,13 @@ def exception_handler(func: Callable[P, R]) -> Callable[P, R]:
                 error_list.insert(0, validation_error)
                 error_str = "\n".join(error_list)
 
-                raise GoldenSourceError(
+                raise DataMartError(
                     f"\nType -> ValidationError \n\nDetails -> {error_str}"
                 ).with_traceback(tb) from None
 
             # If the error is not a ValidationError, then it is a generic exception
             error_type = getattr(e, "original", e).__class__.__name__
-            raise GoldenSourceError(
+            raise DataMartError(
                 f"\nType -> {error_type}\n\nDetail -> {str(e)}"
             ).with_traceback(tb) from None
 

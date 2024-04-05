@@ -1,4 +1,4 @@
-"""Version script for the GoldenSource Market."""
+"""Version script for the DataMart Market."""
 
 import shutil
 import subprocess

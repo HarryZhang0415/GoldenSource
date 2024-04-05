@@ -4,7 +4,7 @@ from typing import Any, Dict, Optional, Type
 
 from pydantic import SecretStr
 
-from datamart_core.app.model.abstract.error import GoldenSourceError
+from datamart_core.app.model.abstract.error import DataMartError
 from datamart_core.provider.abstract.fetcher import Fetcher
 from datamart_core.provider.abstract.provider import Provider
 from datamart_core.provider.registry import Registry, RegistryLoader
@@ -21,7 +21,7 @@ class QueryExecutor:
         """Get a provider from the registry."""
         name = provider_name.lower()
         if name not in self.registry.providers:
-            raise GoldenSourceError(
+            raise DataMartError(
                 f"Provider '{name}' not found in the registry."
                 f"Available providers: {list(self.registry.providers.keys())}"
             )
@@ -30,7 +30,7 @@ class QueryExecutor:
     def get_fetcher(self, provider: Provider, model_name: str) -> Type[Fetcher]:
         """Get a fetcher from a provider."""
         if model_name not in provider.fetcher_dict:
-            raise GoldenSourceError(
+            raise DataMartError(
                 f"Fetcher not found for model '{model_name}' in provider '{provider.name}'."
             )
         return provider.fetcher_dict[model_name]
@@ -55,7 +55,7 @@ class QueryExecutor:
                     if require_credentials:
                         website = provider.website or ""
                         extra_msg = f" Check {website} to get it." if website else ""
-                        raise GoldenSourceError(f"Missing credential '{c}'.{extra_msg}")
+                        raise DataMartError(f"Missing credential '{c}'.{extra_msg}")
                 else:
                     filtered_credentials[c] = secret
 

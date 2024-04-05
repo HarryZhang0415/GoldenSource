@@ -12,8 +12,8 @@ from warnings import catch_warnings, showwarning, warn
 from pydantic import BaseModel, ConfigDict, create_model
 
 from datamart_core.app.logs.logging_service import LoggingService
-from datamart_core.app.model.abstract.error import GoldenSourceError
-from datamart_core.app.model.abstract.warning import GoldenSourceWarning, cast_warning
+from datamart_core.app.model.abstract.error import DataMartError
+from datamart_core.app.model.abstract.warning import DataMartWarning, cast_warning
 from datamart_core.app.model.command_context import CommandContext
 from datamart_core.app.model.metadata import Metadata
 from datamart_core.app.model.obbject import OBBject
@@ -195,7 +195,7 @@ class ParametersBuilder:
                 if p not in valid:
                     warn(
                         message=f"Parameter '{p}' not found.",
-                        category=GoldenSourceWarning,
+                        category=DataMartWarning,
                     )
 
     @staticmethod
@@ -297,7 +297,7 @@ class StaticCommandRunner:
     ) -> None:
         """Create a chart from the command output."""
         if "charting" not in obbject.accessors:
-            raise GoldenSourceError(
+            raise DataMartError(
                 "Charting is not installed. Please install `goldensource-charting`."
             )
         obbject.charting.show(render=False, **kwargs)  # type: ignore
@@ -353,7 +353,7 @@ class StaticCommandRunner:
                     cls._chart(obbject, **kwargs)
 
             except Exception as e:
-                raise GoldenSourceError(e) from e
+                raise DataMartError(e) from e
             finally:
                 ls = LoggingService(system_settings, user_settings)
                 ls.log(
@@ -419,7 +419,7 @@ class StaticCommandRunner:
                 )
             except Exception as e:
                 if Env().DEBUG_MODE:
-                    raise GoldenSourceError(e) from e
+                    raise DataMartError(e) from e
 
         return obbject
 

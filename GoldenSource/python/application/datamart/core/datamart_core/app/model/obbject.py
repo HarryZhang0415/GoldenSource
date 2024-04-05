@@ -21,7 +21,7 @@ import pandas as pd
 from numpy import ndarray
 from pydantic import BaseModel, Field, PrivateAttr
 
-from datamart_core.app.model.abstract.error import GoldenSourceError
+from datamart_core.app.model.abstract.error import DataMartError
 from datamart_core.app.model.abstract.tagged import Tagged
 from datamart_core.app.model.abstract.warning import Warning_
 from datamart_core.app.model.charts.chart import Chart
@@ -40,7 +40,7 @@ T = TypeVar("T")
 
 
 class OBBject(Tagged, Generic[T]):
-    """GoldenSource object."""
+    """DataMart object."""
 
     accessors: ClassVar[Set[str]] = set()
     _user_settings: ClassVar[Optional[BaseModel]] = None
@@ -158,7 +158,7 @@ class OBBject(Tagged, Generic[T]):
             )
 
         if self.results is None or not self.results:
-            raise GoldenSourceError("Results not found.")
+            raise DataMartError("Results not found.")
 
         if isinstance(self.results, pd.DataFrame):
             return self.results
@@ -202,7 +202,7 @@ class OBBject(Tagged, Generic[T]):
                         df = pd.DataFrame([res])
 
             if df is None:
-                raise GoldenSourceError("Unsupported data format.")
+                raise DataMartError("Unsupported data format.")
 
             # Drop columns that are all NaN, but don't rearrange columns
             if sort_columns:
@@ -213,18 +213,18 @@ class OBBject(Tagged, Generic[T]):
             if sort_by:
                 df.sort_values(by=sort_by, inplace=True)
 
-        except GoldenSourceError as e:
+        except DataMartError as e:
             raise e
         except ValueError as ve:
-            raise GoldenSourceError(
+            raise DataMartError(
                 f"ValueError: {ve}. Ensure the data format matches the expected format."
             ) from ve
         except TypeError as te:
-            raise GoldenSourceError(
+            raise DataMartError(
                 f"TypeError: {te}. Check the data types in your results."
             ) from te
         except Exception as ex:
-            raise GoldenSourceError(f"An unexpected error occurred: {ex}") from ex
+            raise DataMartError(f"An unexpected error occurred: {ex}") from ex
 
         return df
 
@@ -281,7 +281,7 @@ class OBBject(Tagged, Generic[T]):
         """Display chart."""
         # pylint: disable=no-member
         if not self.chart or not self.chart.fig:
-            raise GoldenSourceError("Chart not found.")
+            raise DataMartError("Chart not found.")
         show_function: Callable = getattr(self.chart.fig, "show")
         show_function(**kwargs)
 

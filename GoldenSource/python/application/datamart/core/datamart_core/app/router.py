@@ -1,4 +1,4 @@
-"""GoldenSource Router."""
+"""DataMart Router."""
 
 import traceback
 import warnings
@@ -24,9 +24,9 @@ from pydantic import BaseModel, Field, SerializeAsAny, Tag, create_model
 from pydantic.v1.validators import find_validators
 from typing_extensions import Annotated, ParamSpec, _AnnotatedAlias
 
-from datamart_core.app.deprecation import DeprecationSummary, GoldenSourceDeprecationWarning
+from datamart_core.app.deprecation import DeprecationSummary, DataMartDeprecationWarning
 from datamart_core.app.extension_loader import ExtensionLoader
-from datamart_core.app.model.abstract.warning import GoldenSourceWarning
+from datamart_core.app.model.abstract.warning import DataMartWarning
 from datamart_core.app.model.command_context import CommandContext
 from datamart_core.app.model.example import filter_list
 from datamart_core.app.model.obbject import OBBject
@@ -41,8 +41,8 @@ from datamart_core.env import Env
 P = ParamSpec("P")
 
 
-class GoldenSourceErrorResponse(BaseModel):
-    """GoldenSource Error Response."""
+class DataMartErrorResponse(BaseModel):
+    """DataMart Error Response."""
 
     detail: str
     error_kind: str
@@ -196,7 +196,7 @@ class CommandValidator:
 
 
 class Router:
-    """GoldenSource Router Class."""
+    """DataMart Router Class."""
 
     @property
     def api_router(self) -> APIRouter:
@@ -261,12 +261,12 @@ class Router:
                 "responses",
                 {
                     400: {
-                        "model": GoldenSourceErrorResponse,
+                        "model": DataMartErrorResponse,
                         "description": "No Results Found",
                     },
                     404: {"description": "Not found"},
                     500: {
-                        "model": GoldenSourceErrorResponse,
+                        "model": DataMartErrorResponse,
                         "description": "Internal Error",
                     },
                 },
@@ -274,7 +274,7 @@ class Router:
 
             # For custom deprecation
             if kwargs.get("deprecated", False):
-                deprecation: GoldenSourceDeprecationWarning = kwargs.pop("deprecation")
+                deprecation: DataMartDeprecationWarning = kwargs.pop("deprecation")
 
                 kwargs["summary"] = DeprecationSummary(
                     deprecation.long_message, deprecation
@@ -318,7 +318,7 @@ class SignatureInspector:
                         message=f"\nSkipping api route '/{func.__name__}'.\n"
                         f"Model '{model}' not found.\n\n"
                         "Check available models in ProviderInterface().models",
-                        category=GoldenSourceWarning,
+                        category=DataMartWarning,
                     )
                 return None
             cls.validate_signature(
@@ -653,7 +653,7 @@ class RouterLoader:
                     raise LoadingError(msg + f"\033[91m{e}\033[0m") from e
                 warnings.warn(
                     message=msg,
-                    category=GoldenSourceWarning,
+                    category=DataMartWarning,
                 )
 
         return router

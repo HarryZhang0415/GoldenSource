@@ -35,10 +35,10 @@ from pydantic_core import PydanticUndefined
 from starlette.routing import BaseRoute
 from typing_extensions import Annotated, _AnnotatedAlias
 
-from datamart_core.app.extension_loader import ExtensionLoader, GoldenSourceGroups
+from datamart_core.app.extension_loader import ExtensionLoader, DataMartGroups
 from datamart_core.app.model.custom_parameter import (
-    GoldenSourceCustomChoices,
-    GoldenSourceCustomParameter,
+    DataMartCustomChoices,
+    DataMartCustomParameter,
 )
 from datamart_core.app.model.example import Example
 from datamart_core.app.provider_interface import ProviderInterface
@@ -134,7 +134,7 @@ class PackageBuilder:
     def _get_extension_map(self) -> Dict[str, List[str]]:
         """Get map of extensions available at build time."""
         el = ExtensionLoader()
-        og = GoldenSourceGroups.groups()
+        og = DataMartGroups.groups()
         ext_map: Dict[str, List[str]] = {}
 
         for group, entry_point in zip(og, el.entry_points):
@@ -242,7 +242,7 @@ class PackageBuilder:
 
         add: Set[str] = set()
         remove: Set[str] = set()
-        groups = GoldenSourceGroups.groups()
+        groups = DataMartGroups.groups()
 
         for g in groups:
             built = set(ext_map.get(g, {}))
@@ -330,7 +330,7 @@ class ImportDefinition:
         hint_type_list = cls.get_path_hint_type_list(path=path)
         code = "from market.app.static.container import Container"
         code += "\nfrom market.app.model.obbject import OBBject"
-        code += "\nfrom market.app.model.custom_parameter import GoldenSourceCustomParameter, GoldenSourceCustomChoices"
+        code += "\nfrom market.app.model.custom_parameter import DataMartCustomParameter, DataMartCustomChoices"
 
         # These imports were not detected before build, so we add them manually and
         # ruff --fix the resulting code to remove unused imports.
@@ -354,7 +354,7 @@ class ImportDefinition:
         code += "\nfrom market.app.static.utils.decorators import exception_handler, validate\n"
         code += "\nfrom market.app.static.utils.filters import filter_inputs\n"
         code += "\nfrom market.provider.abstract.data import Data"
-        code += "\nfrom market.app.deprecation import GoldenSourceDeprecationWarning\n"
+        code += "\nfrom market.app.deprecation import DataMartDeprecationWarning\n"
         if path.startswith("/quantitative"):
             code += "\nfrom datamart_quantitative.models import "
             code += "(CAPMModel,NormalityModel,OmegaModel,SummaryModel,UnitRootModel)"
@@ -557,7 +557,7 @@ class MethodDefinition:
                 kind=Parameter.POSITIONAL_OR_KEYWORD,
                 annotation=Annotated[
                     bool,
-                    GoldenSourceCustomParameter(
+                    DataMartCustomParameter(
                         description="Whether to create a chart or not, by default False."
                     ),
                 ],
@@ -581,7 +581,7 @@ class MethodDefinition:
                     kind=Parameter.POSITIONAL_OR_KEYWORD,
                     annotation=Annotated[
                         Union[MethodDefinition.get_type(field), None],
-                        GoldenSourceCustomParameter(
+                        DataMartCustomParameter(
                             description=(
                                 "The provider to use for the query, by default None.\n"
                                 f"    If None, the provider specified in defaults is selected or '{first}' if there is\n"
@@ -657,15 +657,15 @@ class MethodDefinition:
                     new_value = value.replace(
                         annotation=Annotated[
                             value.annotation,
-                            GoldenSourceCustomParameter(description=description),
-                            GoldenSourceCustomChoices(choices=choices),
+                            DataMartCustomParameter(description=description),
+                            DataMartCustomChoices(choices=choices),
                         ],
                     )
                 else:
                     new_value = value.replace(
                         annotation=Annotated[
                             value.annotation,
-                            GoldenSourceCustomParameter(description=description),
+                            DataMartCustomParameter(description=description),
                         ],
                     )
 

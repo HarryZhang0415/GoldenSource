@@ -4,7 +4,7 @@ import warnings
 from dataclasses import asdict
 from typing import Any, Dict
 
-from datamart_core.app.model.abstract.warning import GoldenSourceWarning
+from datamart_core.app.model.abstract.warning import DataMartWarning
 from datamart_core.app.model.command_context import CommandContext
 from datamart_core.app.provider_interface import (
     ExtraParams,
@@ -57,7 +57,7 @@ class Query:
                     available = ", ".join(providers)
                     warnings.warn(
                         message=f"Parameter '{k}' is not supported by {provider_name}. Available for: {available}.",
-                        category=GoldenSourceWarning,
+                        category=DataMartWarning,
                     )
 
         return filtered

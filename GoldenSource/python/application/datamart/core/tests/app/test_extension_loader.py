@@ -3,7 +3,7 @@
 from unittest.mock import patch
 
 import pytest
-from datamart_core.app.extension_loader import EntryPoint, ExtensionLoader, GoldenSourceGroups
+from datamart_core.app.extension_loader import EntryPoint, ExtensionLoader, DataMartGroups
 
 
 @pytest.fixture(autouse=True)
@@ -34,11 +34,11 @@ def test_extension_loader_singleton_prop():
 
 
 def test_datamart_groups():
-    """Test the GoldenSourceGroups enum."""
-    assert len(GoldenSourceGroups) == 3
-    assert GoldenSourceGroups.core.value == "datamart_core_extension"
-    assert GoldenSourceGroups.provider.value == "datamart_provider_extension"
-    assert GoldenSourceGroups.obbject.value == "datamart_obbject_extension"
+    """Test the DataMartGroups enum."""
+    assert len(DataMartGroups) == 3
+    assert DataMartGroups.core.value == "datamart_core_extension"
+    assert DataMartGroups.provider.value == "datamart_provider_extension"
+    assert DataMartGroups.obbject.value == "datamart_obbject_extension"
 
 
 def test_obbject_entry_points():
@@ -47,7 +47,7 @@ def test_obbject_entry_points():
     assert isinstance(el.obbject_entry_points, list)
 
     for ep in el.obbject_entry_points:
-        assert ep.group == GoldenSourceGroups.obbject.value
+        assert ep.group == DataMartGroups.obbject.value
 
 
 def test_core_entry_points():
@@ -55,7 +55,7 @@ def test_core_entry_points():
     el = ExtensionLoader()
     assert isinstance(el.core_entry_points, list)
     for ep in el.core_entry_points:
-        assert ep.group == GoldenSourceGroups.core.value
+        assert ep.group == DataMartGroups.core.value
 
 
 def test_provider_entry_points():
@@ -63,15 +63,15 @@ def test_provider_entry_points():
     el = ExtensionLoader()
     assert isinstance(el.provider_entry_points, list)
     for ep in el.provider_entry_points:
-        assert ep.group == GoldenSourceGroups.provider.value
+        assert ep.group == DataMartGroups.provider.value
 
 
 def test_sorted_entry_points():
     """Test the _sorted_entry_points method."""
     # pylint: disable=protected-access
-    core_entry_points = ExtensionLoader._sorted_entry_points(GoldenSourceGroups.core.value)
+    core_entry_points = ExtensionLoader._sorted_entry_points(DataMartGroups.core.value)
     for ep in core_entry_points:
-        assert ep.group == GoldenSourceGroups.core.value
+        assert ep.group == DataMartGroups.core.value
 
 
 def test_get_entry_point():
@@ -80,13 +80,13 @@ def test_get_entry_point():
     # pylint: disable=protected-access
     result = el._get_entry_point(el.provider_entry_points, "fmp")
     if result:
-        assert result.group == GoldenSourceGroups.provider.value
+        assert result.group == DataMartGroups.provider.value
         assert result.name == "fmp"
 
     # pylint: disable=protected-access
     result = el._get_entry_point(el.core_entry_points, "equity")
     if result:
-        assert result.group == GoldenSourceGroups.core.value
+        assert result.group == DataMartGroups.core.value
         assert result.name == "equity"
 
 
@@ -103,13 +103,13 @@ def test_get_obbject_entry_point(mock_get_entry_point):
     """Test the get_obbject_entry_point method."""
 
     mock_get_entry_point.return_value = EntryPoint(
-        name="mock_extension", group=GoldenSourceGroups.obbject.value, value="mock"
+        name="mock_extension", group=DataMartGroups.obbject.value, value="mock"
     )
 
     el = ExtensionLoader()
     result = el.get_obbject_entry_point("mock_extension")
     if result:
-        assert result.group == GoldenSourceGroups.obbject.value
+        assert result.group == DataMartGroups.obbject.value
         assert result.name == "mock_extension"
 
 
@@ -118,13 +118,13 @@ def test_get_entry_point_core(mock_get_entry_point):
     """Test the get_core_entry_point method."""
 
     mock_get_entry_point.return_value = EntryPoint(
-        name="mock_extension", group=GoldenSourceGroups.obbject.value, value="mock"
+        name="mock_extension", group=DataMartGroups.obbject.value, value="mock"
     )
 
     el = ExtensionLoader()
     result = el.get_core_entry_point("mock_extension")
     if result:
-        assert result.group == GoldenSourceGroups.obbject.value
+        assert result.group == DataMartGroups.obbject.value
         assert result.name == "mock_extension"
 
 
@@ -133,13 +133,13 @@ def test_get_entry_point_provider(mock_get_entry_point):
     """Test the get_core_entry_point method."""
 
     mock_get_entry_point.return_value = EntryPoint(
-        name="mock_extension", group=GoldenSourceGroups.obbject.value, value="mock"
+        name="mock_extension", group=DataMartGroups.obbject.value, value="mock"
     )
 
     el = ExtensionLoader()
     result = el.get_provider_entry_point("mock_extension")
     if result:
-        assert result.group == GoldenSourceGroups.obbject.value
+        assert result.group == DataMartGroups.obbject.value
         assert result.name == "mock_extension"
 
 

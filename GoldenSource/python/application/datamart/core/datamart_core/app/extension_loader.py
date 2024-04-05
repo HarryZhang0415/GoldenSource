@@ -14,8 +14,8 @@ if TYPE_CHECKING:
     from datamart_core.provider.abstract.provider import Provider
 
 
-class GoldenSourceGroups(Enum):
-    """GoldenSource Extension Groups."""
+class DataMartGroups(Enum):
+    """DataMart Extension Groups."""
 
     core = "datamart_core_extension"
     provider = "datamart_provider_extension"
@@ -23,11 +23,11 @@ class GoldenSourceGroups(Enum):
 
     @staticmethod
     def groups() -> List[str]:
-        """Return the GoldenSourceGroups."""
+        """Return the DataMartGroups."""
         return [
-            GoldenSourceGroups.core.value,
-            GoldenSourceGroups.provider.value,
-            GoldenSourceGroups.obbject.value,
+            DataMartGroups.core.value,
+            DataMartGroups.provider.value,
+            DataMartGroups.obbject.value,
         ]
 
 
@@ -39,13 +39,13 @@ class ExtensionLoader(metaclass=SingletonMeta):
     ) -> None:
         """Initialize the extension loader."""
         self._obbject_entry_points: EntryPoints = self._sorted_entry_points(
-            group=GoldenSourceGroups.obbject.value
+            group=DataMartGroups.obbject.value
         )
         self._core_entry_points: EntryPoints = self._sorted_entry_points(
-            group=GoldenSourceGroups.core.value
+            group=DataMartGroups.core.value
         )
         self._provider_entry_points: EntryPoints = self._sorted_entry_points(
-            group=GoldenSourceGroups.provider.value
+            group=DataMartGroups.provider.value
         )
         self._obbject_objects: Dict[str, Extension] = {}
         self._core_objects: Dict[str, Router] = {}
@@ -99,7 +99,7 @@ class ExtensionLoader(metaclass=SingletonMeta):
     def obbject_objects(self) -> Dict[str, Extension]:
         """Return a dict of obbject extension objects."""
         self._obbject_objects = self._load_entry_points(
-            self._obbject_entry_points, GoldenSourceGroups.obbject
+            self._obbject_entry_points, DataMartGroups.obbject
         )
         return self._obbject_objects
 
@@ -108,7 +108,7 @@ class ExtensionLoader(metaclass=SingletonMeta):
     def core_objects(self) -> Dict[str, "Router"]:
         """Return a dict of core extension objects."""
         self._core_objects = self._load_entry_points(
-            self._core_entry_points, GoldenSourceGroups.core
+            self._core_entry_points, DataMartGroups.core
         )
         return self._core_objects
 
@@ -117,7 +117,7 @@ class ExtensionLoader(metaclass=SingletonMeta):
     def provider_objects(self) -> Dict[str, "Provider"]:
         """Return a dict of provider extension objects."""
         self._provider_objects = self._load_entry_points(
-            self._provider_entry_points, GoldenSourceGroups.provider
+            self._provider_entry_points, DataMartGroups.provider
         )
         return self._provider_objects
 
@@ -127,7 +127,7 @@ class ExtensionLoader(metaclass=SingletonMeta):
         return sorted(entry_points(group=group))  # type: ignore
 
     def _load_entry_points(
-        self, entry_points_: EntryPoints, group: GoldenSourceGroups
+        self, entry_points_: EntryPoints, group: DataMartGroups
     ) -> Dict[str, Any]:
         """Return a dict of objects matching the entry points."""
 
@@ -168,8 +168,8 @@ class ExtensionLoader(metaclass=SingletonMeta):
             }
 
         func = {
-            GoldenSourceGroups.obbject: load_obbject,
-            GoldenSourceGroups.core: load_core,
-            GoldenSourceGroups.provider: load_provider,
+            DataMartGroups.obbject: load_obbject,
+            DataMartGroups.core: load_core,
+            DataMartGroups.provider: load_provider,
         }
         return func[group](entry_points_)  # type: ignore

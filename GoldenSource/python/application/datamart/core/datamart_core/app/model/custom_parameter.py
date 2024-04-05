@@ -22,14 +22,14 @@ class BaseMetadata:
 
 
 @dataclass(frozen=True, **slots_true)
-class GoldenSourceCustomParameter(BaseMetadata):
-    """Custom parameter for GoldenSource."""
+class DataMartCustomParameter(BaseMetadata):
+    """Custom parameter for DataMart."""
 
     description: Optional[str] = None
 
 
 @dataclass(frozen=True, **slots_true)
-class GoldenSourceCustomChoices(BaseMetadata):
-    """Custom choices for GoldenSource."""
+class DataMartCustomChoices(BaseMetadata):
+    """Custom choices for DataMart."""
 
     choices: Optional[LiteralString] = None

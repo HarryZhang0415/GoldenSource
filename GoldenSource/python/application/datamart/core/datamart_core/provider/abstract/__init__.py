@@ -1,1 +1,1 @@
-"""GoldenSource Provider Abstract Class."""
+"""DataMart Provider Abstract Class."""

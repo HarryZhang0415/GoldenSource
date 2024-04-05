@@ -3,7 +3,7 @@
 from typing import Any, Optional, Tuple
 
 from datamart_core.app.command_runner import CommandRunner
-from datamart_core.app.model.abstract.error import GoldenSourceError
+from datamart_core.app.model.abstract.error import DataMartError
 from datamart_core.app.model.obbject import OBBject
 
 
@@ -33,7 +33,7 @@ class Container:
             ).get("provider"):
                 if config_default in available:
                     return config_default
-                raise GoldenSourceError(
+                raise DataMartError(
                     f"provider '{config_default}' is not available. Choose from: {', '.join(available)}."
                 )
             return available[0]

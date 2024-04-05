@@ -13,7 +13,7 @@ from datamart_core.app.service.hub_service import (
     HubService,
     HubSession,
     HubUserSettings,
-    GoldenSourceError,
+    DataMartError,
 )
 from pydantic import SecretStr
 
@@ -61,7 +61,7 @@ def test_connect_without_credentials():
     """Test connect without credentials."""
     hub_service = HubService()
     with pytest.raises(
-        GoldenSourceError, match="Please provide 'email' and 'password' or 'pat'"
+        DataMartError, match="Please provide 'email' and 'password' or 'pat'"
     ):
         hub_service.connect()
 

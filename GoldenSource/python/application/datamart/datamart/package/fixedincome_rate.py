@@ -3,7 +3,7 @@
 import datetime
 from typing import Literal, Optional, Union
 
-from market_core.app.model.custom_parameter import GoldenSourceCustomParameter
+from market_core.app.model.custom_parameter import DataMartCustomParameter
 from market_core.app.model.obbject import OBBject
 from market_core.app.static.container import Container
 from market_core.app.static.utils.decorators import exception_handler, validate
@@ -32,19 +32,19 @@ class ROUTER_fixedincome_rate(Container):
         self,
         start_date: Annotated[
             Union[datetime.date, None, str],
-            GoldenSourceCustomParameter(
+            DataMartCustomParameter(
                 description="Start date of the data, in YYYY-MM-DD format."
             ),
         ] = None,
         end_date: Annotated[
             Union[datetime.date, None, str],
-            GoldenSourceCustomParameter(
+            DataMartCustomParameter(
                 description="End date of the data, in YYYY-MM-DD format."
             ),
         ] = None,
         provider: Annotated[
             Optional[Literal["fred"]],
-            GoldenSourceCustomParameter(
+            DataMartCustomParameter(
                 description="The provider to use for the query, by default None.\n    If None, the provider specified in defaults is selected or 'fred' if there is\n    no default."
             ),
         ] = None,
@@ -122,19 +122,19 @@ class ROUTER_fixedincome_rate(Container):
         self,
         start_date: Annotated[
             Union[datetime.date, None, str],
-            GoldenSourceCustomParameter(
+            DataMartCustomParameter(
                 description="Start date of the data, in YYYY-MM-DD format."
             ),
         ] = None,
         end_date: Annotated[
             Union[datetime.date, None, str],
-            GoldenSourceCustomParameter(
+            DataMartCustomParameter(
                 description="End date of the data, in YYYY-MM-DD format."
             ),
         ] = None,
         provider: Annotated[
             Optional[Literal["fred"]],
-            GoldenSourceCustomParameter(
+            DataMartCustomParameter(
                 description="The provider to use for the query, by default None.\n    If None, the provider specified in defaults is selected or 'fred' if there is\n    no default."
             ),
         ] = None,
@@ -213,23 +213,23 @@ class ROUTER_fixedincome_rate(Container):
         self,
         start_date: Annotated[
             Union[datetime.date, None, str],
-            GoldenSourceCustomParameter(
+            DataMartCustomParameter(
                 description="Start date of the data, in YYYY-MM-DD format."
             ),
         ] = None,
         end_date: Annotated[
             Union[datetime.date, None, str],
-            GoldenSourceCustomParameter(
+            DataMartCustomParameter(
                 description="End date of the data, in YYYY-MM-DD format."
             ),
         ] = None,
         interest_rate_type: Annotated[
             Literal["deposit", "lending", "refinancing"],
-            GoldenSourceCustomParameter(description="The type of interest rate."),
+            DataMartCustomParameter(description="The type of interest rate."),
         ] = "lending",
         provider: Annotated[
             Optional[Literal["fred"]],
-            GoldenSourceCustomParameter(
+            DataMartCustomParameter(
                 description="The provider to use for the query, by default None.\n    If None, the provider specified in defaults is selected or 'fred' if there is\n    no default."
             ),
         ] = None,
@@ -311,19 +311,19 @@ class ROUTER_fixedincome_rate(Container):
         self,
         start_date: Annotated[
             Union[datetime.date, None, str],
-            GoldenSourceCustomParameter(
+            DataMartCustomParameter(
                 description="Start date of the data, in YYYY-MM-DD format."
             ),
         ] = None,
         end_date: Annotated[
             Union[datetime.date, None, str],
-            GoldenSourceCustomParameter(
+            DataMartCustomParameter(
                 description="End date of the data, in YYYY-MM-DD format."
             ),
         ] = None,
         provider: Annotated[
             Optional[Literal["federal_reserve", "fred"]],
-            GoldenSourceCustomParameter(
+            DataMartCustomParameter(
                 description="The provider to use for the query, by default None.\n    If None, the provider specified in defaults is selected or 'federal_reserve' if there is\n    no default."
             ),
         ] = None,
@@ -401,7 +401,7 @@ class ROUTER_fixedincome_rate(Container):
         self,
         provider: Annotated[
             Optional[Literal["fred"]],
-            GoldenSourceCustomParameter(
+            DataMartCustomParameter(
                 description="The provider to use for the query, by default None.\n    If None, the provider specified in defaults is selected or 'fred' if there is\n    no default."
             ),
         ] = None,
@@ -485,19 +485,19 @@ class ROUTER_fixedincome_rate(Container):
         self,
         start_date: Annotated[
             Union[datetime.date, None, str],
-            GoldenSourceCustomParameter(
+            DataMartCustomParameter(
                 description="Start date of the data, in YYYY-MM-DD format."
             ),
         ] = None,
         end_date: Annotated[
             Union[datetime.date, None, str],
-            GoldenSourceCustomParameter(
+            DataMartCustomParameter(
                 description="End date of the data, in YYYY-MM-DD format."
             ),
         ] = None,
         provider: Annotated[
             Optional[Literal["fred"]],
-            GoldenSourceCustomParameter(
+            DataMartCustomParameter(
                 description="The provider to use for the query, by default None.\n    If None, the provider specified in defaults is selected or 'fred' if there is\n    no default."
             ),
         ] = None,
@@ -576,19 +576,19 @@ class ROUTER_fixedincome_rate(Container):
         self,
         start_date: Annotated[
             Union[datetime.date, None, str],
-            GoldenSourceCustomParameter(
+            DataMartCustomParameter(
                 description="Start date of the data, in YYYY-MM-DD format."
             ),
         ] = None,
         end_date: Annotated[
             Union[datetime.date, None, str],
-            GoldenSourceCustomParameter(
+            DataMartCustomParameter(
                 description="End date of the data, in YYYY-MM-DD format."
             ),
         ] = None,
         provider: Annotated[
             Optional[Literal["fred"]],
-            GoldenSourceCustomParameter(
+            DataMartCustomParameter(
                 description="The provider to use for the query, by default None.\n    If None, the provider specified in defaults is selected or 'fred' if there is\n    no default."
             ),
         ] = None,
@@ -663,19 +663,19 @@ class ROUTER_fixedincome_rate(Container):
         self,
         start_date: Annotated[
             Union[datetime.date, None, str],
-            GoldenSourceCustomParameter(
+            DataMartCustomParameter(
                 description="Start date of the data, in YYYY-MM-DD format."
             ),
         ] = None,
         end_date: Annotated[
             Union[datetime.date, None, str],
-            GoldenSourceCustomParameter(
+            DataMartCustomParameter(
                 description="End date of the data, in YYYY-MM-DD format."
             ),
         ] = None,
         provider: Annotated[
             Optional[Literal["fred"]],
-            GoldenSourceCustomParameter(
+            DataMartCustomParameter(
                 description="The provider to use for the query, by default None.\n    If None, the provider specified in defaults is selected or 'fred' if there is\n    no default."
             ),
         ] = None,

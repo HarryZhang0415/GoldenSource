@@ -6,7 +6,7 @@ from fastapi import HTTPException
 from jose import JWTError
 from jose.exceptions import ExpiredSignatureError
 from jose.jwt import decode, get_unverified_header
-from datamart_core.app.model.abstract.error import GoldenSourceError
+from datamart_core.app.model.abstract.error import DataMartError
 from datamart_core.app.model.credentials import Credentials
 from datamart_core.app.model.hub.features_keys import FeaturesKeys
 from datamart_core.app.model.hub.hub_session import HubSession
@@ -54,7 +54,7 @@ class HubService:
         if pat:
             self._session = self._get_session_from_platform_token(pat)
             return self._session
-        raise GoldenSourceError("Please provide 'email' and 'password' or 'pat'")
+        raise DataMartError("Please provide 'email' and 'password' or 'pat'")
 
     def disconnect(self) -> bool:
         """Disconnect from Hub."""
@@ -62,7 +62,7 @@ class HubService:
             result = self._post_logout(self._session)
             self._session = None
             return result
-        raise GoldenSourceError(
+        raise DataMartError(
             "No session found. Login or provide a 'HubSession' on initialization."
         )
 
@@ -73,7 +73,7 @@ class HubService:
                 hub_user_settings = self.platform2hub(user_settings.credentials)
                 return self._put_user_settings(self._session, hub_user_settings)
             return False
-        raise GoldenSourceError(
+        raise DataMartError(
             "No session found. Login or provide a 'HubSession' on initialization."
         )
 
@@ -87,17 +87,17 @@ class HubService:
                 )
                 credentials = self.hub2platform(hub_user_settings)
                 return UserSettings(profile=profile, credentials=credentials)
-        raise GoldenSourceError(
+        raise DataMartError(
             "No session found. Login or provide a 'HubSession' on initialization."
         )
 
     def _get_session_from_email_password(self, email: str, password: str) -> HubSession:
         """Get session from email and password."""
         if not email:
-            raise GoldenSourceError("Email not found.")
+            raise DataMartError("Email not found.")
 
         if not password:
-            raise GoldenSourceError("Password not found.")
+            raise DataMartError("Password not found.")
 
         response = post(
             url=self._base_url + "/login",
@@ -127,7 +127,7 @@ class HubService:
     def _get_session_from_platform_token(self, token: str) -> HubSession:
         """Get session from Platform personal access token."""
         if not token:
-            raise GoldenSourceError("Platform personal access token not found.")
+            raise DataMartError("Platform personal access token not found.")
 
         self.check_token_expiration(token)
 
@@ -264,6 +264,6 @@ class HubService:
                 options={"verify_signature": False, "verify_exp": True},
             )
         except ExpiredSignatureError as e:
-            raise GoldenSourceError("Platform personal access token expired.") from e
+            raise DataMartError("Platform personal access token expired.") from e
         except JWTError as e:
-            raise GoldenSourceError("Failed to decode Platform token.") from e
+            raise DataMartError("Failed to decode Platform token.") from e

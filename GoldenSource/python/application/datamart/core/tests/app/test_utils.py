@@ -1,7 +1,7 @@
 import numpy as np
 import pandas as pd
 import pytest
-from datamart_core.app.model.abstract.error import GoldenSourceError
+from datamart_core.app.model.abstract.error import DataMartError
 from datamart_core.app.utils import (
     basemodel_to_df,
     check_single_item,
@@ -134,13 +134,13 @@ def test_ndarray_to_basemodel(array, expected):
         ("SYMBOL", "SYMBOL"),
         (None, None),
         ("", ""),
-        ("SYMBOL1,SYMBOL2", GoldenSourceError),
-        ("SYMBOL1;SYMBOL2", GoldenSourceError),
+        ("SYMBOL1,SYMBOL2", DataMartError),
+        ("SYMBOL1;SYMBOL2", DataMartError),
     ],
 )
 def test_check_single_item(item, expected):
-    if expected is GoldenSourceError:
-        with pytest.raises(GoldenSourceError):
+    if expected is DataMartError:
+        with pytest.raises(DataMartError):
             check_single_item(item)
     else:
         assert check_single_item(item) == expected

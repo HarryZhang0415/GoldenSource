@@ -1,4 +1,4 @@
-"""The GoldenSource Market System Settings."""
+"""The DataMart Market System Settings."""
 
 import json
 import platform as pl  # I do this so that the import doesn't conflict with the variable name
@@ -9,7 +9,7 @@ from pydantic import ConfigDict, Field, field_validator, model_validator
 
 from datamart_core.app.constants import (
     HOME_DIRECTORY,
-    OPENBB_DIRECTORY,
+    DATAMART_DIRECTORY,
     SYSTEM_SETTINGS_PATH,
     USER_SETTINGS_PATH,
 )
@@ -26,10 +26,10 @@ class SystemSettings(Tagged):
     python_version: str = str(pl.python_version())
     platform: str = str(pl.platform())
 
-    # GoldenSource section
+    # DataMart section
     version: str = VERSION
     home_directory: str = str(HOME_DIRECTORY)
-    datamart_directory: str = str(OPENBB_DIRECTORY)
+    datamart_directory: str = str(DATAMART_DIRECTORY)
     user_settings_path: str = str(USER_SETTINGS_PATH)
     system_settings_path: str = str(SYSTEM_SETTINGS_PATH)
 
@@ -71,7 +71,7 @@ class SystemSettings(Tagged):
     @model_validator(mode="after")  # type: ignore
     @classmethod
     def create_datamart_directory(cls, values: "SystemSettings") -> "SystemSettings":
-        """Create the GoldenSource directory if it doesn't exist."""
+        """Create the DataMart directory if it doesn't exist."""
         obb_dir = Path(values.datamart_directory).resolve()
         user_settings = Path(values.user_settings_path).resolve()
         system_settings = Path(values.system_settings_path).resolve()

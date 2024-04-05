@@ -11,7 +11,7 @@ from datamart_core.app.static.coverage import Coverage
 from datamart_core.app.version import VERSION
 
 E = TypeVar("E", bound=Type[Container])
-BASE_DOC = f"""GoldenSource Market v{VERSION}
+BASE_DOC = f"""DataMart Market v{VERSION}
 
 Utilities:
     /account

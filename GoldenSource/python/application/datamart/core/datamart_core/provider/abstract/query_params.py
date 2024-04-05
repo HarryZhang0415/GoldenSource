@@ -1,4 +1,4 @@
-"""The GoldenSource Standardized QueryParams Model that holds the query input parameters."""
+"""The DataMart Standardized QueryParams Model that holds the query input parameters."""
 
 from typing import Any, Dict
 
@@ -6,7 +6,7 @@ from pydantic import BaseModel, ConfigDict
 
 
 class QueryParams(BaseModel):
-    """The GoldenSource Standardized QueryParams Model.
+    """The DataMart Standardized QueryParams Model.
 
     The `QueryParams` class is designed to hold query parameters, to be extended by
     providers and to be used by fetchers when making data provider requests.

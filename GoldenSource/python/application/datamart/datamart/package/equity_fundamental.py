@@ -5,8 +5,8 @@ from typing import List, Literal, Optional, Union
 from warnings import simplefilter, warn
 
 from annotated_types import Ge
-from market_core.app.deprecation import GoldenSourceDeprecationWarning
-from market_core.app.model.custom_parameter import GoldenSourceCustomParameter
+from market_core.app.deprecation import DataMartDeprecationWarning
+from market_core.app.model.custom_parameter import DataMartCustomParameter
 from market_core.app.model.obbject import OBBject
 from market_core.app.static.container import Container
 from market_core.app.static.utils.decorators import exception_handler, validate
@@ -51,18 +51,18 @@ class ROUTER_equity_fundamental(Container):
     def balance(
         self,
         symbol: Annotated[
-            str, GoldenSourceCustomParameter(description="Symbol to get data for.")
+            str, DataMartCustomParameter(description="Symbol to get data for.")
         ],
         period: Annotated[
-            str, GoldenSourceCustomParameter(description="Time period of the data to return.")
+            str, DataMartCustomParameter(description="Time period of the data to return.")
         ] = "annual",
         limit: Annotated[
             Optional[Annotated[int, Ge(ge=0)]],
-            GoldenSourceCustomParameter(description="The number of data entries to return."),
+            DataMartCustomParameter(description="The number of data entries to return."),
         ] = 5,
         provider: Annotated[
             Optional[Literal["fmp", "intrinio", "polygon", "yfinance"]],
-            GoldenSourceCustomParameter(
+            DataMartCustomParameter(
                 description="The provider to use for the query, by default None.\n    If None, the provider specified in defaults is selected or 'fmp' if there is\n    no default."
             ),
         ] = None,
@@ -413,15 +413,15 @@ class ROUTER_equity_fundamental(Container):
     def balance_growth(
         self,
         symbol: Annotated[
-            str, GoldenSourceCustomParameter(description="Symbol to get data for.")
+            str, DataMartCustomParameter(description="Symbol to get data for.")
         ],
         limit: Annotated[
             int,
-            GoldenSourceCustomParameter(description="The number of data entries to return."),
+            DataMartCustomParameter(description="The number of data entries to return."),
         ] = 10,
         provider: Annotated[
             Optional[Literal["fmp"]],
-            GoldenSourceCustomParameter(
+            DataMartCustomParameter(
                 description="The provider to use for the query, by default None.\n    If None, the provider specified in defaults is selected or 'fmp' if there is\n    no default."
             ),
         ] = None,
@@ -571,18 +571,18 @@ class ROUTER_equity_fundamental(Container):
     def cash(
         self,
         symbol: Annotated[
-            str, GoldenSourceCustomParameter(description="Symbol to get data for.")
+            str, DataMartCustomParameter(description="Symbol to get data for.")
         ],
         period: Annotated[
-            str, GoldenSourceCustomParameter(description="Time period of the data to return.")
+            str, DataMartCustomParameter(description="Time period of the data to return.")
         ] = "annual",
         limit: Annotated[
             Optional[Annotated[int, Ge(ge=0)]],
-            GoldenSourceCustomParameter(description="The number of data entries to return."),
+            DataMartCustomParameter(description="The number of data entries to return."),
         ] = 5,
         provider: Annotated[
             Optional[Literal["fmp", "intrinio", "polygon", "yfinance"]],
-            GoldenSourceCustomParameter(
+            DataMartCustomParameter(
                 description="The provider to use for the query, by default None.\n    If None, the provider specified in defaults is selected or 'fmp' if there is\n    no default."
             ),
         ] = None,
@@ -841,15 +841,15 @@ class ROUTER_equity_fundamental(Container):
     def cash_growth(
         self,
         symbol: Annotated[
-            str, GoldenSourceCustomParameter(description="Symbol to get data for.")
+            str, DataMartCustomParameter(description="Symbol to get data for.")
         ],
         limit: Annotated[
             int,
-            GoldenSourceCustomParameter(description="The number of data entries to return."),
+            DataMartCustomParameter(description="The number of data entries to return."),
         ] = 10,
         provider: Annotated[
             Optional[Literal["fmp"]],
-            GoldenSourceCustomParameter(
+            DataMartCustomParameter(
                 description="The provider to use for the query, by default None.\n    If None, the provider specified in defaults is selected or 'fmp' if there is\n    no default."
             ),
         ] = None,
@@ -981,23 +981,23 @@ class ROUTER_equity_fundamental(Container):
     def dividends(
         self,
         symbol: Annotated[
-            str, GoldenSourceCustomParameter(description="Symbol to get data for.")
+            str, DataMartCustomParameter(description="Symbol to get data for.")
         ],
         start_date: Annotated[
             Union[datetime.date, None, str],
-            GoldenSourceCustomParameter(
+            DataMartCustomParameter(
                 description="Start date of the data, in YYYY-MM-DD format."
             ),
         ] = None,
         end_date: Annotated[
             Union[datetime.date, None, str],
-            GoldenSourceCustomParameter(
+            DataMartCustomParameter(
                 description="End date of the data, in YYYY-MM-DD format."
             ),
         ] = None,
         provider: Annotated[
             Optional[Literal["fmp", "intrinio", "yfinance"]],
-            GoldenSourceCustomParameter(
+            DataMartCustomParameter(
                 description="The provider to use for the query, by default None.\n    If None, the provider specified in defaults is selected or 'fmp' if there is\n    no default."
             ),
         ] = None,
@@ -1087,11 +1087,11 @@ class ROUTER_equity_fundamental(Container):
     def employee_count(
         self,
         symbol: Annotated[
-            str, GoldenSourceCustomParameter(description="Symbol to get data for.")
+            str, DataMartCustomParameter(description="Symbol to get data for.")
         ],
         provider: Annotated[
             Optional[Literal["fmp"]],
-            GoldenSourceCustomParameter(
+            DataMartCustomParameter(
                 description="The provider to use for the query, by default None.\n    If None, the provider specified in defaults is selected or 'fmp' if there is\n    no default."
             ),
         ] = None,
@@ -1171,21 +1171,21 @@ class ROUTER_equity_fundamental(Container):
     def filings(
         self,
         symbol: Annotated[
-            Optional[str], GoldenSourceCustomParameter(description="Symbol to get data for.")
+            Optional[str], DataMartCustomParameter(description="Symbol to get data for.")
         ] = None,
         form_type: Annotated[
             Optional[str],
-            GoldenSourceCustomParameter(
+            DataMartCustomParameter(
                 description="Filter by form type. Check the data provider for available types."
             ),
         ] = None,
         limit: Annotated[
             int,
-            GoldenSourceCustomParameter(description="The number of data entries to return."),
+            DataMartCustomParameter(description="The number of data entries to return."),
         ] = 100,
         provider: Annotated[
             Optional[Literal["fmp", "intrinio", "sec"]],
-            GoldenSourceCustomParameter(
+            DataMartCustomParameter(
                 description="The provider to use for the query, by default None.\n    If None, the provider specified in defaults is selected or 'fmp' if there is\n    no default."
             ),
         ] = None,
@@ -1324,47 +1324,47 @@ class ROUTER_equity_fundamental(Container):
         self,
         symbol: Annotated[
             Union[str, List[str]],
-            GoldenSourceCustomParameter(
+            DataMartCustomParameter(
                 description="Symbol to get data for. Multiple comma separated items allowed for provider(s): intrinio."
             ),
         ],
         tag: Annotated[
             Union[str, List[str]],
-            GoldenSourceCustomParameter(
+            DataMartCustomParameter(
                 description="Intrinio data tag ID or code. Multiple comma separated items allowed for provider(s): intrinio."
             ),
         ],
         start_date: Annotated[
             Union[datetime.date, None, str],
-            GoldenSourceCustomParameter(
+            DataMartCustomParameter(
                 description="Start date of the data, in YYYY-MM-DD format."
             ),
         ] = None,
         end_date: Annotated[
             Union[datetime.date, None, str],
-            GoldenSourceCustomParameter(
+            DataMartCustomParameter(
                 description="End date of the data, in YYYY-MM-DD format."
             ),
         ] = None,
         frequency: Annotated[
             Optional[Literal["daily", "weekly", "monthly", "quarterly", "yearly"]],
-            GoldenSourceCustomParameter(description="The frequency of the data."),
+            DataMartCustomParameter(description="The frequency of the data."),
         ] = "yearly",
         limit: Annotated[
             Optional[int],
-            GoldenSourceCustomParameter(description="The number of data entries to return."),
+            DataMartCustomParameter(description="The number of data entries to return."),
         ] = 1000,
         tag_type: Annotated[
             Optional[str],
-            GoldenSourceCustomParameter(description="Filter by type, when applicable."),
+            DataMartCustomParameter(description="Filter by type, when applicable."),
         ] = None,
         sort: Annotated[
             Optional[Literal["asc", "desc"]],
-            GoldenSourceCustomParameter(description="Sort order."),
+            DataMartCustomParameter(description="Sort order."),
         ] = "desc",
         provider: Annotated[
             Optional[Literal["intrinio"]],
-            GoldenSourceCustomParameter(
+            DataMartCustomParameter(
                 description="The provider to use for the query, by default None.\n    If None, the provider specified in defaults is selected or 'intrinio' if there is\n    no default."
             ),
         ] = None,
@@ -1459,11 +1459,11 @@ class ROUTER_equity_fundamental(Container):
     def historical_eps(
         self,
         symbol: Annotated[
-            str, GoldenSourceCustomParameter(description="Symbol to get data for.")
+            str, DataMartCustomParameter(description="Symbol to get data for.")
         ],
         provider: Annotated[
             Optional[Literal["fmp"]],
-            GoldenSourceCustomParameter(
+            DataMartCustomParameter(
                 description="The provider to use for the query, by default None.\n    If None, the provider specified in defaults is selected or 'fmp' if there is\n    no default."
             ),
         ] = None,
@@ -1547,11 +1547,11 @@ class ROUTER_equity_fundamental(Container):
     def historical_splits(
         self,
         symbol: Annotated[
-            str, GoldenSourceCustomParameter(description="Symbol to get data for.")
+            str, DataMartCustomParameter(description="Symbol to get data for.")
         ],
         provider: Annotated[
             Optional[Literal["fmp"]],
-            GoldenSourceCustomParameter(
+            DataMartCustomParameter(
                 description="The provider to use for the query, by default None.\n    If None, the provider specified in defaults is selected or 'fmp' if there is\n    no default."
             ),
         ] = None,
@@ -1621,18 +1621,18 @@ class ROUTER_equity_fundamental(Container):
     def income(
         self,
         symbol: Annotated[
-            str, GoldenSourceCustomParameter(description="Symbol to get data for.")
+            str, DataMartCustomParameter(description="Symbol to get data for.")
         ],
         period: Annotated[
-            str, GoldenSourceCustomParameter(description="Time period of the data to return.")
+            str, DataMartCustomParameter(description="Time period of the data to return.")
         ] = "annual",
         limit: Annotated[
             Optional[Annotated[int, Ge(ge=0)]],
-            GoldenSourceCustomParameter(description="The number of data entries to return."),
+            DataMartCustomParameter(description="The number of data entries to return."),
         ] = 5,
         provider: Annotated[
             Optional[Literal["fmp", "intrinio", "polygon", "yfinance"]],
-            GoldenSourceCustomParameter(
+            DataMartCustomParameter(
                 description="The provider to use for the query, by default None.\n    If None, the provider specified in defaults is selected or 'fmp' if there is\n    no default."
             ),
         ] = None,
@@ -1985,19 +1985,19 @@ class ROUTER_equity_fundamental(Container):
     def income_growth(
         self,
         symbol: Annotated[
-            str, GoldenSourceCustomParameter(description="Symbol to get data for.")
+            str, DataMartCustomParameter(description="Symbol to get data for.")
         ],
         limit: Annotated[
             int,
-            GoldenSourceCustomParameter(description="The number of data entries to return."),
+            DataMartCustomParameter(description="The number of data entries to return."),
         ] = 10,
         period: Annotated[
             Literal["annual", "quarter"],
-            GoldenSourceCustomParameter(description="Time period of the data to return."),
+            DataMartCustomParameter(description="Time period of the data to return."),
         ] = "annual",
         provider: Annotated[
             Optional[Literal["fmp"]],
-            GoldenSourceCustomParameter(
+            DataMartCustomParameter(
                 description="The provider to use for the query, by default None.\n    If None, the provider specified in defaults is selected or 'fmp' if there is\n    no default."
             ),
         ] = None,
@@ -2125,19 +2125,19 @@ class ROUTER_equity_fundamental(Container):
         self,
         symbol: Annotated[
             Union[str, List[str]],
-            GoldenSourceCustomParameter(
+            DataMartCustomParameter(
                 description="Symbol to get data for. Multiple comma separated items allowed for provider(s): intrinio."
             ),
         ],
         tag: Annotated[
             Union[str, List[str]],
-            GoldenSourceCustomParameter(
+            DataMartCustomParameter(
                 description="Intrinio data tag ID or code. Multiple comma separated items allowed for provider(s): intrinio."
             ),
         ],
         provider: Annotated[
             Optional[Literal["intrinio"]],
-            GoldenSourceCustomParameter(
+            DataMartCustomParameter(
                 description="The provider to use for the query, by default None.\n    If None, the provider specified in defaults is selected or 'intrinio' if there is\n    no default."
             ),
         ] = None,
@@ -2212,11 +2212,11 @@ class ROUTER_equity_fundamental(Container):
     def management(
         self,
         symbol: Annotated[
-            str, GoldenSourceCustomParameter(description="Symbol to get data for.")
+            str, DataMartCustomParameter(description="Symbol to get data for.")
         ],
         provider: Annotated[
             Optional[Literal["fmp", "yfinance"]],
-            GoldenSourceCustomParameter(
+            DataMartCustomParameter(
                 description="The provider to use for the query, by default None.\n    If None, the provider specified in defaults is selected or 'fmp' if there is\n    no default."
             ),
         ] = None,
@@ -2297,13 +2297,13 @@ class ROUTER_equity_fundamental(Container):
         self,
         symbol: Annotated[
             Union[str, List[str]],
-            GoldenSourceCustomParameter(
+            DataMartCustomParameter(
                 description="Symbol to get data for. Multiple comma separated items allowed for provider(s): fmp."
             ),
         ],
         provider: Annotated[
             Optional[Literal["fmp"]],
-            GoldenSourceCustomParameter(
+            DataMartCustomParameter(
                 description="The provider to use for the query, by default None.\n    If None, the provider specified in defaults is selected or 'fmp' if there is\n    no default."
             ),
         ] = None,
@@ -2399,21 +2399,21 @@ class ROUTER_equity_fundamental(Container):
         self,
         symbol: Annotated[
             Union[str, List[str]],
-            GoldenSourceCustomParameter(
+            DataMartCustomParameter(
                 description="Symbol to get data for. Multiple comma separated items allowed for provider(s): fmp, intrinio, yfinance."
             ),
         ],
         period: Annotated[
             Optional[Literal["annual", "quarter"]],
-            GoldenSourceCustomParameter(description="Time period of the data to return."),
+            DataMartCustomParameter(description="Time period of the data to return."),
         ] = "annual",
         limit: Annotated[
             Optional[int],
-            GoldenSourceCustomParameter(description="The number of data entries to return."),
+            DataMartCustomParameter(description="The number of data entries to return."),
         ] = 100,
         provider: Annotated[
             Optional[Literal["fmp", "intrinio", "yfinance"]],
-            GoldenSourceCustomParameter(
+            DataMartCustomParameter(
                 description="The provider to use for the query, by default None.\n    If None, the provider specified in defaults is selected or 'fmp' if there is\n    no default."
             ),
         ] = None,
@@ -2720,13 +2720,13 @@ class ROUTER_equity_fundamental(Container):
         self,
         symbol: Annotated[
             Union[str, List[str]],
-            GoldenSourceCustomParameter(
+            DataMartCustomParameter(
                 description="Symbol to get data for. Multiple comma separated items allowed for provider(s): fmp."
             ),
         ],
         provider: Annotated[
             Optional[Literal["fmp"]],
-            GoldenSourceCustomParameter(
+            DataMartCustomParameter(
                 description="The provider to use for the query, by default None.\n    If None, the provider specified in defaults is selected or 'fmp' if there is\n    no default."
             ),
         ] = None,
@@ -2909,17 +2909,17 @@ class ROUTER_equity_fundamental(Container):
     @exception_handler
     @validate
     @deprecated(
-        "This endpoint is deprecated; use `/equity/profile` instead. Deprecated in GoldenSource Platform V4.1 to be removed in V4.3.",
-        category=GoldenSourceDeprecationWarning,
+        "This endpoint is deprecated; use `/equity/profile` instead. Deprecated in DataMart Platform V4.1 to be removed in V4.3.",
+        category=DataMartDeprecationWarning,
     )
     def overview(
         self,
         symbol: Annotated[
-            str, GoldenSourceCustomParameter(description="Symbol to get data for.")
+            str, DataMartCustomParameter(description="Symbol to get data for.")
         ],
         provider: Annotated[
             Optional[Literal["fmp"]],
-            GoldenSourceCustomParameter(
+            DataMartCustomParameter(
                 description="The provider to use for the query, by default None.\n    If None, the provider specified in defaults is selected or 'fmp' if there is\n    no default."
             ),
         ] = None,
@@ -3033,7 +3033,7 @@ class ROUTER_equity_fundamental(Container):
 
         simplefilter("always", DeprecationWarning)
         warn(
-            "This endpoint is deprecated; use `/equity/profile` instead. Deprecated in GoldenSource Platform V4.1 to be removed in V4.3.",
+            "This endpoint is deprecated; use `/equity/profile` instead. Deprecated in DataMart Platform V4.1 to be removed in V4.3.",
             category=DeprecationWarning,
             stacklevel=2,
         )
@@ -3060,18 +3060,18 @@ class ROUTER_equity_fundamental(Container):
     def ratios(
         self,
         symbol: Annotated[
-            str, GoldenSourceCustomParameter(description="Symbol to get data for.")
+            str, DataMartCustomParameter(description="Symbol to get data for.")
         ],
         period: Annotated[
-            str, GoldenSourceCustomParameter(description="Time period of the data to return.")
+            str, DataMartCustomParameter(description="Time period of the data to return.")
         ] = "annual",
         limit: Annotated[
             int,
-            GoldenSourceCustomParameter(description="The number of data entries to return."),
+            DataMartCustomParameter(description="The number of data entries to return."),
         ] = 12,
         provider: Annotated[
             Optional[Literal["fmp", "intrinio"]],
-            GoldenSourceCustomParameter(
+            DataMartCustomParameter(
                 description="The provider to use for the query, by default None.\n    If None, the provider specified in defaults is selected or 'fmp' if there is\n    no default."
             ),
         ] = None,
@@ -3260,26 +3260,26 @@ class ROUTER_equity_fundamental(Container):
     def reported_financials(
         self,
         symbol: Annotated[
-            str, GoldenSourceCustomParameter(description="Symbol to get data for.")
+            str, DataMartCustomParameter(description="Symbol to get data for.")
         ],
         period: Annotated[
-            str, GoldenSourceCustomParameter(description="Time period of the data to return.")
+            str, DataMartCustomParameter(description="Time period of the data to return.")
         ] = "annual",
         statement_type: Annotated[
             str,
-            GoldenSourceCustomParameter(
+            DataMartCustomParameter(
                 description="The type of financial statement - i.e, balance, income, cash."
             ),
         ] = "balance",
         limit: Annotated[
             Optional[int],
-            GoldenSourceCustomParameter(
+            DataMartCustomParameter(
                 description="The number of data entries to return. Although the response object contains multiple results, because of the variance in the fields, year-to-year and quarter-to-quarter, it is recommended to view results in small chunks."
             ),
         ] = 100,
         provider: Annotated[
             Optional[Literal["intrinio"]],
-            GoldenSourceCustomParameter(
+            DataMartCustomParameter(
                 description="The provider to use for the query, by default None.\n    If None, the provider specified in defaults is selected or 'intrinio' if there is\n    no default."
             ),
         ] = None,
@@ -3364,19 +3364,19 @@ class ROUTER_equity_fundamental(Container):
     def revenue_per_geography(
         self,
         symbol: Annotated[
-            str, GoldenSourceCustomParameter(description="Symbol to get data for.")
+            str, DataMartCustomParameter(description="Symbol to get data for.")
         ],
         period: Annotated[
             Literal["annual", "quarter"],
-            GoldenSourceCustomParameter(description="Time period of the data to return."),
+            DataMartCustomParameter(description="Time period of the data to return."),
         ] = "annual",
         structure: Annotated[
             Literal["hierarchical", "flat"],
-            GoldenSourceCustomParameter(description="Structure of the returned data."),
+            DataMartCustomParameter(description="Structure of the returned data."),
         ] = "flat",
         provider: Annotated[
             Optional[Literal["fmp"]],
-            GoldenSourceCustomParameter(
+            DataMartCustomParameter(
                 description="The provider to use for the query, by default None.\n    If None, the provider specified in defaults is selected or 'fmp' if there is\n    no default."
             ),
         ] = None,
@@ -3455,19 +3455,19 @@ class ROUTER_equity_fundamental(Container):
     def revenue_per_segment(
         self,
         symbol: Annotated[
-            str, GoldenSourceCustomParameter(description="Symbol to get data for.")
+            str, DataMartCustomParameter(description="Symbol to get data for.")
         ],
         period: Annotated[
             Literal["annual", "quarter"],
-            GoldenSourceCustomParameter(description="Time period of the data to return."),
+            DataMartCustomParameter(description="Time period of the data to return."),
         ] = "annual",
         structure: Annotated[
             Literal["hierarchical", "flat"],
-            GoldenSourceCustomParameter(description="Structure of the returned data."),
+            DataMartCustomParameter(description="Structure of the returned data."),
         ] = "flat",
         provider: Annotated[
             Optional[Literal["fmp"]],
-            GoldenSourceCustomParameter(
+            DataMartCustomParameter(
                 description="The provider to use for the query, by default None.\n    If None, the provider specified in defaults is selected or 'fmp' if there is\n    no default."
             ),
         ] = None,
@@ -3546,15 +3546,15 @@ class ROUTER_equity_fundamental(Container):
     def search_attributes(
         self,
         query: Annotated[
-            str, GoldenSourceCustomParameter(description="Query to search for.")
+            str, DataMartCustomParameter(description="Query to search for.")
         ],
         limit: Annotated[
             Optional[int],
-            GoldenSourceCustomParameter(description="The number of data entries to return."),
+            DataMartCustomParameter(description="The number of data entries to return."),
         ] = 1000,
         provider: Annotated[
             Optional[Literal["intrinio"]],
-            GoldenSourceCustomParameter(
+            DataMartCustomParameter(
                 description="The provider to use for the query, by default None.\n    If None, the provider specified in defaults is selected or 'intrinio' if there is\n    no default."
             ),
         ] = None,
@@ -3641,17 +3641,17 @@ class ROUTER_equity_fundamental(Container):
     def trailing_dividend_yield(
         self,
         symbol: Annotated[
-            str, GoldenSourceCustomParameter(description="Symbol to get data for.")
+            str, DataMartCustomParameter(description="Symbol to get data for.")
         ],
         limit: Annotated[
             Optional[int],
-            GoldenSourceCustomParameter(
+            DataMartCustomParameter(
                 description="The number of data entries to return. Default is 252, the number of trading days in a year."
             ),
         ] = 252,
         provider: Annotated[
             Optional[Literal["tiingo"]],
-            GoldenSourceCustomParameter(
+            DataMartCustomParameter(
                 description="The provider to use for the query, by default None.\n    If None, the provider specified in defaults is selected or 'tiingo' if there is\n    no default."
             ),
         ] = None,
@@ -3721,15 +3721,15 @@ class ROUTER_equity_fundamental(Container):
     def transcript(
         self,
         symbol: Annotated[
-            str, GoldenSourceCustomParameter(description="Symbol to get data for.")
+            str, DataMartCustomParameter(description="Symbol to get data for.")
         ],
         year: Annotated[
             int,
-            GoldenSourceCustomParameter(description="Year of the earnings call transcript."),
+            DataMartCustomParameter(description="Year of the earnings call transcript."),
         ],
         provider: Annotated[
             Optional[Literal["fmp"]],
-            GoldenSourceCustomParameter(
+            DataMartCustomParameter(
                 description="The provider to use for the query, by default None.\n    If None, the provider specified in defaults is selected or 'fmp' if there is\n    no default."
             ),
         ] = None,

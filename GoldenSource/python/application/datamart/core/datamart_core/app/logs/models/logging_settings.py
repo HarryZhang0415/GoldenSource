@@ -17,7 +17,7 @@ class LoggingSettings:
         system_settings = system_settings or SystemSettings()
 
         user_data_directory = (
-            str(Path.home() / "GoldenSourceUserData")
+            str(Path.home() / "DataMartUserData")
             if not user_settings.preferences
             else user_settings.preferences.data_directory
         )

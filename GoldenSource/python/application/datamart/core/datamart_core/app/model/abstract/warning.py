@@ -15,5 +15,5 @@ def cast_warning(w: WarningMessage) -> Warning_:
     )
 
 
-class GoldenSourceWarning(Warning):
+class DataMartWarning(Warning):
     pass

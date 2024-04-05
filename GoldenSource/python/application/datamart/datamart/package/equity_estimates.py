@@ -2,7 +2,7 @@
 
 from typing import List, Literal, Optional, Union
 
-from market_core.app.model.custom_parameter import GoldenSourceCustomParameter
+from market_core.app.model.custom_parameter import DataMartCustomParameter
 from market_core.app.model.obbject import OBBject
 from market_core.app.static.container import Container
 from market_core.app.static.utils.decorators import exception_handler, validate
@@ -27,19 +27,19 @@ class ROUTER_equity_estimates(Container):
         self,
         analyst_name: Annotated[
             Union[str, None, List[Optional[str]]],
-            GoldenSourceCustomParameter(
+            DataMartCustomParameter(
                 description="Analyst names to return. Omitting will return all available analysts. Multiple comma separated items allowed for provider(s): benzinga."
             ),
         ] = None,
         firm_name: Annotated[
             Union[str, None, List[Optional[str]]],
-            GoldenSourceCustomParameter(
+            DataMartCustomParameter(
                 description="Firm names to return. Omitting will return all available firms. Multiple comma separated items allowed for provider(s): benzinga."
             ),
         ] = None,
         provider: Annotated[
             Optional[Literal["benzinga"]],
-            GoldenSourceCustomParameter(
+            DataMartCustomParameter(
                 description="The provider to use for the query, by default None.\n    If None, the provider specified in defaults is selected or 'benzinga' if there is\n    no default."
             ),
         ] = None,
@@ -211,13 +211,13 @@ class ROUTER_equity_estimates(Container):
         self,
         symbol: Annotated[
             Union[str, List[str]],
-            GoldenSourceCustomParameter(
+            DataMartCustomParameter(
                 description="Symbol to get data for. Multiple comma separated items allowed for provider(s): fmp, yfinance."
             ),
         ],
         provider: Annotated[
             Optional[Literal["fmp", "yfinance"]],
-            GoldenSourceCustomParameter(
+            DataMartCustomParameter(
                 description="The provider to use for the query, by default None.\n    If None, the provider specified in defaults is selected or 'fmp' if there is\n    no default."
             ),
         ] = None,
@@ -302,13 +302,13 @@ class ROUTER_equity_estimates(Container):
         self,
         symbol: Annotated[
             Union[str, List[str]],
-            GoldenSourceCustomParameter(
+            DataMartCustomParameter(
                 description="Symbol to get data for. Multiple comma separated items allowed for provider(s): fmp."
             ),
         ],
         provider: Annotated[
             Optional[Literal["fmp"]],
-            GoldenSourceCustomParameter(
+            DataMartCustomParameter(
                 description="The provider to use for the query, by default None.\n    If None, the provider specified in defaults is selected or 'fmp' if there is\n    no default."
             ),
         ] = None,
@@ -420,17 +420,17 @@ class ROUTER_equity_estimates(Container):
         self,
         symbol: Annotated[
             Union[str, None, List[Optional[str]]],
-            GoldenSourceCustomParameter(
+            DataMartCustomParameter(
                 description="Symbol to get data for. Multiple comma separated items allowed for provider(s): benzinga, fmp."
             ),
         ] = None,
         limit: Annotated[
             int,
-            GoldenSourceCustomParameter(description="The number of data entries to return."),
+            DataMartCustomParameter(description="The number of data entries to return."),
         ] = 200,
         provider: Annotated[
             Optional[Literal["benzinga", "fmp"]],
-            GoldenSourceCustomParameter(
+            DataMartCustomParameter(
                 description="The provider to use for the query, by default None.\n    If None, the provider specified in defaults is selected or 'benzinga' if there is\n    no default."
             ),
         ] = None,

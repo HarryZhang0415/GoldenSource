@@ -4,7 +4,7 @@ import datetime
 from typing import List, Literal, Optional, Union
 
 from annotated_types import Ge
-from market_core.app.model.custom_parameter import GoldenSourceCustomParameter
+from market_core.app.model.custom_parameter import DataMartCustomParameter
 from market_core.app.model.obbject import OBBject
 from market_core.app.static.container import Container
 from market_core.app.static.utils.decorators import exception_handler, validate
@@ -27,31 +27,31 @@ class ROUTER_news(Container):
         self,
         symbol: Annotated[
             Union[str, None, List[Optional[str]]],
-            GoldenSourceCustomParameter(
+            DataMartCustomParameter(
                 description="Symbol to get data for. Multiple comma separated items allowed for provider(s): benzinga, fmp, intrinio, polygon, tiingo, yfinance."
             ),
         ] = None,
         start_date: Annotated[
             Union[datetime.date, None, str],
-            GoldenSourceCustomParameter(
+            DataMartCustomParameter(
                 description="Start date of the data, in YYYY-MM-DD format."
             ),
         ] = None,
         end_date: Annotated[
             Union[datetime.date, None, str],
-            GoldenSourceCustomParameter(
+            DataMartCustomParameter(
                 description="End date of the data, in YYYY-MM-DD format."
             ),
         ] = None,
         limit: Annotated[
             Optional[Annotated[int, Ge(ge=0)]],
-            GoldenSourceCustomParameter(description="The number of data entries to return."),
+            DataMartCustomParameter(description="The number of data entries to return."),
         ] = 2500,
         provider: Annotated[
             Optional[
                 Literal["benzinga", "fmp", "intrinio", "polygon", "tiingo", "yfinance"]
             ],
-            GoldenSourceCustomParameter(
+            DataMartCustomParameter(
                 description="The provider to use for the query, by default None.\n    If None, the provider specified in defaults is selected or 'benzinga' if there is\n    no default."
             ),
         ] = None,
@@ -221,25 +221,25 @@ class ROUTER_news(Container):
         self,
         limit: Annotated[
             int,
-            GoldenSourceCustomParameter(
+            DataMartCustomParameter(
                 description="The number of data entries to return. The number of articles to return."
             ),
         ] = 2500,
         start_date: Annotated[
             Union[datetime.date, None, str],
-            GoldenSourceCustomParameter(
+            DataMartCustomParameter(
                 description="Start date of the data, in YYYY-MM-DD format."
             ),
         ] = None,
         end_date: Annotated[
             Union[datetime.date, None, str],
-            GoldenSourceCustomParameter(
+            DataMartCustomParameter(
                 description="End date of the data, in YYYY-MM-DD format."
             ),
         ] = None,
         provider: Annotated[
             Optional[Literal["benzinga", "fmp", "intrinio", "tiingo"]],
-            GoldenSourceCustomParameter(
+            DataMartCustomParameter(
                 description="The provider to use for the query, by default None.\n    If None, the provider specified in defaults is selected or 'benzinga' if there is\n    no default."
             ),
         ] = None,

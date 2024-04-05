@@ -2,7 +2,7 @@
 
 from typing import Literal, Optional
 
-from market_core.app.model.custom_parameter import GoldenSourceCustomParameter
+from market_core.app.model.custom_parameter import DataMartCustomParameter
 from market_core.app.model.obbject import OBBject
 from market_core.app.static.container import Container
 from market_core.app.static.utils.decorators import exception_handler, validate
@@ -24,11 +24,11 @@ class ROUTER_derivatives_options(Container):
     def chains(
         self,
         symbol: Annotated[
-            str, GoldenSourceCustomParameter(description="Symbol to get data for.")
+            str, DataMartCustomParameter(description="Symbol to get data for.")
         ],
         provider: Annotated[
             Optional[Literal["intrinio"]],
-            GoldenSourceCustomParameter(
+            DataMartCustomParameter(
                 description="The provider to use for the query, by default None.\n    If None, the provider specified in defaults is selected or 'intrinio' if there is\n    no default."
             ),
         ] = None,
@@ -183,13 +183,13 @@ class ROUTER_derivatives_options(Container):
         self,
         symbol: Annotated[
             Optional[str],
-            GoldenSourceCustomParameter(
+            DataMartCustomParameter(
                 description="Symbol to get data for. (the underlying symbol)"
             ),
         ] = None,
         provider: Annotated[
             Optional[Literal["intrinio"]],
-            GoldenSourceCustomParameter(
+            DataMartCustomParameter(
                 description="The provider to use for the query, by default None.\n    If None, the provider specified in defaults is selected or 'intrinio' if there is\n    no default."
             ),
         ] = None,

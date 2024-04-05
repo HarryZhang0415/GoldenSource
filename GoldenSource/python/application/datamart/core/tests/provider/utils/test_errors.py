@@ -1,13 +1,13 @@
 """Test custom errors."""
 
 import pytest
-from datamart_core.app.model.abstract.error import GoldenSourceError
+from datamart_core.app.model.abstract.error import DataMartError
 from datamart_core.provider.utils.errors import EmptyDataError
 
 
 def function_that_raises_provider_error():
-    """Raise a GoldenSourceError."""
-    raise GoldenSourceError("An error occurred in the provider.")
+    """Raise a DataMartError."""
+    raise DataMartError("An error occurred in the provider.")
 
 
 def function_that_raises_empty_data_error():
@@ -16,8 +16,8 @@ def function_that_raises_empty_data_error():
 
 
 def test_provider_error_is_raised():
-    """Test if the GoldenSourceError is raised."""
-    with pytest.raises(GoldenSourceError) as exc_info:
+    """Test if the DataMartError is raised."""
+    with pytest.raises(DataMartError) as exc_info:
         function_that_raises_provider_error()
     assert str(exc_info.value) == "An error occurred in the provider."
 

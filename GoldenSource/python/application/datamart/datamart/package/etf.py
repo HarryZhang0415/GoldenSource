@@ -3,7 +3,7 @@
 import datetime
 from typing import List, Literal, Optional, Union
 
-from market_core.app.model.custom_parameter import GoldenSourceCustomParameter
+from market_core.app.model.custom_parameter import DataMartCustomParameter
 from market_core.app.model.obbject import OBBject
 from market_core.app.static.container import Container
 from market_core.app.static.utils.decorators import exception_handler, validate
@@ -34,13 +34,13 @@ class ROUTER_etf(Container):
         self,
         symbol: Annotated[
             Union[str, List[str]],
-            GoldenSourceCustomParameter(
+            DataMartCustomParameter(
                 description="Symbol to get data for. (ETF) Multiple comma separated items allowed for provider(s): fmp."
             ),
         ],
         provider: Annotated[
             Optional[Literal["fmp"]],
-            GoldenSourceCustomParameter(
+            DataMartCustomParameter(
                 description="The provider to use for the query, by default None.\n    If None, the provider specified in defaults is selected or 'fmp' if there is\n    no default."
             ),
         ] = None,
@@ -106,13 +106,13 @@ class ROUTER_etf(Container):
         self,
         symbol: Annotated[
             Union[str, List[str]],
-            GoldenSourceCustomParameter(
+            DataMartCustomParameter(
                 description="Symbol to get data for. (Stock) Multiple comma separated items allowed for provider(s): fmp."
             ),
         ],
         provider: Annotated[
             Optional[Literal["fmp"]],
-            GoldenSourceCustomParameter(
+            DataMartCustomParameter(
                 description="The provider to use for the query, by default None.\n    If None, the provider specified in defaults is selected or 'fmp' if there is\n    no default."
             ),
         ] = None,
@@ -188,29 +188,29 @@ class ROUTER_etf(Container):
         self,
         symbol: Annotated[
             Union[str, List[str]],
-            GoldenSourceCustomParameter(
+            DataMartCustomParameter(
                 description="Symbol to get data for. Multiple comma separated items allowed for provider(s): fmp, polygon, tiingo, yfinance."
             ),
         ],
         interval: Annotated[
             Optional[str],
-            GoldenSourceCustomParameter(description="Time interval of the data to return."),
+            DataMartCustomParameter(description="Time interval of the data to return."),
         ] = "1d",
         start_date: Annotated[
             Union[datetime.date, None, str],
-            GoldenSourceCustomParameter(
+            DataMartCustomParameter(
                 description="Start date of the data, in YYYY-MM-DD format."
             ),
         ] = None,
         end_date: Annotated[
             Union[datetime.date, None, str],
-            GoldenSourceCustomParameter(
+            DataMartCustomParameter(
                 description="End date of the data, in YYYY-MM-DD format."
             ),
         ] = None,
         provider: Annotated[
             Optional[Literal["fmp", "intrinio", "polygon", "tiingo", "yfinance"]],
-            GoldenSourceCustomParameter(
+            DataMartCustomParameter(
                 description="The provider to use for the query, by default None.\n    If None, the provider specified in defaults is selected or 'fmp' if there is\n    no default."
             ),
         ] = None,
@@ -370,11 +370,11 @@ class ROUTER_etf(Container):
     def holdings(
         self,
         symbol: Annotated[
-            str, GoldenSourceCustomParameter(description="Symbol to get data for. (ETF)")
+            str, DataMartCustomParameter(description="Symbol to get data for. (ETF)")
         ],
         provider: Annotated[
             Optional[Literal["fmp", "intrinio", "sec"]],
-            GoldenSourceCustomParameter(
+            DataMartCustomParameter(
                 description="The provider to use for the query, by default None.\n    If None, the provider specified in defaults is selected or 'fmp' if there is\n    no default."
             ),
         ] = None,
@@ -630,11 +630,11 @@ class ROUTER_etf(Container):
     def holdings_date(
         self,
         symbol: Annotated[
-            str, GoldenSourceCustomParameter(description="Symbol to get data for. (ETF)")
+            str, DataMartCustomParameter(description="Symbol to get data for. (ETF)")
         ],
         provider: Annotated[
             Optional[Literal["fmp"]],
-            GoldenSourceCustomParameter(
+            DataMartCustomParameter(
                 description="The provider to use for the query, by default None.\n    If None, the provider specified in defaults is selected or 'fmp' if there is\n    no default."
             ),
         ] = None,
@@ -701,13 +701,13 @@ class ROUTER_etf(Container):
         self,
         symbol: Annotated[
             Union[str, List[str]],
-            GoldenSourceCustomParameter(
+            DataMartCustomParameter(
                 description="Symbol to get data for. Multiple comma separated items allowed for provider(s): fmp."
             ),
         ],
         provider: Annotated[
             Optional[Literal["fmp"]],
-            GoldenSourceCustomParameter(
+            DataMartCustomParameter(
                 description="The provider to use for the query, by default None.\n    If None, the provider specified in defaults is selected or 'fmp' if there is\n    no default."
             ),
         ] = None,
@@ -805,13 +805,13 @@ class ROUTER_etf(Container):
         self,
         symbol: Annotated[
             Union[str, List[str]],
-            GoldenSourceCustomParameter(
+            DataMartCustomParameter(
                 description="Symbol to get data for. (ETF) Multiple comma separated items allowed for provider(s): fmp, intrinio, yfinance."
             ),
         ],
         provider: Annotated[
             Optional[Literal["fmp", "intrinio", "yfinance"]],
-            GoldenSourceCustomParameter(
+            DataMartCustomParameter(
                 description="The provider to use for the query, by default None.\n    If None, the provider specified in defaults is selected or 'fmp' if there is\n    no default."
             ),
         ] = None,
@@ -1197,13 +1197,13 @@ class ROUTER_etf(Container):
         self,
         symbol: Annotated[
             Union[str, List[str]],
-            GoldenSourceCustomParameter(
+            DataMartCustomParameter(
                 description="Symbol to get data for. Multiple comma separated items allowed for provider(s): fmp, intrinio."
             ),
         ],
         provider: Annotated[
             Optional[Literal["fmp", "intrinio"]],
-            GoldenSourceCustomParameter(
+            DataMartCustomParameter(
                 description="The provider to use for the query, by default None.\n    If None, the provider specified in defaults is selected or 'fmp' if there is\n    no default."
             ),
         ] = None,
@@ -1335,11 +1335,11 @@ class ROUTER_etf(Container):
     def search(
         self,
         query: Annotated[
-            Optional[str], GoldenSourceCustomParameter(description="Search query.")
+            Optional[str], DataMartCustomParameter(description="Search query.")
         ] = "",
         provider: Annotated[
             Optional[Literal["fmp", "intrinio"]],
-            GoldenSourceCustomParameter(
+            DataMartCustomParameter(
                 description="The provider to use for the query, by default None.\n    If None, the provider specified in defaults is selected or 'fmp' if there is\n    no default."
             ),
         ] = None,
@@ -1449,11 +1449,11 @@ class ROUTER_etf(Container):
     def sectors(
         self,
         symbol: Annotated[
-            str, GoldenSourceCustomParameter(description="Symbol to get data for. (ETF)")
+            str, DataMartCustomParameter(description="Symbol to get data for. (ETF)")
         ],
         provider: Annotated[
             Optional[Literal["fmp"]],
-            GoldenSourceCustomParameter(
+            DataMartCustomParameter(
                 description="The provider to use for the query, by default None.\n    If None, the provider specified in defaults is selected or 'fmp' if there is\n    no default."
             ),
         ] = None,

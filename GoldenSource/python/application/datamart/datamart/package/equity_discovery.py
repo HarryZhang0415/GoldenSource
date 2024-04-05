@@ -3,7 +3,7 @@
 import datetime
 from typing import Literal, Optional, Union
 
-from market_core.app.model.custom_parameter import GoldenSourceCustomParameter
+from market_core.app.model.custom_parameter import DataMartCustomParameter
 from market_core.app.model.obbject import OBBject
 from market_core.app.static.container import Container
 from market_core.app.static.utils.decorators import exception_handler, validate
@@ -32,13 +32,13 @@ class ROUTER_equity_discovery(Container):
         self,
         sort: Annotated[
             Literal["asc", "desc"],
-            GoldenSourceCustomParameter(
+            DataMartCustomParameter(
                 description="Sort order. Possible values: 'asc', 'desc'. Default: 'desc'."
             ),
         ] = "desc",
         provider: Annotated[
             Optional[Literal["yfinance"]],
-            GoldenSourceCustomParameter(
+            DataMartCustomParameter(
                 description="The provider to use for the query, by default None.\n    If None, the provider specified in defaults is selected or 'yfinance' if there is\n    no default."
             ),
         ] = None,
@@ -120,13 +120,13 @@ class ROUTER_equity_discovery(Container):
         self,
         sort: Annotated[
             Literal["asc", "desc"],
-            GoldenSourceCustomParameter(
+            DataMartCustomParameter(
                 description="Sort order. Possible values: 'asc', 'desc'. Default: 'desc'."
             ),
         ] = "desc",
         provider: Annotated[
             Optional[Literal["yfinance"]],
-            GoldenSourceCustomParameter(
+            DataMartCustomParameter(
                 description="The provider to use for the query, by default None.\n    If None, the provider specified in defaults is selected or 'yfinance' if there is\n    no default."
             ),
         ] = None,
@@ -208,29 +208,29 @@ class ROUTER_equity_discovery(Container):
         self,
         start_date: Annotated[
             Union[datetime.date, None, str],
-            GoldenSourceCustomParameter(
+            DataMartCustomParameter(
                 description="Start date of the data, in YYYY-MM-DD format."
             ),
         ] = None,
         end_date: Annotated[
             Union[datetime.date, None, str],
-            GoldenSourceCustomParameter(
+            DataMartCustomParameter(
                 description="End date of the data, in YYYY-MM-DD format."
             ),
         ] = None,
         form_type: Annotated[
             Optional[str],
-            GoldenSourceCustomParameter(
+            DataMartCustomParameter(
                 description="Filter by form type. Visit https://www.sec.gov/forms for a list of supported form types."
             ),
         ] = None,
         limit: Annotated[
             int,
-            GoldenSourceCustomParameter(description="The number of data entries to return."),
+            DataMartCustomParameter(description="The number of data entries to return."),
         ] = 100,
         provider: Annotated[
             Optional[Literal["fmp"]],
-            GoldenSourceCustomParameter(
+            DataMartCustomParameter(
                 description="The provider to use for the query, by default None.\n    If None, the provider specified in defaults is selected or 'fmp' if there is\n    no default."
             ),
         ] = None,
@@ -323,13 +323,13 @@ class ROUTER_equity_discovery(Container):
         self,
         sort: Annotated[
             Literal["asc", "desc"],
-            GoldenSourceCustomParameter(
+            DataMartCustomParameter(
                 description="Sort order. Possible values: 'asc', 'desc'. Default: 'desc'."
             ),
         ] = "desc",
         provider: Annotated[
             Optional[Literal["yfinance"]],
-            GoldenSourceCustomParameter(
+            DataMartCustomParameter(
                 description="The provider to use for the query, by default None.\n    If None, the provider specified in defaults is selected or 'yfinance' if there is\n    no default."
             ),
         ] = None,
@@ -411,13 +411,13 @@ class ROUTER_equity_discovery(Container):
         self,
         sort: Annotated[
             Literal["asc", "desc"],
-            GoldenSourceCustomParameter(
+            DataMartCustomParameter(
                 description="Sort order. Possible values: 'asc', 'desc'. Default: 'desc'."
             ),
         ] = "desc",
         provider: Annotated[
             Optional[Literal["yfinance"]],
-            GoldenSourceCustomParameter(
+            DataMartCustomParameter(
                 description="The provider to use for the query, by default None.\n    If None, the provider specified in defaults is selected or 'yfinance' if there is\n    no default."
             ),
         ] = None,
@@ -499,13 +499,13 @@ class ROUTER_equity_discovery(Container):
         self,
         sort: Annotated[
             Literal["asc", "desc"],
-            GoldenSourceCustomParameter(
+            DataMartCustomParameter(
                 description="Sort order. Possible values: 'asc', 'desc'. Default: 'desc'."
             ),
         ] = "desc",
         provider: Annotated[
             Optional[Literal["yfinance"]],
-            GoldenSourceCustomParameter(
+            DataMartCustomParameter(
                 description="The provider to use for the query, by default None.\n    If None, the provider specified in defaults is selected or 'yfinance' if there is\n    no default."
             ),
         ] = None,
@@ -587,13 +587,13 @@ class ROUTER_equity_discovery(Container):
         self,
         sort: Annotated[
             Literal["asc", "desc"],
-            GoldenSourceCustomParameter(
+            DataMartCustomParameter(
                 description="Sort order. Possible values: 'asc', 'desc'. Default: 'desc'."
             ),
         ] = "desc",
         provider: Annotated[
             Optional[Literal["yfinance"]],
-            GoldenSourceCustomParameter(
+            DataMartCustomParameter(
                 description="The provider to use for the query, by default None.\n    If None, the provider specified in defaults is selected or 'yfinance' if there is\n    no default."
             ),
         ] = None,
@@ -675,13 +675,13 @@ class ROUTER_equity_discovery(Container):
         self,
         sort: Annotated[
             Literal["asc", "desc"],
-            GoldenSourceCustomParameter(
+            DataMartCustomParameter(
                 description="Sort order. Possible values: 'asc', 'desc'. Default: 'desc'."
             ),
         ] = "desc",
         provider: Annotated[
             Optional[Literal["yfinance"]],
-            GoldenSourceCustomParameter(
+            DataMartCustomParameter(
                 description="The provider to use for the query, by default None.\n    If None, the provider specified in defaults is selected or 'yfinance' if there is\n    no default."
             ),
         ] = None,

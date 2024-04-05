@@ -1,1 +1,1 @@
-"""Standard models for GoldenSource Provider."""
+"""Standard models for DataMart Provider."""

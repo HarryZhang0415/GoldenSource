@@ -8,7 +8,7 @@ from sys import exc_info
 from typing import TYPE_CHECKING, Optional
 
 from datamart_core.app.logs.logging_service import LoggingService
-from datamart_core.app.model.abstract.error import GoldenSourceError
+from datamart_core.app.model.abstract.error import DataMartError
 from datamart_core.app.model.hub.hub_session import HubSession
 from datamart_core.app.model.user_settings import UserSettings
 from datamart_core.app.service.hub_service import HubService
@@ -48,7 +48,7 @@ class Account:
                 # pylint: disable=E1102
                 result = func(self, *args, **kwargs)  # type: ignore[operator]
             except Exception as e:
-                raise GoldenSourceError(e) from e
+                raise DataMartError(e) from e
             finally:
                 user_settings = self._base_app._command_runner.user_settings
                 system_settings = self._base_app._command_runner.system_settings
@@ -79,7 +79,7 @@ class Account:
         if email is None and password is None and pat is None:
             session_file = Path(self._datamart_directory, self.SESSION_FILE)
             if not session_file.exists():
-                raise GoldenSourceError("Session not found.")
+                raise DataMartError("Session not found.")
 
             with open(session_file) as f:
                 session_dict = json.load(f)
@@ -129,7 +129,7 @@ class Account:
             session_file = Path(self._datamart_directory, self.SESSION_FILE)
             with open(session_file, "w") as f:
                 if not hs.session:
-                    raise GoldenSourceError("Not connected to hub.")
+                    raise DataMartError("Not connected to hub.")
 
                 json.dump(hs.session.model_dump(mode="json"), f, indent=4)
 
@@ -210,7 +210,7 @@ class Account:
         """
         hub_session = self._base_app._command_runner.user_settings.profile.hub_session
         if not hub_session:
-            raise GoldenSourceError("Not connected to hub.")
+            raise DataMartError("Not connected to hub.")
 
         hs = HubService(hub_session)
         hs.disconnect()

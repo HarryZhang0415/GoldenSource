@@ -1,4 +1,4 @@
-"""The GoldenSource Standardized Data Model."""
+"""The DataMart Standardized Data Model."""
 
 from typing import Dict
 
@@ -26,10 +26,10 @@ ForceInt = Annotated[int, BeforeValidator(check_int)]
 
 class Data(BaseModel):
     """
-    The GoldenSource Standardized Data Model.
+    The DataMart Standardized Data Model.
 
     The `Data` class is a flexible Pydantic model designed to accommodate various data structures
-    for GoldenSource's data processing pipeline as it's structured to support dynamic field definitions.
+    for DataMart's data processing pipeline as it's structured to support dynamic field definitions.
 
     The model leverages Pydantic's powerful validation features to ensure data integrity while
     providing the flexibility to handle extra fields that are not explicitly defined in the model's
@@ -49,10 +49,10 @@ class Data(BaseModel):
 
     Example:
         # Direct instantiation
-        data_record = Data(name="GoldenSource", value=42)
+        data_record = Data(name="DataMart", value=42)
 
         # Conversion from a dictionary
-        data_dict = {"name": "GoldenSource", "value": 42}
+        data_dict = {"name": "DataMart", "value": 42}
         data_record = Data(**data_dict)
 
     The class is highly extensible and can be subclassed to create more specific models tailored to

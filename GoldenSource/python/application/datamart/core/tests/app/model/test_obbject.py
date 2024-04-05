@@ -4,7 +4,7 @@ from unittest.mock import MagicMock
 
 import pandas as pd
 import pytest
-from datamart_core.app.model.obbject import Chart, OBBject, GoldenSourceError
+from datamart_core.app.model.obbject import Chart, OBBject, DataMartError
 from datamart_core.app.utils import basemodel_to_df
 from datamart_core.provider.abstract.data import Data
 from pandas.testing import assert_frame_equal
@@ -206,9 +206,9 @@ class MockDataFrame(Data):
             ),
         ),
         # Test case 10: Empty results
-        ([], GoldenSourceError("Results not found.")),
-        # Test case 11: Results as None, should raise GoldenSourceError
-        (None, GoldenSourceError("Results not found.")),
+        ([], DataMartError("Results not found.")),
+        # Test case 11: Results as None, should raise DataMartError
+        (None, DataMartError("Results not found.")),
     ],
 )
 def test_to_dataframe(results, expected_df):
@@ -308,9 +308,9 @@ def test_to_df_daylight_savings(results):
             {"0": [0, 2], "1": [1, 3], "2": [2, 0], "3": [3, 1], "4": [4, 6]},
         ),
         # Test case 4: No results
-        ([], GoldenSourceError("Results not found.")),
-        # Test case 5: Results as None, should raise GoldenSourceError
-        (None, GoldenSourceError("Results not found.")),
+        ([], DataMartError("Results not found.")),
+        # Test case 5: Results as None, should raise DataMartError
+        (None, DataMartError("Results not found.")),
         # Test case 6: List of tuples
         (
             [(3, 2), (1, 3), (2, 0), (3, 1), (4, 6)],
@@ -375,7 +375,7 @@ def test_show_chart_no_chart():
     mock_instance: OBBject = OBBject()
 
     # Act and Assert
-    with pytest.raises(GoldenSourceError, match="Chart not found."):
+    with pytest.raises(DataMartError, match="Chart not found."):
         mock_instance.show()
 
 
@@ -386,5 +386,5 @@ def test_show_chart_no_fig():
     mock_instance.chart = Chart()
 
     # Act and Assert
-    with pytest.raises(GoldenSourceError, match="Chart not found."):
+    with pytest.raises(DataMartError, match="Chart not found."):
         mock_instance.show()

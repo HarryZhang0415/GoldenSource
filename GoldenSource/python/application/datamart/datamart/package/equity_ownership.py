@@ -3,7 +3,7 @@
 import datetime
 from typing import List, Literal, Optional, Union
 
-from market_core.app.model.custom_parameter import GoldenSourceCustomParameter
+from market_core.app.model.custom_parameter import DataMartCustomParameter
 from market_core.app.model.obbject import OBBject
 from market_core.app.static.container import Container
 from market_core.app.static.utils.decorators import exception_handler, validate
@@ -29,25 +29,25 @@ class ROUTER_equity_ownership(Container):
         self,
         symbol: Annotated[
             str,
-            GoldenSourceCustomParameter(
+            DataMartCustomParameter(
                 description="Symbol to get data for. A CIK or Symbol can be used."
             ),
         ],
         date: Annotated[
             Union[datetime.date, None, str],
-            GoldenSourceCustomParameter(
+            DataMartCustomParameter(
                 description="A specific date to get data for. The date represents the end of the reporting period. All form 13F-HR filings are based on the calendar year and are reported quarterly. If a date is not supplied, the most recent filing is returned. Submissions beginning 2013-06-30 are supported."
             ),
         ] = None,
         limit: Annotated[
             Optional[int],
-            GoldenSourceCustomParameter(
+            DataMartCustomParameter(
                 description="The number of data entries to return. The number of previous filings to return. The date parameter takes priority over this parameter."
             ),
         ] = 1,
         provider: Annotated[
             Optional[Literal["sec"]],
-            GoldenSourceCustomParameter(
+            DataMartCustomParameter(
                 description="The provider to use for the query, by default None.\n    If None, the provider specified in defaults is selected or 'sec' if there is\n    no default."
             ),
         ] = None,
@@ -151,15 +151,15 @@ class ROUTER_equity_ownership(Container):
     def insider_trading(
         self,
         symbol: Annotated[
-            str, GoldenSourceCustomParameter(description="Symbol to get data for.")
+            str, DataMartCustomParameter(description="Symbol to get data for.")
         ],
         limit: Annotated[
             int,
-            GoldenSourceCustomParameter(description="The number of data entries to return."),
+            DataMartCustomParameter(description="The number of data entries to return."),
         ] = 500,
         provider: Annotated[
             Optional[Literal["fmp", "intrinio"]],
-            GoldenSourceCustomParameter(
+            DataMartCustomParameter(
                 description="The provider to use for the query, by default None.\n    If None, the provider specified in defaults is selected or 'fmp' if there is\n    no default."
             ),
         ] = None,
@@ -293,11 +293,11 @@ class ROUTER_equity_ownership(Container):
     def institutional(
         self,
         symbol: Annotated[
-            str, GoldenSourceCustomParameter(description="Symbol to get data for.")
+            str, DataMartCustomParameter(description="Symbol to get data for.")
         ],
         provider: Annotated[
             Optional[Literal["fmp"]],
-            GoldenSourceCustomParameter(
+            DataMartCustomParameter(
                 description="The provider to use for the query, by default None.\n    If None, the provider specified in defaults is selected or 'fmp' if there is\n    no default."
             ),
         ] = None,
@@ -435,19 +435,19 @@ class ROUTER_equity_ownership(Container):
     def major_holders(
         self,
         symbol: Annotated[
-            str, GoldenSourceCustomParameter(description="Symbol to get data for.")
+            str, DataMartCustomParameter(description="Symbol to get data for.")
         ],
         date: Annotated[
             Union[datetime.date, None, str],
-            GoldenSourceCustomParameter(description="A specific date to get data for."),
+            DataMartCustomParameter(description="A specific date to get data for."),
         ] = None,
         page: Annotated[
             Optional[int],
-            GoldenSourceCustomParameter(description="Page number of the data to fetch."),
+            DataMartCustomParameter(description="Page number of the data to fetch."),
         ] = 0,
         provider: Annotated[
             Optional[Literal["fmp"]],
-            GoldenSourceCustomParameter(
+            DataMartCustomParameter(
                 description="The provider to use for the query, by default None.\n    If None, the provider specified in defaults is selected or 'fmp' if there is\n    no default."
             ),
         ] = None,
@@ -595,13 +595,13 @@ class ROUTER_equity_ownership(Container):
         self,
         symbol: Annotated[
             Union[str, List[str]],
-            GoldenSourceCustomParameter(
+            DataMartCustomParameter(
                 description="Symbol to get data for. Multiple comma separated items allowed for provider(s): yfinance."
             ),
         ],
         provider: Annotated[
             Optional[Literal["fmp", "intrinio", "yfinance"]],
-            GoldenSourceCustomParameter(
+            DataMartCustomParameter(
                 description="The provider to use for the query, by default None.\n    If None, the provider specified in defaults is selected or 'fmp' if there is\n    no default."
             ),
         ] = None,

@@ -1,4 +1,4 @@
-"""GoldenSource filters."""
+"""DataMart filters."""
 
 from typing import Dict, List, Optional
 

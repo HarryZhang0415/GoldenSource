@@ -12,7 +12,7 @@ from datamart_core.app.command_runner import (
     ParametersBuilder,
     StaticCommandRunner,
 )
-from datamart_core.app.model.abstract.warning import GoldenSourceWarning
+from datamart_core.app.model.abstract.warning import DataMartWarning
 from datamart_core.app.model.command_context import CommandContext
 from datamart_core.app.model.system_settings import SystemSettings
 from datamart_core.app.model.user_settings import UserSettings
@@ -239,7 +239,7 @@ def test_parameters_builder_validate_kwargs(mock_func):
         (
             {"inexistent_field": ...},
             ExtraParams,
-            GoldenSourceWarning,
+            DataMartWarning,
         ),
     ],
 )

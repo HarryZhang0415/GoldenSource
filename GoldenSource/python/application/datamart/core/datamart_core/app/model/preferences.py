@@ -1,4 +1,4 @@
-"""Preferences for the GoldenSource platform."""
+"""Preferences for the DataMart platform."""
 
 from pathlib import Path
 from typing import Literal
@@ -7,12 +7,12 @@ from pydantic import BaseModel, ConfigDict, Field, PositiveInt
 
 
 class Preferences(BaseModel):
-    """Preferences for the GoldenSource platform."""
+    """Preferences for the DataMart platform."""
 
-    data_directory: str = str(Path.home() / "GoldenSourceUserData")
-    export_directory: str = str(Path.home() / "GoldenSourceUserData" / "exports")
-    user_styles_directory: str = str(Path.home() / "GoldenSourceUserData" / "styles" / "user")
-    cache_directory: str = str(Path.home() / "GoldenSourceUserData" / "cache")
+    data_directory: str = str(Path.home() / "DataMartUserData")
+    export_directory: str = str(Path.home() / "DataMartUserData" / "exports")
+    user_styles_directory: str = str(Path.home() / "DataMartUserData" / "styles" / "user")
+    cache_directory: str = str(Path.home() / "DataMartUserData" / "cache")
     chart_style: Literal["dark", "light"] = "dark"
     plot_enable_pywry: bool = True
     plot_pywry_width: PositiveInt = 1400

@@ -1,7 +1,7 @@
 """
-GoldenSource-specific deprecation warnings.
+DataMart-specific deprecation warnings.
 
-This implementation was inspired from Pydantic's specific warnings and modified to suit GoldenSource's needs.
+This implementation was inspired from Pydantic's specific warnings and modified to suit DataMart's needs.
 """
 
 from typing import Optional, Tuple
@@ -19,11 +19,11 @@ class DeprecationSummary(str):
         return obj
 
 
-class GoldenSourceDeprecationWarning(DeprecationWarning):
+class DataMartDeprecationWarning(DeprecationWarning):
     """
-    A GoldenSource specific deprecation warning.
+    A DataMart specific deprecation warning.
 
-    This warning is raised when using deprecated functionality in GoldenSource. It provides information on when the
+    This warning is raised when using deprecated functionality in DataMart. It provides information on when the
     deprecation was introduced and the expected version in which the corresponding functionality will be removed.
 
     Attributes
@@ -34,8 +34,8 @@ class GoldenSourceDeprecationWarning(DeprecationWarning):
     """
 
     # The choice to use class variables is based on the potential for extending the class in future developments.
-    # Example: launching Platform V5 and decide to create a subclimagine we areass named GoldenSourceDeprecatedSinceV4,
-    # which inherits from GoldenSourceDeprecationWarning. In this subclass, we would set since=4.X and expected_removal=5.0.
+    # Example: launching Platform V5 and decide to create a subclimagine we areass named DataMartDeprecatedSinceV4,
+    # which inherits from DataMartDeprecationWarning. In this subclass, we would set since=4.X and expected_removal=5.0.
     # It's important for these values to be defined at the class level, rather than just at the instance level,
     # to ensure consistency and clarity in our deprecation warnings across the platform.
 
@@ -55,7 +55,7 @@ class GoldenSourceDeprecationWarning(DeprecationWarning):
         self.since = since or get_major_minor(VERSION)
         self.expected_removal = expected_removal or (self.since[0] + 1, 0)
         self.long_message = (
-            f"{self.message}. Deprecated in GoldenSource Market V{self.since[0]}.{self.since[1]}"
+            f"{self.message}. Deprecated in DataMart Market V{self.since[0]}.{self.since[1]}"
             f" to be removed in V{self.expected_removal[0]}.{self.expected_removal[1]}."
         )
 

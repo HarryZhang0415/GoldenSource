@@ -4,8 +4,8 @@ import datetime
 from typing import List, Literal, Optional, Union
 
 from market_core.app.model.custom_parameter import (
-    GoldenSourceCustomChoices,
-    GoldenSourceCustomParameter,
+    DataMartCustomChoices,
+    DataMartCustomParameter,
 )
 from market_core.app.model.obbject import OBBject
 from market_core.app.static.container import Container
@@ -39,19 +39,19 @@ class ROUTER_economy(Container):
         self,
         start_date: Annotated[
             Union[datetime.date, None, str],
-            GoldenSourceCustomParameter(
+            DataMartCustomParameter(
                 description="Start date of the data, in YYYY-MM-DD format."
             ),
         ] = None,
         end_date: Annotated[
             Union[datetime.date, None, str],
-            GoldenSourceCustomParameter(
+            DataMartCustomParameter(
                 description="End date of the data, in YYYY-MM-DD format."
             ),
         ] = None,
         provider: Annotated[
             Optional[Literal["fmp", "tradingeconomics"]],
-            GoldenSourceCustomParameter(
+            DataMartCustomParameter(
                 description="The provider to use for the query, by default None.\n    If None, the provider specified in defaults is selected or 'fmp' if there is\n    no default."
             ),
         ] = None,
@@ -162,19 +162,19 @@ class ROUTER_economy(Container):
         self,
         start_date: Annotated[
             Union[datetime.date, None, str],
-            GoldenSourceCustomParameter(
+            DataMartCustomParameter(
                 description="Start date of the data, in YYYY-MM-DD format."
             ),
         ] = None,
         end_date: Annotated[
             Union[datetime.date, None, str],
-            GoldenSourceCustomParameter(
+            DataMartCustomParameter(
                 description="End date of the data, in YYYY-MM-DD format."
             ),
         ] = None,
         provider: Annotated[
             Optional[Literal["oecd"]],
-            GoldenSourceCustomParameter(
+            DataMartCustomParameter(
                 description="The provider to use for the query, by default None.\n    If None, the provider specified in defaults is selected or 'oecd' if there is\n    no default."
             ),
         ] = None,
@@ -252,10 +252,10 @@ class ROUTER_economy(Container):
         self,
         country: Annotated[
             Union[str, List[str]],
-            GoldenSourceCustomParameter(
+            DataMartCustomParameter(
                 description="The country to get data. Multiple comma separated items allowed for provider(s): fred."
             ),
-            GoldenSourceCustomChoices(
+            DataMartCustomChoices(
                 choices=[
                     "australia",
                     "austria",
@@ -311,37 +311,37 @@ class ROUTER_economy(Container):
         ],
         units: Annotated[
             Literal["growth_previous", "growth_same", "index_2015"],
-            GoldenSourceCustomParameter(
+            DataMartCustomParameter(
                 description="The unit of measurement for the data.\n    Options:\n    - `growth_previous`: Percent growth from the previous period.\n      If monthly data, this is month-over-month, etc\n    - `growth_same`: Percent growth from the same period in the previous year.\n      If looking at monthly data, this would be year-over-year, etc.\n    - `index_2015`: Rescaled index value, such that the value in 2015 is 100."
             ),
         ] = "growth_same",
         frequency: Annotated[
             Literal["monthly", "quarter", "annual"],
-            GoldenSourceCustomParameter(
+            DataMartCustomParameter(
                 description="The frequency of the data.\n    Options: `monthly`, `quarter`, and `annual`."
             ),
         ] = "monthly",
         harmonized: Annotated[
             bool,
-            GoldenSourceCustomParameter(
+            DataMartCustomParameter(
                 description="Whether you wish to obtain harmonized data."
             ),
         ] = False,
         start_date: Annotated[
             Union[datetime.date, None, str],
-            GoldenSourceCustomParameter(
+            DataMartCustomParameter(
                 description="Start date of the data, in YYYY-MM-DD format."
             ),
         ] = None,
         end_date: Annotated[
             Union[datetime.date, None, str],
-            GoldenSourceCustomParameter(
+            DataMartCustomParameter(
                 description="End date of the data, in YYYY-MM-DD format."
             ),
         ] = None,
         provider: Annotated[
             Optional[Literal["fred"]],
-            GoldenSourceCustomParameter(
+            DataMartCustomParameter(
                 description="The provider to use for the query, by default None.\n    If None, the provider specified in defaults is selected or 'fred' if there is\n    no default."
             ),
         ] = None,
@@ -430,27 +430,27 @@ class ROUTER_economy(Container):
     def fred_regional(
         self,
         symbol: Annotated[
-            str, GoldenSourceCustomParameter(description="Symbol to get data for.")
+            str, DataMartCustomParameter(description="Symbol to get data for.")
         ],
         start_date: Annotated[
             Union[datetime.date, None, str],
-            GoldenSourceCustomParameter(
+            DataMartCustomParameter(
                 description="Start date of the data, in YYYY-MM-DD format."
             ),
         ] = None,
         end_date: Annotated[
             Union[datetime.date, None, str],
-            GoldenSourceCustomParameter(
+            DataMartCustomParameter(
                 description="End date of the data, in YYYY-MM-DD format."
             ),
         ] = None,
         limit: Annotated[
             Optional[int],
-            GoldenSourceCustomParameter(description="The number of data entries to return."),
+            DataMartCustomParameter(description="The number of data entries to return."),
         ] = 100000,
         provider: Annotated[
             Optional[Literal["fred"]],
-            GoldenSourceCustomParameter(
+            DataMartCustomParameter(
                 description="The provider to use for the query, by default None.\n    If None, the provider specified in defaults is selected or 'fred' if there is\n    no default."
             ),
         ] = None,
@@ -585,11 +585,11 @@ class ROUTER_economy(Container):
     def fred_search(
         self,
         query: Annotated[
-            Optional[str], GoldenSourceCustomParameter(description="The search word(s).")
+            Optional[str], DataMartCustomParameter(description="The search word(s).")
         ] = None,
         provider: Annotated[
             Optional[Literal["fred"]],
-            GoldenSourceCustomParameter(
+            DataMartCustomParameter(
                 description="The provider to use for the query, by default None.\n    If None, the provider specified in defaults is selected or 'fred' if there is\n    no default."
             ),
         ] = None,
@@ -713,29 +713,29 @@ class ROUTER_economy(Container):
         self,
         symbol: Annotated[
             Union[str, List[str]],
-            GoldenSourceCustomParameter(
+            DataMartCustomParameter(
                 description="Symbol to get data for. Multiple comma separated items allowed for provider(s): fred."
             ),
         ],
         start_date: Annotated[
             Union[datetime.date, None, str],
-            GoldenSourceCustomParameter(
+            DataMartCustomParameter(
                 description="Start date of the data, in YYYY-MM-DD format."
             ),
         ] = None,
         end_date: Annotated[
             Union[datetime.date, None, str],
-            GoldenSourceCustomParameter(
+            DataMartCustomParameter(
                 description="End date of the data, in YYYY-MM-DD format."
             ),
         ] = None,
         limit: Annotated[
             Optional[int],
-            GoldenSourceCustomParameter(description="The number of data entries to return."),
+            DataMartCustomParameter(description="The number of data entries to return."),
         ] = 100000,
         provider: Annotated[
             Optional[Literal["fred", "intrinio"]],
-            GoldenSourceCustomParameter(
+            DataMartCustomParameter(
                 description="The provider to use for the query, by default None.\n    If None, the provider specified in defaults is selected or 'fred' if there is\n    no default."
             ),
         ] = None,
@@ -867,19 +867,19 @@ class ROUTER_economy(Container):
         self,
         start_date: Annotated[
             Union[datetime.date, None, str],
-            GoldenSourceCustomParameter(
+            DataMartCustomParameter(
                 description="Start date of the data, in YYYY-MM-DD format."
             ),
         ] = None,
         end_date: Annotated[
             Union[datetime.date, None, str],
-            GoldenSourceCustomParameter(
+            DataMartCustomParameter(
                 description="End date of the data, in YYYY-MM-DD format."
             ),
         ] = None,
         provider: Annotated[
             Optional[Literal["oecd"]],
-            GoldenSourceCustomParameter(
+            DataMartCustomParameter(
                 description="The provider to use for the query, by default None.\n    If None, the provider specified in defaults is selected or 'oecd' if there is\n    no default."
             ),
         ] = None,
@@ -964,25 +964,25 @@ class ROUTER_economy(Container):
         self,
         start_date: Annotated[
             Union[datetime.date, None, str],
-            GoldenSourceCustomParameter(
+            DataMartCustomParameter(
                 description="Start date of the data, in YYYY-MM-DD format."
             ),
         ] = None,
         end_date: Annotated[
             Union[datetime.date, None, str],
-            GoldenSourceCustomParameter(
+            DataMartCustomParameter(
                 description="End date of the data, in YYYY-MM-DD format."
             ),
         ] = None,
         adjusted: Annotated[
             Optional[bool],
-            GoldenSourceCustomParameter(
+            DataMartCustomParameter(
                 description="Whether to return seasonally adjusted data."
             ),
         ] = True,
         provider: Annotated[
             Optional[Literal["federal_reserve"]],
-            GoldenSourceCustomParameter(
+            DataMartCustomParameter(
                 description="The provider to use for the query, by default None.\n    If None, the provider specified in defaults is selected or 'federal_reserve' if there is\n    no default."
             ),
         ] = None,
@@ -1068,7 +1068,7 @@ class ROUTER_economy(Container):
         self,
         provider: Annotated[
             Optional[Literal["fmp"]],
-            GoldenSourceCustomParameter(
+            DataMartCustomParameter(
                 description="The provider to use for the query, by default None.\n    If None, the provider specified in defaults is selected or 'fmp' if there is\n    no default."
             ),
         ] = None,
@@ -1135,19 +1135,19 @@ class ROUTER_economy(Container):
         self,
         start_date: Annotated[
             Union[datetime.date, None, str],
-            GoldenSourceCustomParameter(
+            DataMartCustomParameter(
                 description="Start date of the data, in YYYY-MM-DD format."
             ),
         ] = None,
         end_date: Annotated[
             Union[datetime.date, None, str],
-            GoldenSourceCustomParameter(
+            DataMartCustomParameter(
                 description="End date of the data, in YYYY-MM-DD format."
             ),
         ] = None,
         provider: Annotated[
             Optional[Literal["oecd"]],
-            GoldenSourceCustomParameter(
+            DataMartCustomParameter(
                 description="The provider to use for the query, by default None.\n    If None, the provider specified in defaults is selected or 'oecd' if there is\n    no default."
             ),
         ] = None,
@@ -1229,19 +1229,19 @@ class ROUTER_economy(Container):
         self,
         start_date: Annotated[
             Union[datetime.date, None, str],
-            GoldenSourceCustomParameter(
+            DataMartCustomParameter(
                 description="Start date of the data, in YYYY-MM-DD format."
             ),
         ] = None,
         end_date: Annotated[
             Union[datetime.date, None, str],
-            GoldenSourceCustomParameter(
+            DataMartCustomParameter(
                 description="End date of the data, in YYYY-MM-DD format."
             ),
         ] = None,
         provider: Annotated[
             Optional[Literal["oecd"]],
-            GoldenSourceCustomParameter(
+            DataMartCustomParameter(
                 description="The provider to use for the query, by default None.\n    If None, the provider specified in defaults is selected or 'oecd' if there is\n    no default."
             ),
         ] = None,

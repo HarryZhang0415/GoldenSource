@@ -15,7 +15,7 @@ from pydantic.functional_serializers import PlainSerializer
 from typing_extensions import Annotated
 
 from datamart_core.app.extension_loader import ExtensionLoader
-from datamart_core.app.model.abstract.warning import GoldenSourceWarning
+from datamart_core.app.model.abstract.warning import DataMartWarning
 from datamart_core.app.provider_interface import ProviderInterface
 from datamart_core.env import Env
 
@@ -72,7 +72,7 @@ class CredentialsLoader:
                     raise LoadingError(msg + f"\033[91m{e}\033[0m") from e
                 warnings.warn(
                     message=msg,
-                    category=GoldenSourceWarning,
+                    category=DataMartWarning,
                 )
 
     def from_providers(self) -> None:

@@ -13,7 +13,7 @@ with contextlib.suppress(ImportError):
     import numpy as np
 
 with contextlib.suppress(ImportError):
-    from datamart_charting.core.datamart_figure import GoldenSourceFigure
+    from datamart_charting.core.datamart_figure import DataMartFigure
 
 
 # pylint: disable=inconsistent-return-statements
@@ -76,7 +76,7 @@ def test_to_chart(market):
 
     res = market.equity.price.historical("AAPL", provider="fmp")
     res.charting.to_chart(render=False)
-    assert isinstance(res.chart.fig, GoldenSourceFigure)
+    assert isinstance(res.chart.fig, DataMartFigure)
 
 
 @pytest.mark.skipif(
@@ -87,5 +87,5 @@ def test_show(market):
     """Test obbject to chart."""
 
     stocks_data = market.equity.price.historical("AAPL", provider="fmp", chart=True)
-    assert isinstance(stocks_data.chart.fig, GoldenSourceFigure)
+    assert isinstance(stocks_data.chart.fig, DataMartFigure)
     assert stocks_data.chart.fig.show() is None

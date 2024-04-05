@@ -6,7 +6,7 @@ from functools import lru_cache
 from typing import Dict
 
 from datamart_core.app.extension_loader import ExtensionLoader
-from datamart_core.app.model.abstract.warning import GoldenSourceWarning
+from datamart_core.app.model.abstract.warning import DataMartWarning
 from datamart_core.env import Env
 from datamart_core.provider.abstract.provider import Provider
 
@@ -51,6 +51,6 @@ class RegistryLoader:
                     raise LoadingError(msg + f"\033[91m{e}\033[0m") from e
                 warnings.warn(
                     message=msg,
-                    category=GoldenSourceWarning,
+                    category=DataMartWarning,
                 )
         return registry

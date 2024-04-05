@@ -2,7 +2,7 @@
 
 from typing import List, Literal, Optional, Union
 
-from market_core.app.model.custom_parameter import GoldenSourceCustomParameter
+from market_core.app.model.custom_parameter import DataMartCustomParameter
 from market_core.app.model.obbject import OBBject
 from market_core.app.static.container import Container
 from market_core.app.static.utils.decorators import exception_handler, validate
@@ -78,7 +78,7 @@ class ROUTER_equity(Container):
         self,
         provider: Annotated[
             Optional[Literal["fmp", "intrinio", "polygon"]],
-            GoldenSourceCustomParameter(
+            DataMartCustomParameter(
                 description="The provider to use for the query, by default None.\n    If None, the provider specified in defaults is selected or 'fmp' if there is\n    no default."
             ),
         ] = None,
@@ -253,13 +253,13 @@ class ROUTER_equity(Container):
         self,
         symbol: Annotated[
             Union[str, List[str]],
-            GoldenSourceCustomParameter(
+            DataMartCustomParameter(
                 description="Symbol to get data for. Multiple comma separated items allowed for provider(s): fmp, intrinio, yfinance."
             ),
         ],
         provider: Annotated[
             Optional[Literal["fmp", "intrinio", "yfinance"]],
-            GoldenSourceCustomParameter(
+            DataMartCustomParameter(
                 description="The provider to use for the query, by default None.\n    If None, the provider specified in defaults is selected or 'fmp' if there is\n    no default."
             ),
         ] = None,
@@ -448,7 +448,7 @@ class ROUTER_equity(Container):
         self,
         provider: Annotated[
             Optional[Literal["fmp"]],
-            GoldenSourceCustomParameter(
+            DataMartCustomParameter(
                 description="The provider to use for the query, by default None.\n    If None, the provider specified in defaults is selected or 'fmp' if there is\n    no default."
             ),
         ] = None,
@@ -568,18 +568,18 @@ class ROUTER_equity(Container):
     @validate
     def search(
         self,
-        query: Annotated[str, GoldenSourceCustomParameter(description="Search query.")] = "",
+        query: Annotated[str, DataMartCustomParameter(description="Search query.")] = "",
         is_symbol: Annotated[
             bool,
-            GoldenSourceCustomParameter(description="Whether to search by ticker symbol."),
+            DataMartCustomParameter(description="Whether to search by ticker symbol."),
         ] = False,
         use_cache: Annotated[
             Optional[bool],
-            GoldenSourceCustomParameter(description="Whether to use the cache or not."),
+            DataMartCustomParameter(description="Whether to use the cache or not."),
         ] = True,
         provider: Annotated[
             Optional[Literal["intrinio", "sec"]],
-            GoldenSourceCustomParameter(
+            DataMartCustomParameter(
                 description="The provider to use for the query, by default None.\n    If None, the provider specified in defaults is selected or 'intrinio' if there is\n    no default."
             ),
         ] = None,

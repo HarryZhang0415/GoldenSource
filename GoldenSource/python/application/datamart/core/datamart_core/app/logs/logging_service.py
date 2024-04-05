@@ -11,7 +11,7 @@ from datamart_core.app.logs.formatters.formatter_with_exceptions import (
 )
 from datamart_core.app.logs.handlers_manager import HandlersManager
 from datamart_core.app.logs.models.logging_settings import LoggingSettings
-from datamart_core.app.model.abstract.error import GoldenSourceError
+from datamart_core.app.model.abstract.error import DataMartError
 from datamart_core.app.model.abstract.singleton import SingletonMeta
 from datamart_core.app.model.system_settings import SystemSettings
 from datamart_core.app.model.user_settings import UserSettings
@@ -230,7 +230,7 @@ class LoggingService(metaclass=SingletonMeta):
 
             # Get execution info
             datamart_error = cast(
-                Optional[GoldenSourceError], exec_info[1] if exec_info else None
+                Optional[DataMartError], exec_info[1] if exec_info else None
             )
 
             # Construct message

@@ -22,7 +22,7 @@ def get_app_id(contextual_user_data_directory: str) -> str:
         if e.errno == 30:
             warnings.warn("Please move the application into a writable location.")
             warnings.warn(
-                "Note for macOS users: copy `GoldenSource Terminal` folder outside the DMG."
+                "Note for macOS users: copy `DataMart Terminal` folder outside the DMG."
             )
         raise e
     except Exception as e:

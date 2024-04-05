@@ -1,4 +1,4 @@
-"""GoldenSource Platform."""
+"""DataMart Platform."""
 
 # flake8: noqa
 

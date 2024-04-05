@@ -1,8 +1,8 @@
 from typing import Optional, Union
 
 
-class GoldenSourceError(Exception):
-    """GoldenSource Error."""
+class DataMartError(Exception):
+    """DataMart Error."""
 
     def __init__(self, original: Optional[Union[str, Exception]] = None):
         self.original = original

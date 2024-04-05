@@ -1,4 +1,4 @@
-"""REST API for the GoldenSource Market."""
+"""REST API for the DataMart Market."""
 
 import logging
 from contextlib import asynccontextmanager
@@ -10,7 +10,7 @@ from datamart_core.api.app_loader import AppLoader
 from datamart_core.api.router.commands import router as router_commands
 from datamart_core.api.router.coverage import router as router_coverage
 from datamart_core.api.router.system import router as router_system
-from datamart_core.app.model.abstract.error import GoldenSourceError
+from datamart_core.app.model.abstract.error import DataMartError
 from datamart_core.app.service.auth_service import AuthService
 from datamart_core.app.service.system_service import SystemService
 from datamart_core.env import Env
@@ -28,7 +28,7 @@ async def lifespan(_: FastAPI):
   /$$$$$$            /$$       /$$                          
  /$$__  $$          | $$      | $$                          
 | $$  \__/  /$$$$$$ | $$  /$$$$$$$  /$$$$$$  /$$$$$$$       
-| $$ /$$$$ /$$__  $$| $$ /$$__  $$ /$$__  $$| $$__  $$      GoldenSource Market v{system.version}
+| $$ /$$$$ /$$__  $$| $$ /$$__  $$ /$$__  $$| $$__  $$      GoldenSource DataMart v{system.version}
 | $$|_  $$| $$  \ $$| $$| $$  | $$| $$$$$$$$| $$  \ $$      Authentication: {auth}
 | $$  \ $$| $$  | $$| $$| $$  | $$| $$_____/| $$  | $$      
 |  $$$$$$/|  $$$$$$/| $$|  $$$$$$$|  $$$$$$$| $$  | $$      
@@ -104,9 +104,9 @@ async def api_exception_handler(_: Request, exc: Exception):
     )
 
 
-@app.exception_handler(GoldenSourceError)
-async def datamart_exception_handler(_: Request, exc: GoldenSourceError):
-    """Exception handler for GoldenSource errors."""
+@app.exception_handler(DataMartError)
+async def datamart_exception_handler(_: Request, exc: DataMartError):
+    """Exception handler for DataMart errors."""
     if Env().DEBUG_MODE:
         raise exc
     logger.error(exc.original)

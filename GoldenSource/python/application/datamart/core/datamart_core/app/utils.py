@@ -1,4 +1,4 @@
-"""Utility functions for the GoldenSource Core app."""
+"""Utility functions for the DataMart Core app."""
 
 import ast
 import json
@@ -9,7 +9,7 @@ import numpy as np
 import pandas as pd
 from pydantic import ValidationError
 
-from datamart_core.app.model.abstract.error import GoldenSourceError
+from datamart_core.app.model.abstract.error import DataMartError
 from datamart_core.app.model.preferences import Preferences
 from datamart_core.app.model.system_settings import SystemSettings
 from datamart_core.provider.abstract.data import Data
@@ -167,5 +167,5 @@ def check_single_item(
 ) -> Optional[str]:
     """Check that string contains a single item."""
     if value and ("," in value or ";" in value):
-        raise GoldenSourceError(message if message else "multiple items not allowed")
+        raise DataMartError(message if message else "multiple items not allowed")
     return value

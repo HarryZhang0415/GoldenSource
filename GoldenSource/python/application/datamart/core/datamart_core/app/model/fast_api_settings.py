@@ -21,7 +21,7 @@ class Servers(BaseModel):
     model_config = ConfigDict(frozen=True)
 
     url: str = "http://localhost:8000"
-    description: str = "Local GoldenSource development server"
+    description: str = "Local DataMart development server"
 
 
 class FastAPISettings(BaseModel):
@@ -30,10 +30,10 @@ class FastAPISettings(BaseModel):
     model_config = ConfigDict(frozen=True)
 
     version: str = "1"
-    title: str = "GoldenSource Market API"
-    description: str = "This is the GoldenSource Market API."
+    title: str = "DataMart Market API"
+    description: str = "This is the DataMart Market API."
     terms_of_service: str = "http://example.com/terms/"
-    contact_name: str = "GoldenSource Team"
+    contact_name: str = "DataMart Team"
     contact_url: str = ""
     contact_email: str = ""
     license_name: str = "MIT"

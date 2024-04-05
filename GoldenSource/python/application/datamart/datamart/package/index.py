@@ -4,8 +4,8 @@ import datetime
 from typing import List, Literal, Optional, Union
 from warnings import simplefilter, warn
 
-from market_core.app.deprecation import GoldenSourceDeprecationWarning
-from market_core.app.model.custom_parameter import GoldenSourceCustomParameter
+from market_core.app.deprecation import DataMartDeprecationWarning
+from market_core.app.model.custom_parameter import DataMartCustomParameter
 from market_core.app.model.obbject import OBBject
 from market_core.app.static.container import Container
 from market_core.app.static.utils.decorators import exception_handler, validate
@@ -30,7 +30,7 @@ class ROUTER_index(Container):
         self,
         provider: Annotated[
             Optional[Literal["fmp", "yfinance"]],
-            GoldenSourceCustomParameter(
+            DataMartCustomParameter(
                 description="The provider to use for the query, by default None.\n    If None, the provider specified in defaults is selected or 'fmp' if there is\n    no default."
             ),
         ] = None,
@@ -70,7 +70,7 @@ class ROUTER_index(Container):
         exchange_short_name : Optional[str]
             Short name of the stock exchange where the index is listed. (provider: fmp)
         code : Optional[str]
-            ID code for keying the index in the GoldenSource Terminal. (provider: yfinance)
+            ID code for keying the index in the DataMart Terminal. (provider: yfinance)
         symbol : Optional[str]
             Symbol for the index. (provider: yfinance)
 
@@ -101,11 +101,11 @@ class ROUTER_index(Container):
     def constituents(
         self,
         symbol: Annotated[
-            str, GoldenSourceCustomParameter(description="Symbol to get data for.")
+            str, DataMartCustomParameter(description="Symbol to get data for.")
         ],
         provider: Annotated[
             Optional[Literal["fmp"]],
-            GoldenSourceCustomParameter(
+            DataMartCustomParameter(
                 description="The provider to use for the query, by default None.\n    If None, the provider specified in defaults is selected or 'fmp' if there is\n    no default."
             ),
         ] = None,
@@ -181,36 +181,36 @@ class ROUTER_index(Container):
     @exception_handler
     @validate
     @deprecated(
-        "This endpoint is deprecated; use `/index/price/historical` instead. Deprecated in GoldenSource Platform V4.1 to be removed in V4.3.",
-        category=GoldenSourceDeprecationWarning,
+        "This endpoint is deprecated; use `/index/price/historical` instead. Deprecated in DataMart Platform V4.1 to be removed in V4.3.",
+        category=DataMartDeprecationWarning,
     )
     def market(
         self,
         symbol: Annotated[
             Union[str, List[str]],
-            GoldenSourceCustomParameter(
+            DataMartCustomParameter(
                 description="Symbol to get data for. Multiple comma separated items allowed for provider(s): fmp, intrinio, polygon, yfinance."
             ),
         ],
         start_date: Annotated[
             Union[datetime.date, None, str],
-            GoldenSourceCustomParameter(
+            DataMartCustomParameter(
                 description="Start date of the data, in YYYY-MM-DD format."
             ),
         ] = None,
         end_date: Annotated[
             Union[datetime.date, None, str],
-            GoldenSourceCustomParameter(
+            DataMartCustomParameter(
                 description="End date of the data, in YYYY-MM-DD format."
             ),
         ] = None,
         interval: Annotated[
             Optional[str],
-            GoldenSourceCustomParameter(description="Time interval of the data to return."),
+            DataMartCustomParameter(description="Time interval of the data to return."),
         ] = "1d",
         provider: Annotated[
             Optional[Literal["fmp", "intrinio", "polygon", "yfinance"]],
-            GoldenSourceCustomParameter(
+            DataMartCustomParameter(
                 description="The provider to use for the query, by default None.\n    If None, the provider specified in defaults is selected or 'fmp' if there is\n    no default."
             ),
         ] = None,
@@ -282,7 +282,7 @@ class ROUTER_index(Container):
 
         simplefilter("always", DeprecationWarning)
         warn(
-            "This endpoint is deprecated; use `/index/price/historical` instead. Deprecated in GoldenSource Platform V4.1 to be removed in V4.3.",
+            "This endpoint is deprecated; use `/index/price/historical` instead. Deprecated in DataMart Platform V4.1 to be removed in V4.3.",
             category=DeprecationWarning,
             stacklevel=2,
         )

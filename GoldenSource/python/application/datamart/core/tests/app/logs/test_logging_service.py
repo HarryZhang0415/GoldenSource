@@ -4,7 +4,7 @@ from unittest.mock import MagicMock, Mock, patch
 
 import pytest
 from datamart_core.app.logs.logging_service import LoggingService
-from datamart_core.app.model.abstract.error import GoldenSourceError
+from datamart_core.app.model.abstract.error import DataMartError
 from pydantic import BaseModel
 
 # ruff: noqa: S106
@@ -104,7 +104,7 @@ def test_log_startup(logging_service):
         logging_service._system_settings = "your_system_settings"
 
         logging_service._log_startup(
-            route="test_route", custom_headers={"X-GoldenSource-Test": "test"}
+            route="test_route", custom_headers={"X-DataMart-Test": "test"}
         )
 
         expected_log_data = {
@@ -115,7 +115,7 @@ def test_log_startup(logging_service):
                 "password": "defined",  # pragma: allowlist secret
             },
             "SYSTEM": "your_system_settings",
-            "custom_headers": {"X-GoldenSource-Test": "test"},
+            "custom_headers": {"X-DataMart-Test": "test"},
         }
         mock_info.assert_called_once_with(
             "STARTUP: %s ",
@@ -142,8 +142,8 @@ def test_log_startup(logging_service):
             "mock_route",
             "mock_func",
             {},
-            (GoldenSourceError, GoldenSourceError("mock_error")),
-            {"X-GoldenSource-Test": "test"},
+            (DataMartError, DataMartError("mock_error")),
+            {"X-DataMart-Test": "test"},
         ),
         (
             "mock_settings",
@@ -152,7 +152,7 @@ def test_log_startup(logging_service):
             "mock_func",
             {},
             None,
-            {"X-GoldenSource-Test1": "test1", "X-GoldenSource-Test2": "test2"},
+            {"X-DataMart-Test1": "test1", "X-DataMart-Test2": "test2"},
         ),
     ],
 )
