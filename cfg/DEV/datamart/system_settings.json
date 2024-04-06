@@ -1,0 +1,37 @@
+{
+    "logging_sub_app": "python",
+    "log_collect": true,
+    "api_settings": {
+        "version": "1",
+        "title": "DataMart Platform API",
+        "description": "This is the DataMart Platform API.",
+        "terms_of_service": "http://example.com/terms/",
+        "contact_name": "DataMart Team",
+        "contact_url": "https://datamart.co",
+        "contact_email": "hello@datamart.co",
+        "license_name": "MIT",
+        "license_url": "https://github.com/DataMart-finance/DataMartTerminal/blob/develop/LICENSE",
+        "servers": [
+            {
+                "url": "http://localhost:8000",
+                "description": "Local DataMart development server"
+            }
+        ],
+        "cors": {
+            "allow_origins": [
+                "*"
+            ],
+            "allow_methods": [
+                "*"
+            ],
+            "allow_headers": [
+                "*"
+            ]
+        },
+        "custom_headers": null,
+        "prefix": "/api/v1"
+    },
+    "debug_mode": false,
+    "test_mode": false,
+    "headless": false
+}
