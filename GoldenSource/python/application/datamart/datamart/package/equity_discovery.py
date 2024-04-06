@@ -1,14 +1,14 @@
 ### THIS FILE IS AUTO-GENERATED. DO NOT EDIT. ###
 
+from datamart_core.app.static.container import Container
+from datamart_core.app.model.obbject import OBBject
+from datamart_core.app.model.custom_parameter import DataMartCustomParameter
 import datetime
-from typing import Literal, Optional, Union
-
-from market_core.app.model.custom_parameter import DataMartCustomParameter
-from market_core.app.model.obbject import OBBject
-from market_core.app.static.container import Container
-from market_core.app.static.utils.decorators import exception_handler, validate
-from market_core.app.static.utils.filters import filter_inputs
+from typing import Union, Optional, Literal
 from typing_extensions import Annotated
+from datamart_core.app.static.utils.decorators import exception_handler, validate
+
+from datamart_core.app.static.utils.filters import filter_inputs
 
 
 class ROUTER_equity_discovery(Container):
@@ -226,7 +226,9 @@ class ROUTER_equity_discovery(Container):
         ] = None,
         limit: Annotated[
             int,
-            DataMartCustomParameter(description="The number of data entries to return."),
+            DataMartCustomParameter(
+                description="The number of data entries to return."
+            ),
         ] = 100,
         provider: Annotated[
             Optional[Literal["fmp"]],

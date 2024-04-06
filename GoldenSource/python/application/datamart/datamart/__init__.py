@@ -5,12 +5,12 @@
 from pathlib import Path
 from typing import List, Optional, Union
 
-from market_core.app.static.app_factory import (
+from datamart_core.app.static.app_factory import (
     BaseApp as _BaseApp,
     create_app as _create_app,
 )
-from market_core.app.static.package_builder import PackageBuilder as _PackageBuilder
-from market_core.app.static.reference_loader import ReferenceLoader as _ReferenceLoader
+from datamart_core.app.static.package_builder import PackageBuilder as _PackageBuilder
+from datamart_core.app.static.reference_loader import ReferenceLoader as _ReferenceLoader
 
 _this_dir = Path(__file__).parent.resolve()
 

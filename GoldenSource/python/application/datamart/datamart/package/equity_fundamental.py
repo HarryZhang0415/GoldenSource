@@ -1,17 +1,18 @@
 ### THIS FILE IS AUTO-GENERATED. DO NOT EDIT. ###
 
+from datamart_core.app.static.container import Container
+from datamart_core.app.model.obbject import OBBject
+from datamart_core.app.model.custom_parameter import DataMartCustomParameter
 import datetime
-from typing import List, Literal, Optional, Union
-from warnings import simplefilter, warn
-
+from typing import List, Union, Optional, Literal
 from annotated_types import Ge
-from market_core.app.deprecation import DataMartDeprecationWarning
-from market_core.app.model.custom_parameter import DataMartCustomParameter
-from market_core.app.model.obbject import OBBject
-from market_core.app.static.container import Container
-from market_core.app.static.utils.decorators import exception_handler, validate
-from market_core.app.static.utils.filters import filter_inputs
+from warnings import warn, simplefilter
 from typing_extensions import Annotated, deprecated
+from datamart_core.app.static.utils.decorators import exception_handler, validate
+
+from datamart_core.app.static.utils.filters import filter_inputs
+
+from datamart_core.app.deprecation import DataMartDeprecationWarning
 
 
 class ROUTER_equity_fundamental(Container):
@@ -54,11 +55,14 @@ class ROUTER_equity_fundamental(Container):
             str, DataMartCustomParameter(description="Symbol to get data for.")
         ],
         period: Annotated[
-            str, DataMartCustomParameter(description="Time period of the data to return.")
+            str,
+            DataMartCustomParameter(description="Time period of the data to return."),
         ] = "annual",
         limit: Annotated[
             Optional[Annotated[int, Ge(ge=0)]],
-            DataMartCustomParameter(description="The number of data entries to return."),
+            DataMartCustomParameter(
+                description="The number of data entries to return."
+            ),
         ] = 5,
         provider: Annotated[
             Optional[Literal["fmp", "intrinio", "polygon", "yfinance"]],
@@ -417,7 +421,9 @@ class ROUTER_equity_fundamental(Container):
         ],
         limit: Annotated[
             int,
-            DataMartCustomParameter(description="The number of data entries to return."),
+            DataMartCustomParameter(
+                description="The number of data entries to return."
+            ),
         ] = 10,
         provider: Annotated[
             Optional[Literal["fmp"]],
@@ -574,11 +580,14 @@ class ROUTER_equity_fundamental(Container):
             str, DataMartCustomParameter(description="Symbol to get data for.")
         ],
         period: Annotated[
-            str, DataMartCustomParameter(description="Time period of the data to return.")
+            str,
+            DataMartCustomParameter(description="Time period of the data to return."),
         ] = "annual",
         limit: Annotated[
             Optional[Annotated[int, Ge(ge=0)]],
-            DataMartCustomParameter(description="The number of data entries to return."),
+            DataMartCustomParameter(
+                description="The number of data entries to return."
+            ),
         ] = 5,
         provider: Annotated[
             Optional[Literal["fmp", "intrinio", "polygon", "yfinance"]],
@@ -845,7 +854,9 @@ class ROUTER_equity_fundamental(Container):
         ],
         limit: Annotated[
             int,
-            DataMartCustomParameter(description="The number of data entries to return."),
+            DataMartCustomParameter(
+                description="The number of data entries to return."
+            ),
         ] = 10,
         provider: Annotated[
             Optional[Literal["fmp"]],
@@ -1171,7 +1182,8 @@ class ROUTER_equity_fundamental(Container):
     def filings(
         self,
         symbol: Annotated[
-            Optional[str], DataMartCustomParameter(description="Symbol to get data for.")
+            Optional[str],
+            DataMartCustomParameter(description="Symbol to get data for."),
         ] = None,
         form_type: Annotated[
             Optional[str],
@@ -1181,7 +1193,9 @@ class ROUTER_equity_fundamental(Container):
         ] = None,
         limit: Annotated[
             int,
-            DataMartCustomParameter(description="The number of data entries to return."),
+            DataMartCustomParameter(
+                description="The number of data entries to return."
+            ),
         ] = 100,
         provider: Annotated[
             Optional[Literal["fmp", "intrinio", "sec"]],
@@ -1352,7 +1366,9 @@ class ROUTER_equity_fundamental(Container):
         ] = "yearly",
         limit: Annotated[
             Optional[int],
-            DataMartCustomParameter(description="The number of data entries to return."),
+            DataMartCustomParameter(
+                description="The number of data entries to return."
+            ),
         ] = 1000,
         tag_type: Annotated[
             Optional[str],
@@ -1624,11 +1640,14 @@ class ROUTER_equity_fundamental(Container):
             str, DataMartCustomParameter(description="Symbol to get data for.")
         ],
         period: Annotated[
-            str, DataMartCustomParameter(description="Time period of the data to return.")
+            str,
+            DataMartCustomParameter(description="Time period of the data to return."),
         ] = "annual",
         limit: Annotated[
             Optional[Annotated[int, Ge(ge=0)]],
-            DataMartCustomParameter(description="The number of data entries to return."),
+            DataMartCustomParameter(
+                description="The number of data entries to return."
+            ),
         ] = 5,
         provider: Annotated[
             Optional[Literal["fmp", "intrinio", "polygon", "yfinance"]],
@@ -1989,7 +2008,9 @@ class ROUTER_equity_fundamental(Container):
         ],
         limit: Annotated[
             int,
-            DataMartCustomParameter(description="The number of data entries to return."),
+            DataMartCustomParameter(
+                description="The number of data entries to return."
+            ),
         ] = 10,
         period: Annotated[
             Literal["annual", "quarter"],
@@ -2409,7 +2430,9 @@ class ROUTER_equity_fundamental(Container):
         ] = "annual",
         limit: Annotated[
             Optional[int],
-            DataMartCustomParameter(description="The number of data entries to return."),
+            DataMartCustomParameter(
+                description="The number of data entries to return."
+            ),
         ] = 100,
         provider: Annotated[
             Optional[Literal["fmp", "intrinio", "yfinance"]],
@@ -2909,7 +2932,7 @@ class ROUTER_equity_fundamental(Container):
     @exception_handler
     @validate
     @deprecated(
-        "This endpoint is deprecated; use `/equity/profile` instead. Deprecated in DataMart Platform V4.1 to be removed in V4.3.",
+        "This endpoint is deprecated; use `/equity/profile` instead. Deprecated in DataMart Market V4.1 to be removed in V4.3.",
         category=DataMartDeprecationWarning,
     )
     def overview(
@@ -3033,7 +3056,7 @@ class ROUTER_equity_fundamental(Container):
 
         simplefilter("always", DeprecationWarning)
         warn(
-            "This endpoint is deprecated; use `/equity/profile` instead. Deprecated in DataMart Platform V4.1 to be removed in V4.3.",
+            "This endpoint is deprecated; use `/equity/profile` instead. Deprecated in DataMart Market V4.1 to be removed in V4.3.",
             category=DeprecationWarning,
             stacklevel=2,
         )
@@ -3063,11 +3086,14 @@ class ROUTER_equity_fundamental(Container):
             str, DataMartCustomParameter(description="Symbol to get data for.")
         ],
         period: Annotated[
-            str, DataMartCustomParameter(description="Time period of the data to return.")
+            str,
+            DataMartCustomParameter(description="Time period of the data to return."),
         ] = "annual",
         limit: Annotated[
             int,
-            DataMartCustomParameter(description="The number of data entries to return."),
+            DataMartCustomParameter(
+                description="The number of data entries to return."
+            ),
         ] = 12,
         provider: Annotated[
             Optional[Literal["fmp", "intrinio"]],
@@ -3263,7 +3289,8 @@ class ROUTER_equity_fundamental(Container):
             str, DataMartCustomParameter(description="Symbol to get data for.")
         ],
         period: Annotated[
-            str, DataMartCustomParameter(description="Time period of the data to return.")
+            str,
+            DataMartCustomParameter(description="Time period of the data to return."),
         ] = "annual",
         statement_type: Annotated[
             str,
@@ -3550,7 +3577,9 @@ class ROUTER_equity_fundamental(Container):
         ],
         limit: Annotated[
             Optional[int],
-            DataMartCustomParameter(description="The number of data entries to return."),
+            DataMartCustomParameter(
+                description="The number of data entries to return."
+            ),
         ] = 1000,
         provider: Annotated[
             Optional[Literal["intrinio"]],
@@ -3725,7 +3754,9 @@ class ROUTER_equity_fundamental(Container):
         ],
         year: Annotated[
             int,
-            DataMartCustomParameter(description="Year of the earnings call transcript."),
+            DataMartCustomParameter(
+                description="Year of the earnings call transcript."
+            ),
         ],
         provider: Annotated[
             Optional[Literal["fmp"]],

@@ -5,7 +5,7 @@
             "message": null
         },
         "description": "Get historical price data for cryptocurrency pair(s) within a provider.",
-        "examples": "\nExamples\n--------\n\n```python\nfrom datamart import market\nobb.crypto.price.historical(symbol='BTCUSD', provider='fmp')\nobb.crypto.price.historical(symbol='BTCUSD', start_date='2024-01-01', end_date='2024-01-31', provider='fmp')\nobb.crypto.price.historical(symbol='BTCUSD,ETHUSD', start_date='2024-01-01', end_date='2024-01-31', provider='polygon')\n# Get monthly historical prices from Yahoo Finance for Ethereum.\nobb.crypto.price.historical(symbol='ETH-USD', interval=1m, start_date='2024-01-01', end_date='2024-12-31', provider='yfinance')\n```\n\n",
+        "examples": "\nExamples\n--------\n\n```python\nfrom datamart import market\nmarket.crypto.price.historical(symbol='BTCUSD', provider='fmp')\nmarket.crypto.price.historical(symbol='BTCUSD', start_date='2024-01-01', end_date='2024-01-31', provider='fmp')\nmarket.crypto.price.historical(symbol='BTCUSD,ETHUSD', start_date='2024-01-01', end_date='2024-01-31', provider='polygon')\n# Get monthly historical prices from Yahoo Finance for Ethereum.\nmarket.crypto.price.historical(symbol='ETH-USD', interval=1m, start_date='2024-01-01', end_date='2024-12-31', provider='yfinance')\n```\n\n",
         "parameters": {
             "standard": [
                 {
@@ -234,7 +234,7 @@
             "message": null
         },
         "description": "Search available cryptocurrency pairs within a provider.",
-        "examples": "\nExamples\n--------\n\n```python\nfrom datamart import market\nmarket.crypto.search(provider='fmp')\nobb.crypto.search(query='BTCUSD', provider='fmp')\n```\n\n",
+        "examples": "\nExamples\n--------\n\n```python\nfrom datamart import market\nmarket.crypto.search(provider='fmp')\nmarket.crypto.search(query='BTCUSD', provider='fmp')\n```\n\n",
         "parameters": {
             "standard": [
                 {
@@ -332,7 +332,7 @@
             "message": null
         },
         "description": "Currency Historical Price. Currency historical data.\n\nCurrency historical prices refer to the past exchange rates of one currency against\nanother over a specific period.\nThis data provides insight into the fluctuations and trends in the foreign exchange market,\nhelping analysts, traders, and economists understand currency performance,\nevaluate economic health, and make predictions about future movements.",
-        "examples": "\nExamples\n--------\n\n```python\nfrom datamart import market\nobb.currency.price.historical(symbol='EURUSD', provider='fmp')\n# Filter historical data with specific start and end date.\nobb.currency.price.historical(symbol='EURUSD', start_date='2023-01-01', end_date='2023-12-31', provider='fmp')\n# Get data with different granularity.\nobb.currency.price.historical(symbol='EURUSD', provider='polygon', interval=15m)\n```\n\n",
+        "examples": "\nExamples\n--------\n\n```python\nfrom datamart import market\nmarket.currency.price.historical(symbol='EURUSD', provider='fmp')\n# Filter historical data with specific start and end date.\nmarket.currency.price.historical(symbol='EURUSD', start_date='2023-01-01', end_date='2023-12-31', provider='fmp')\n# Get data with different granularity.\nmarket.currency.price.historical(symbol='EURUSD', provider='polygon', interval=15m)\n```\n\n",
         "parameters": {
             "standard": [
                 {
@@ -539,7 +539,7 @@
             "message": null
         },
         "description": "Currency Search.\n\nSearch available currency pairs.\nCurrency pairs are the national currencies from two countries coupled for trading on\nthe foreign exchange (FX) marketplace.\nBoth currencies will have exchange rates on which the trade will have its position basis.\nAll trading within the forex market, whether selling, buying, or trading, will take place through currency pairs.\n(ref: Investopedia)\nMajor currency pairs include pairs such as EUR/USD, USD/JPY, GBP/USD, etc.",
-        "examples": "\nExamples\n--------\n\n```python\nfrom datamart import market\nobb.currency.search(provider='intrinio')\n# Search for 'EURUSD' currency pair using 'intrinio' as provider.\nobb.currency.search(provider='intrinio', symbol=EURUSD)\n# Search for actively traded currency pairs on the queried date using 'polygon' as provider.\nobb.currency.search(provider='polygon', date=2024-01-02, active=True)\n# Search for terms  using 'polygon' as provider.\nobb.currency.search(provider='polygon', search=Euro zone)\n```\n\n",
+        "examples": "\nExamples\n--------\n\n```python\nfrom datamart import market\nmarket.currency.search(provider='intrinio')\n# Search for 'EURUSD' currency pair using 'intrinio' as provider.\nmarket.currency.search(provider='intrinio', symbol=EURUSD)\n# Search for actively traded currency pairs on the queried date using 'polygon' as provider.\nmarket.currency.search(provider='polygon', date=2024-01-02, active=True)\n# Search for terms  using 'polygon' as provider.\nmarket.currency.search(provider='polygon', search=Euro zone)\n```\n\n",
         "parameters": {
             "standard": [
                 {
@@ -763,7 +763,7 @@
             "message": null
         },
         "description": "Snapshots of currency exchange rates from an indirect or direct perspective of a base currency.",
-        "examples": "\nExamples\n--------\n\n```python\nfrom datamart import market\nobb.currency.snapshots(provider='fmp')\n# Get exchange rates from USD and XAU to EUR, JPY, and GBP using 'fmp' as provider.\nobb.currency.snapshots(provider='fmp', base='USD,XAU', counter_currencies='EUR,JPY,GBP', quote_type='indirect')\n```\n\n",
+        "examples": "\nExamples\n--------\n\n```python\nfrom datamart import market\nmarket.currency.snapshots(provider='fmp')\n# Get exchange rates from USD and XAU to EUR, JPY, and GBP using 'fmp' as provider.\nmarket.currency.snapshots(provider='fmp', base='USD,XAU', counter_currencies='EUR,JPY,GBP', quote_type='indirect')\n```\n\n",
         "parameters": {
             "standard": [
                 {
@@ -952,7 +952,7 @@
             "message": null
         },
         "description": "Get the complete options chain for a ticker.",
-        "examples": "\nExamples\n--------\n\n```python\nfrom datamart import market\nobb.derivatives.options.chains(symbol='AAPL', provider='intrinio')\n# Use the \"date\" parameter to get the end-of-day-data for a specific date, where supported.\nobb.derivatives.options.chains(symbol='AAPL', date=2023-01-25, provider='intrinio')\n```\n\n",
+        "examples": "\nExamples\n--------\n\n```python\nfrom datamart import market\nmarket.derivatives.options.chains(symbol='AAPL', provider='intrinio')\n# Use the \"date\" parameter to get the end-of-day-data for a specific date, where supported.\nmarket.derivatives.options.chains(symbol='AAPL', date=2023-01-25, provider='intrinio')\n```\n\n",
         "parameters": {
             "standard": [
                 {
@@ -1331,7 +1331,7 @@
             "message": null
         },
         "description": "Get the complete options chain for a ticker.",
-        "examples": "\nExamples\n--------\n\n```python\nfrom datamart import market\nobb.derivatives.options.unusual(provider='intrinio')\n# Use the 'symbol' parameter to get the most recent activity for a specific symbol.\nobb.derivatives.options.unusual(symbol='TSLA', provider='intrinio')\n```\n\n",
+        "examples": "\nExamples\n--------\n\n```python\nfrom datamart import market\nmarket.derivatives.options.unusual(provider='intrinio')\n# Use the 'symbol' parameter to get the most recent activity for a specific symbol.\nmarket.derivatives.options.unusual(symbol='TSLA', provider='intrinio')\n```\n\n",
         "parameters": {
             "standard": [
                 {
@@ -1528,7 +1528,7 @@
             "message": null
         },
         "description": "Historical futures prices.",
-        "examples": "\nExamples\n--------\n\n```python\nfrom datamart import market\nobb.derivatives.futures.historical(symbol='ES', provider='yfinance')\n# Enter multiple symbols.\nobb.derivatives.futures.historical(symbol='ES,NQ', provider='yfinance')\n# Enter expiration dates as \"YYYY-MM\".\nobb.derivatives.futures.historical(symbol='ES', provider='yfinance', expiration='2025-12')\n```\n\n",
+        "examples": "\nExamples\n--------\n\n```python\nfrom datamart import market\nmarket.derivatives.futures.historical(symbol='ES', provider='yfinance')\n# Enter multiple symbols.\nmarket.derivatives.futures.historical(symbol='ES,NQ', provider='yfinance')\n# Enter expiration dates as \"YYYY-MM\".\nmarket.derivatives.futures.historical(symbol='ES', provider='yfinance', expiration='2025-12')\n```\n\n",
         "parameters": {
             "standard": [
                 {
@@ -1661,7 +1661,7 @@
             "message": null
         },
         "description": "Futures Term Structure, current or historical.",
-        "examples": "\nExamples\n--------\n\n```python\nfrom datamart import market\n# Enter a date to get the term structure from a historical date.\nobb.derivatives.futures.curve(symbol='NG', provider='yfinance', date='2023-01-01')\n```\n\n",
+        "examples": "\nExamples\n--------\n\n```python\nfrom datamart import market\n# Enter a date to get the term structure from a historical date.\nmarket.derivatives.futures.curve(symbol='NG', provider='yfinance', date='2023-01-01')\n```\n\n",
         "parameters": {
             "standard": [
                 {
@@ -1744,7 +1744,7 @@
             "message": null
         },
         "description": "Forecasted GDP Data.",
-        "examples": "\nExamples\n--------\n\n```python\nfrom datamart import market\nobb.economy.gdp.forecast(provider='oecd')\nobb.economy.gdp.forecast(period='annual', type='real', provider='oecd')\n```\n\n",
+        "examples": "\nExamples\n--------\n\n```python\nfrom datamart import market\nmarket.economy.gdp.forecast(provider='oecd')\nmarket.economy.gdp.forecast(period='annual', type='real', provider='oecd')\n```\n\n",
         "parameters": {
             "standard": [
                 {
@@ -1849,7 +1849,7 @@
             "message": null
         },
         "description": "Nominal GDP Data.",
-        "examples": "\nExamples\n--------\n\n```python\nfrom datamart import market\nobb.economy.gdp.nominal(provider='oecd')\nobb.economy.gdp.nominal(units='usd', provider='oecd')\n```\n\n",
+        "examples": "\nExamples\n--------\n\n```python\nfrom datamart import market\nmarket.economy.gdp.nominal(provider='oecd')\nmarket.economy.gdp.nominal(units='usd', provider='oecd')\n```\n\n",
         "parameters": {
             "standard": [
                 {
@@ -1947,7 +1947,7 @@
             "message": null
         },
         "description": "Real GDP Data.",
-        "examples": "\nExamples\n--------\n\n```python\nfrom datamart import market\nobb.economy.gdp.real(provider='oecd')\nobb.economy.gdp.real(units='yoy', provider='oecd')\n```\n\n",
+        "examples": "\nExamples\n--------\n\n```python\nfrom datamart import market\nmarket.economy.gdp.real(provider='oecd')\nmarket.economy.gdp.real(units='yoy', provider='oecd')\n```\n\n",
         "parameters": {
             "standard": [
                 {
@@ -2045,7 +2045,7 @@
             "message": null
         },
         "description": "Get the upcoming, or historical, economic calendar of global events.",
-        "examples": "\nExamples\n--------\n\n```python\nfrom datamart import market\n# By default, the calendar will be forward-looking.\nobb.economy.calendar(provider='fmp')\nobb.economy.calendar(provider='fmp', start_date='2020-03-01', end_date='2020-03-31')\n```\n\n",
+        "examples": "\nExamples\n--------\n\n```python\nfrom datamart import market\n# By default, the calendar will be forward-looking.\nmarket.economy.calendar(provider='fmp')\nmarket.economy.calendar(provider='fmp', start_date='2020-03-01', end_date='2020-03-31')\n```\n\n",
         "parameters": {
             "standard": [
                 {
@@ -2265,7 +2265,7 @@
             "message": null
         },
         "description": "Consumer Price Index (CPI).  Returns either the rescaled index value, or a rate of change (inflation).",
-        "examples": "\nExamples\n--------\n\n```python\nfrom datamart import market\nobb.economy.cpi(country='japan,china,turkey', provider='fred')\n# Use the `units` parameter to define the reference period for the change in values.\nobb.economy.cpi(country='united_states,united_kingdom', units='growth_previous', provider='fred')\n```\n\n",
+        "examples": "\nExamples\n--------\n\n```python\nfrom datamart import market\nmarket.economy.cpi(country='japan,china,turkey', provider='fred')\n# Use the `units` parameter to define the reference period for the change in values.\nmarket.economy.cpi(country='united_states,united_kingdom', units='growth_previous', provider='fred')\n```\n\n",
         "parameters": {
             "standard": [
                 {
@@ -2369,7 +2369,7 @@
             "message": null
         },
         "description": "Market Risk Premium by country.",
-        "examples": "\nExamples\n--------\n\n```python\nfrom datamart import market\nobb.economy.risk_premium(provider='fmp')\n```\n\n",
+        "examples": "\nExamples\n--------\n\n```python\nfrom datamart import market\nmarket.economy.risk_premium(provider='fmp')\n```\n\n",
         "parameters": {
             "standard": [
                 {
@@ -2452,7 +2452,7 @@
             "message": null
         },
         "description": "Search for FRED series or economic releases by ID or string.\nThis does not return the observation values, only the metadata.\nUse this function to find series IDs for `fred_series()`.",
-        "examples": "\nExamples\n--------\n\n```python\nfrom datamart import market\nobb.economy.fred_search(provider='fred')\n```\n\n",
+        "examples": "\nExamples\n--------\n\n```python\nfrom datamart import market\nmarket.economy.fred_search(provider='fred')\n```\n\n",
         "parameters": {
             "standard": [
                 {
@@ -2719,7 +2719,7 @@
             "message": null
         },
         "description": "Get data by series ID from FRED.",
-        "examples": "\nExamples\n--------\n\n```python\nfrom datamart import market\nobb.economy.fred_series(symbol='NFCI', provider='fred')\n# Multiple series can be passed in as a list.\nobb.economy.fred_series(symbol='NFCI,STLFSI4', provider='fred')\n# Use the `transform` parameter to transform the data as change, log, or percent change.\nobb.economy.fred_series(symbol='CBBTCUSD', transform=pc1, provider='fred')\n```\n\n",
+        "examples": "\nExamples\n--------\n\n```python\nfrom datamart import market\nmarket.economy.fred_series(symbol='NFCI', provider='fred')\n# Multiple series can be passed in as a list.\nmarket.economy.fred_series(symbol='NFCI,STLFSI4', provider='fred')\n# Use the `transform` parameter to transform the data as change, log, or percent change.\nmarket.economy.fred_series(symbol='CBBTCUSD', transform=pc1, provider='fred')\n```\n\n",
         "parameters": {
             "standard": [
                 {
@@ -2856,7 +2856,7 @@
             "message": null
         },
         "description": "Money Measures (M1/M2 and components). The Federal Reserve publishes as part of the H.6 Release.",
-        "examples": "\nExamples\n--------\n\n```python\nfrom datamart import market\nobb.economy.money_measures(provider='federal_reserve')\nobb.economy.money_measures(adjusted=False, provider='federal_reserve')\n```\n\n",
+        "examples": "\nExamples\n--------\n\n```python\nfrom datamart import market\nmarket.economy.money_measures(provider='federal_reserve')\nmarket.economy.money_measures(adjusted=False, provider='federal_reserve')\n```\n\n",
         "parameters": {
             "standard": [
                 {
@@ -2988,7 +2988,7 @@
             "message": null
         },
         "description": "Global unemployment data.",
-        "examples": "\nExamples\n--------\n\n```python\nfrom datamart import market\nobb.economy.unemployment(provider='oecd')\nobb.economy.unemployment(country=all, frequency=quarterly, provider='oecd')\n# Demographics for the statistics are selected with the `age` parameter.\nobb.economy.unemployment(country=all, frequency=quarterly, age=25-54, provider='oecd')\n```\n\n",
+        "examples": "\nExamples\n--------\n\n```python\nfrom datamart import market\nmarket.economy.unemployment(provider='oecd')\nmarket.economy.unemployment(country=all, frequency=quarterly, provider='oecd')\n# Demographics for the statistics are selected with the `age` parameter.\nmarket.economy.unemployment(country=all, frequency=quarterly, age=25-54, provider='oecd')\n```\n\n",
         "parameters": {
             "standard": [
                 {
@@ -3114,7 +3114,7 @@
             "message": null
         },
         "description": "The composite leading indicator (CLI) is designed to provide early signals of turning points\nin business cycles showing fluctuation of the economic activity around its long term potential level.\nCLIs show short-term economic movements in qualitative rather than quantitative terms.",
-        "examples": "\nExamples\n--------\n\n```python\nfrom datamart import market\nobb.economy.composite_leading_indicator(provider='oecd')\nobb.economy.composite_leading_indicator(country=all, provider='oecd')\n```\n\n",
+        "examples": "\nExamples\n--------\n\n```python\nfrom datamart import market\nmarket.economy.composite_leading_indicator(provider='oecd')\nmarket.economy.composite_leading_indicator(country=all, provider='oecd')\n```\n\n",
         "parameters": {
             "standard": [
                 {
@@ -3212,7 +3212,7 @@
             "message": null
         },
         "description": "Short-term interest rates are the rates at which short-term borrowings are effected between\nfinancial institutions or the rate at which short-term government paper is issued or traded in the market.\nShort-term interest rates are generally averages of daily rates, measured as a percentage.\nShort-term interest rates are based on three-month money market rates where available.\nTypical standardised names are \"money market rate\" and \"treasury bill rate\".",
-        "examples": "\nExamples\n--------\n\n```python\nfrom datamart import market\nobb.economy.short_term_interest_rate(provider='oecd')\nobb.economy.short_term_interest_rate(country=all, frequency=quarterly, provider='oecd')\n```\n\n",
+        "examples": "\nExamples\n--------\n\n```python\nfrom datamart import market\nmarket.economy.short_term_interest_rate(provider='oecd')\nmarket.economy.short_term_interest_rate(country=all, frequency=quarterly, provider='oecd')\n```\n\n",
         "parameters": {
             "standard": [
                 {
@@ -3317,7 +3317,7 @@
             "message": null
         },
         "description": "Long-term interest rates refer to government bonds maturing in ten years.\nRates are mainly determined by the price charged by the lender, the risk from the borrower and the\nfall in the capital value. Long-term interest rates are generally averages of daily rates,\nmeasured as a percentage. These interest rates are implied by the prices at which the government bonds are\ntraded on financial markets, not the interest rates at which the loans were issued.\nIn all cases, they refer to bonds whose capital repayment is guaranteed by governments.\nLong-term interest rates are one of the determinants of business investment.\nLow long-term interest rates encourage investment in new equipment and high interest rates discourage it.\nInvestment is, in turn, a major source of economic growth.",
-        "examples": "\nExamples\n--------\n\n```python\nfrom datamart import market\nobb.economy.long_term_interest_rate(provider='oecd')\nobb.economy.long_term_interest_rate(country=all, frequency=quarterly, provider='oecd')\n```\n\n",
+        "examples": "\nExamples\n--------\n\n```python\nfrom datamart import market\nmarket.economy.long_term_interest_rate(provider='oecd')\nmarket.economy.long_term_interest_rate(country=all, frequency=quarterly, provider='oecd')\n```\n\n",
         "parameters": {
             "standard": [
                 {
@@ -3422,7 +3422,7 @@
             "message": null
         },
         "description": "Query the Geo Fred API for regional economic data by series group.\nThe series group ID is found by using `fred_search` and the `series_id` parameter.",
-        "examples": "\nExamples\n--------\n\n```python\nfrom datamart import market\nobb.economy.fred_regional(symbol='NYICLAIMS', provider='fred')\n# With a date, time series data is returned.\nobb.economy.fred_regional(symbol='NYICLAIMS', start_date='2021-01-01', end_date='2021-12-31', limit=10, provider='fred')\n```\n\n",
+        "examples": "\nExamples\n--------\n\n```python\nfrom datamart import market\nmarket.economy.fred_regional(symbol='NYICLAIMS', provider='fred')\n# With a date, time series data is returned.\nmarket.economy.fred_regional(symbol='NYICLAIMS', start_date='2021-01-01', end_date='2021-12-31', limit=10, provider='fred')\n```\n\n",
         "parameters": {
             "standard": [
                 {
@@ -3591,7 +3591,7 @@
             "message": null
         },
         "description": "Get historical and upcoming initial public offerings (IPOs).",
-        "examples": "\nExamples\n--------\n\n```python\nfrom datamart import market\nobb.equity.calendar.ipo(provider='intrinio')\n# Get all IPOs available.\nobb.equity.calendar.ipo(provider='intrinio')\n```\n\n",
+        "examples": "\nExamples\n--------\n\n```python\nfrom datamart import market\nmarket.equity.calendar.ipo(provider='intrinio')\n# Get all IPOs available.\nmarket.equity.calendar.ipo(provider='intrinio')\n```\n\n",
         "parameters": {
             "standard": [
                 {
@@ -3851,7 +3851,7 @@
             "message": null
         },
         "description": "Get historical and upcoming dividend payments. Includes dividend amount, ex-dividend and payment dates.",
-        "examples": "\nExamples\n--------\n\n```python\nfrom datamart import market\nobb.equity.calendar.dividend(provider='fmp')\n```\n\n",
+        "examples": "\nExamples\n--------\n\n```python\nfrom datamart import market\nmarket.equity.calendar.dividend(provider='fmp')\n```\n\n",
         "parameters": {
             "standard": [
                 {
@@ -3984,7 +3984,7 @@
             "message": null
         },
         "description": "Get historical and upcoming stock split operations.",
-        "examples": "\nExamples\n--------\n\n```python\nfrom datamart import market\nobb.equity.calendar.splits(provider='fmp')\n# Get stock splits calendar for specific dates.\nobb.equity.calendar.splits(start_date='2024-02-01', end_date='2024-02-07', provider='fmp')\n```\n\n",
+        "examples": "\nExamples\n--------\n\n```python\nfrom datamart import market\nmarket.equity.calendar.splits(provider='fmp')\n# Get stock splits calendar for specific dates.\nmarket.equity.calendar.splits(start_date='2024-02-01', end_date='2024-02-07', provider='fmp')\n```\n\n",
         "parameters": {
             "standard": [
                 {
@@ -4088,7 +4088,7 @@
             "message": null
         },
         "description": "Get historical and upcoming company earnings releases. Includes earnings per share (EPS) and revenue data.",
-        "examples": "\nExamples\n--------\n\n```python\nfrom datamart import market\nobb.equity.calendar.earnings(provider='fmp')\n# Get earnings calendar for specific dates.\nobb.equity.calendar.earnings(start_date='2024-02-01', end_date='2024-02-07', provider='fmp')\n```\n\n",
+        "examples": "\nExamples\n--------\n\n```python\nfrom datamart import market\nmarket.equity.calendar.earnings(provider='fmp')\n# Get earnings calendar for specific dates.\nmarket.equity.calendar.earnings(start_date='2024-02-01', end_date='2024-02-07', provider='fmp')\n```\n\n",
         "parameters": {
             "standard": [
                 {
@@ -4235,7 +4235,7 @@
             "message": null
         },
         "description": "Get the closest peers for a given company.\n\nPeers consist of companies trading on the same exchange, operating within the same sector\nand with comparable market capitalizations.",
-        "examples": "\nExamples\n--------\n\n```python\nfrom datamart import market\nobb.equity.compare.peers(symbol='AAPL', provider='fmp')\n```\n\n",
+        "examples": "\nExamples\n--------\n\n```python\nfrom datamart import market\nmarket.equity.compare.peers(symbol='AAPL', provider='fmp')\n```\n\n",
         "parameters": {
             "standard": [
                 {
@@ -4304,7 +4304,7 @@
             "message": null
         },
         "description": "Get analyst price targets by company.",
-        "examples": "\nExamples\n--------\n\n```python\nfrom datamart import market\nobb.equity.estimates.price_target(provider='benzinga')\n# Get price targets for Microsoft using 'benzinga' as provider.\nobb.equity.estimates.price_target(start_date=2020-01-01, end_date=2024-02-16, limit=10, symbol='msft', provider='benzinga', action=downgrades)\n```\n\n",
+        "examples": "\nExamples\n--------\n\n```python\nfrom datamart import market\nmarket.equity.estimates.price_target(provider='benzinga')\n# Get price targets for Microsoft using 'benzinga' as provider.\nmarket.equity.estimates.price_target(start_date=2020-01-01, end_date=2024-02-16, limit=10, symbol='msft', provider='benzinga', action=downgrades)\n```\n\n",
         "parameters": {
             "standard": [
                 {
@@ -4652,7 +4652,7 @@
             "message": null
         },
         "description": "Get historical analyst estimates for earnings and revenue.",
-        "examples": "\nExamples\n--------\n\n```python\nfrom datamart import market\nobb.equity.estimates.historical(symbol='AAPL', provider='fmp')\n```\n\n",
+        "examples": "\nExamples\n--------\n\n```python\nfrom datamart import market\nmarket.equity.estimates.historical(symbol='AAPL', provider='fmp')\n```\n\n",
         "parameters": {
             "standard": [
                 {
@@ -4883,7 +4883,7 @@
             "message": null
         },
         "description": "Get consensus price target and recommendation.",
-        "examples": "\nExamples\n--------\n\n```python\nfrom datamart import market\nobb.equity.estimates.consensus(symbol='AAPL', provider='fmp')\nobb.equity.estimates.consensus(symbol='AAPL,MSFT', provider='yfinance')\n```\n\n",
+        "examples": "\nExamples\n--------\n\n```python\nfrom datamart import market\nmarket.equity.estimates.consensus(symbol='AAPL', provider='fmp')\nmarket.equity.estimates.consensus(symbol='AAPL,MSFT', provider='yfinance')\n```\n\n",
         "parameters": {
             "standard": [
                 {
@@ -5018,7 +5018,7 @@
             "message": null
         },
         "description": "Search for specific analysts and get their forecast track record.",
-        "examples": "\nExamples\n--------\n\n```python\nfrom datamart import market\nobb.equity.estimates.analyst_search(provider='benzinga')\nobb.equity.estimates.analyst_search(firm_name='Wedbush', provider='benzinga')\n```\n\n",
+        "examples": "\nExamples\n--------\n\n```python\nfrom datamart import market\nmarket.equity.estimates.analyst_search(provider='benzinga')\nmarket.equity.estimates.analyst_search(firm_name='Wedbush', provider='benzinga')\n```\n\n",
         "parameters": {
             "standard": [
                 {
@@ -5432,7 +5432,7 @@
             "message": null
         },
         "description": "Get the top price gainers in the stock market.",
-        "examples": "\nExamples\n--------\n\n```python\nfrom datamart import market\nobb.equity.discovery.gainers(provider='yfinance')\nobb.equity.discovery.gainers(sort='desc', provider='yfinance')\n```\n\n",
+        "examples": "\nExamples\n--------\n\n```python\nfrom datamart import market\nmarket.equity.discovery.gainers(provider='yfinance')\nmarket.equity.discovery.gainers(sort='desc', provider='yfinance')\n```\n\n",
         "parameters": {
             "standard": [
                 {
@@ -5558,7 +5558,7 @@
             "message": null
         },
         "description": "Get the top price losers in the stock market.",
-        "examples": "\nExamples\n--------\n\n```python\nfrom datamart import market\nobb.equity.discovery.losers(provider='yfinance')\nobb.equity.discovery.losers(sort='desc', provider='yfinance')\n```\n\n",
+        "examples": "\nExamples\n--------\n\n```python\nfrom datamart import market\nmarket.equity.discovery.losers(provider='yfinance')\nmarket.equity.discovery.losers(sort='desc', provider='yfinance')\n```\n\n",
         "parameters": {
             "standard": [
                 {
@@ -5684,7 +5684,7 @@
             "message": null
         },
         "description": "Get the most actively traded stocks based on volume.",
-        "examples": "\nExamples\n--------\n\n```python\nfrom datamart import market\nobb.equity.discovery.active(provider='yfinance')\nobb.equity.discovery.active(sort='desc', provider='yfinance')\n```\n\n",
+        "examples": "\nExamples\n--------\n\n```python\nfrom datamart import market\nmarket.equity.discovery.active(provider='yfinance')\nmarket.equity.discovery.active(sort='desc', provider='yfinance')\n```\n\n",
         "parameters": {
             "standard": [
                 {
@@ -5810,7 +5810,7 @@
             "message": null
         },
         "description": "Get potentially undervalued large cap stocks.",
-        "examples": "\nExamples\n--------\n\n```python\nfrom datamart import market\nobb.equity.discovery.undervalued_large_caps(provider='yfinance')\nobb.equity.discovery.undervalued_large_caps(sort='desc', provider='yfinance')\n```\n\n",
+        "examples": "\nExamples\n--------\n\n```python\nfrom datamart import market\nmarket.equity.discovery.undervalued_large_caps(provider='yfinance')\nmarket.equity.discovery.undervalued_large_caps(sort='desc', provider='yfinance')\n```\n\n",
         "parameters": {
             "standard": [
                 {
@@ -5936,7 +5936,7 @@
             "message": null
         },
         "description": "Get potentially undervalued growth stocks.",
-        "examples": "\nExamples\n--------\n\n```python\nfrom datamart import market\nobb.equity.discovery.undervalued_growth(provider='yfinance')\nobb.equity.discovery.undervalued_growth(sort='desc', provider='yfinance')\n```\n\n",
+        "examples": "\nExamples\n--------\n\n```python\nfrom datamart import market\nmarket.equity.discovery.undervalued_growth(provider='yfinance')\nmarket.equity.discovery.undervalued_growth(sort='desc', provider='yfinance')\n```\n\n",
         "parameters": {
             "standard": [
                 {
@@ -6062,7 +6062,7 @@
             "message": null
         },
         "description": "Get top small cap stocks based on earnings growth.",
-        "examples": "\nExamples\n--------\n\n```python\nfrom datamart import market\nobb.equity.discovery.aggressive_small_caps(provider='yfinance')\nobb.equity.discovery.aggressive_small_caps(sort='desc', provider='yfinance')\n```\n\n",
+        "examples": "\nExamples\n--------\n\n```python\nfrom datamart import market\nmarket.equity.discovery.aggressive_small_caps(provider='yfinance')\nmarket.equity.discovery.aggressive_small_caps(sort='desc', provider='yfinance')\n```\n\n",
         "parameters": {
             "standard": [
                 {
@@ -6188,7 +6188,7 @@
             "message": null
         },
         "description": "Get top tech stocks based on revenue and earnings growth.",
-        "examples": "\nExamples\n--------\n\n```python\nfrom datamart import market\nobb.equity.discovery.growth_tech(provider='yfinance')\nobb.equity.discovery.growth_tech(sort='desc', provider='yfinance')\n```\n\n",
+        "examples": "\nExamples\n--------\n\n```python\nfrom datamart import market\nmarket.equity.discovery.growth_tech(provider='yfinance')\nmarket.equity.discovery.growth_tech(sort='desc', provider='yfinance')\n```\n\n",
         "parameters": {
             "standard": [
                 {
@@ -6314,7 +6314,7 @@
             "message": null
         },
         "description": "Get the URLs to SEC filings reported to EDGAR database, such as 10-K, 10-Q, 8-K, and more. SEC\nfilings include Form 10-K, Form 10-Q, Form 8-K, the proxy statement, Forms 3, 4, and 5, Schedule 13, Form 114,\nForeign Investment Disclosures and others. The annual 10-K report is required to be\nfiled annually and includes the company's financial statements, management discussion and analysis,\nand audited financial statements.",
-        "examples": "\nExamples\n--------\n\n```python\nfrom datamart import market\nobb.equity.discovery.filings(provider='fmp')\n# Get filings for the year 2023, limited to 100 results\nobb.equity.discovery.filings(start_date='2023-01-01', end_date='2023-12-31', limit=100, provider='fmp')\n```\n\n",
+        "examples": "\nExamples\n--------\n\n```python\nfrom datamart import market\nmarket.equity.discovery.filings(provider='fmp')\n# Get filings for the year 2023, limited to 100 results\nmarket.equity.discovery.filings(start_date='2023-01-01', end_date='2023-12-31', limit=100, provider='fmp')\n```\n\n",
         "parameters": {
             "standard": [
                 {
@@ -6447,7 +6447,7 @@
             "message": null
         },
         "description": "Get equity valuation multiples for a given company.",
-        "examples": "\nExamples\n--------\n\n```python\nfrom datamart import market\nobb.equity.fundamental.multiples(symbol='AAPL', provider='fmp')\n```\n\n",
+        "examples": "\nExamples\n--------\n\n```python\nfrom datamart import market\nmarket.equity.fundamental.multiples(symbol='AAPL', provider='fmp')\n```\n\n",
         "parameters": {
             "standard": [
                 {
@@ -6936,7 +6936,7 @@
             "message": null
         },
         "description": "Get the balance sheet for a given company.",
-        "examples": "\nExamples\n--------\n\n```python\nfrom datamart import market\nobb.equity.fundamental.balance(symbol='AAPL', provider='fmp')\nobb.equity.fundamental.balance(symbol='AAPL', period='annual', limit=5, provider='intrinio')\n```\n\n",
+        "examples": "\nExamples\n--------\n\n```python\nfrom datamart import market\nmarket.equity.fundamental.balance(symbol='AAPL', provider='fmp')\nmarket.equity.fundamental.balance(symbol='AAPL', period='annual', limit=5, provider='intrinio')\n```\n\n",
         "parameters": {
             "standard": [
                 {
@@ -8325,7 +8325,7 @@
             "message": null
         },
         "description": "Get the growth of a company's balance sheet items over time.",
-        "examples": "\nExamples\n--------\n\n```python\nfrom datamart import market\nobb.equity.fundamental.balance_growth(symbol='AAPL', provider='fmp')\nobb.equity.fundamental.balance_growth(symbol='AAPL', limit=10, provider='fmp')\n```\n\n",
+        "examples": "\nExamples\n--------\n\n```python\nfrom datamart import market\nmarket.equity.fundamental.balance_growth(symbol='AAPL', provider='fmp')\nmarket.equity.fundamental.balance_growth(symbol='AAPL', limit=10, provider='fmp')\n```\n\n",
         "parameters": {
             "standard": [
                 {
@@ -8688,7 +8688,7 @@
             "message": null
         },
         "description": "Get the cash flow statement for a given company.",
-        "examples": "\nExamples\n--------\n\n```python\nfrom datamart import market\nobb.equity.fundamental.cash(symbol='AAPL', provider='fmp')\nobb.equity.fundamental.cash(symbol='AAPL', period='annual', limit=5, provider='intrinio')\n```\n\n",
+        "examples": "\nExamples\n--------\n\n```python\nfrom datamart import market\nmarket.equity.fundamental.cash(symbol='AAPL', provider='fmp')\nmarket.equity.fundamental.cash(symbol='AAPL', period='annual', limit=5, provider='intrinio')\n```\n\n",
         "parameters": {
             "standard": [
                 {
@@ -9545,7 +9545,7 @@
             "message": null
         },
         "description": "Get financial statements as reported by the company.",
-        "examples": "\nExamples\n--------\n\n```python\nfrom datamart import market\nobb.equity.fundamental.reported_financials(symbol='AAPL', provider='intrinio')\n# Get AAPL balance sheet with a limit of 10 items.\nobb.equity.fundamental.reported_financials(symbol='AAPL', period='annual', statement_type='balance', limit=10, provider='intrinio')\n# Get reported income statement\nobb.equity.fundamental.reported_financials(symbol='AAPL', statement_type='income', provider='intrinio')\n# Get reported cash flow statement\nobb.equity.fundamental.reported_financials(symbol='AAPL', statement_type='cash', provider='intrinio')\n```\n\n",
+        "examples": "\nExamples\n--------\n\n```python\nfrom datamart import market\nmarket.equity.fundamental.reported_financials(symbol='AAPL', provider='intrinio')\n# Get AAPL balance sheet with a limit of 10 items.\nmarket.equity.fundamental.reported_financials(symbol='AAPL', period='annual', statement_type='balance', limit=10, provider='intrinio')\n# Get reported income statement\nmarket.equity.fundamental.reported_financials(symbol='AAPL', statement_type='income', provider='intrinio')\n# Get reported cash flow statement\nmarket.equity.fundamental.reported_financials(symbol='AAPL', statement_type='cash', provider='intrinio')\n```\n\n",
         "parameters": {
             "standard": [
                 {
@@ -9657,7 +9657,7 @@
             "message": null
         },
         "description": "Get the growth of a company's cash flow statement items over time.",
-        "examples": "\nExamples\n--------\n\n```python\nfrom datamart import market\nobb.equity.fundamental.cash_growth(symbol='AAPL', provider='fmp')\nobb.equity.fundamental.cash_growth(symbol='AAPL', limit=10, provider='fmp')\n```\n\n",
+        "examples": "\nExamples\n--------\n\n```python\nfrom datamart import market\nmarket.equity.fundamental.cash_growth(symbol='AAPL', provider='fmp')\nmarket.equity.fundamental.cash_growth(symbol='AAPL', limit=10, provider='fmp')\n```\n\n",
         "parameters": {
             "standard": [
                 {
@@ -9957,7 +9957,7 @@
             "message": null
         },
         "description": "Get historical dividend data for a given company.",
-        "examples": "\nExamples\n--------\n\n```python\nfrom datamart import market\nobb.equity.fundamental.dividends(symbol='AAPL', provider='intrinio')\n```\n\n",
+        "examples": "\nExamples\n--------\n\n```python\nfrom datamart import market\nmarket.equity.fundamental.dividends(symbol='AAPL', provider='intrinio')\n```\n\n",
         "parameters": {
             "standard": [
                 {
@@ -10117,7 +10117,7 @@
             "message": null
         },
         "description": "Get historical earnings per share data for a given company.",
-        "examples": "\nExamples\n--------\n\n```python\nfrom datamart import market\nobb.equity.fundamental.historical_eps(symbol='AAPL', provider='fmp')\n```\n\n",
+        "examples": "\nExamples\n--------\n\n```python\nfrom datamart import market\nmarket.equity.fundamental.historical_eps(symbol='AAPL', provider='fmp')\n```\n\n",
         "parameters": {
             "standard": [
                 {
@@ -10258,7 +10258,7 @@
             "message": null
         },
         "description": "Get historical employee count data for a given company.",
-        "examples": "\nExamples\n--------\n\n```python\nfrom datamart import market\nobb.equity.fundamental.employee_count(symbol='AAPL', provider='fmp')\n```\n\n",
+        "examples": "\nExamples\n--------\n\n```python\nfrom datamart import market\nmarket.equity.fundamental.employee_count(symbol='AAPL', provider='fmp')\n```\n\n",
         "parameters": {
             "standard": [
                 {
@@ -10383,7 +10383,7 @@
             "message": null
         },
         "description": "Search Intrinio data tags to search in latest or historical attributes.",
-        "examples": "\nExamples\n--------\n\n```python\nfrom datamart import market\nobb.equity.fundamental.search_attributes(query='ebitda', provider='intrinio')\n```\n\n",
+        "examples": "\nExamples\n--------\n\n```python\nfrom datamart import market\nmarket.equity.fundamental.search_attributes(query='ebitda', provider='intrinio')\n```\n\n",
         "parameters": {
             "standard": [
                 {
@@ -10529,7 +10529,7 @@
             "message": null
         },
         "description": "Get the latest value of a data tag from Intrinio.",
-        "examples": "\nExamples\n--------\n\n```python\nfrom datamart import market\nobb.equity.fundamental.latest_attributes(symbol='AAPL', tag='ceo', provider='intrinio')\n```\n\n",
+        "examples": "\nExamples\n--------\n\n```python\nfrom datamart import market\nmarket.equity.fundamental.latest_attributes(symbol='AAPL', tag='ceo', provider='intrinio')\n```\n\n",
         "parameters": {
             "standard": [
                 {
@@ -10619,7 +10619,7 @@
             "message": null
         },
         "description": "Get the historical values of a data tag from Intrinio.",
-        "examples": "\nExamples\n--------\n\n```python\nfrom datamart import market\nobb.equity.fundamental.historical_attributes(symbol='AAPL', tag='ebitda', provider='intrinio')\n```\n\n",
+        "examples": "\nExamples\n--------\n\n```python\nfrom datamart import market\nmarket.equity.fundamental.historical_attributes(symbol='AAPL', tag='ebitda', provider='intrinio')\n```\n\n",
         "parameters": {
             "standard": [
                 {
@@ -10758,7 +10758,7 @@
             "message": null
         },
         "description": "Get the income statement for a given company.",
-        "examples": "\nExamples\n--------\n\n```python\nfrom datamart import market\nobb.equity.fundamental.income(symbol='AAPL', provider='fmp')\nobb.equity.fundamental.income(symbol='AAPL', period='annual', limit=5, provider='intrinio')\n```\n\n",
+        "examples": "\nExamples\n--------\n\n```python\nfrom datamart import market\nmarket.equity.fundamental.income(symbol='AAPL', provider='fmp')\nmarket.equity.fundamental.income(symbol='AAPL', period='annual', limit=5, provider='intrinio')\n```\n\n",
         "parameters": {
             "standard": [
                 {
@@ -12049,7 +12049,7 @@
             "message": null
         },
         "description": "Get the growth of a company's income statement items over time.",
-        "examples": "\nExamples\n--------\n\n```python\nfrom datamart import market\nobb.equity.fundamental.income_growth(symbol='AAPL', provider='fmp')\nobb.equity.fundamental.income_growth(symbol='AAPL', limit=10, period='annual', provider='fmp')\n```\n\n",
+        "examples": "\nExamples\n--------\n\n```python\nfrom datamart import market\nmarket.equity.fundamental.income_growth(symbol='AAPL', provider='fmp')\nmarket.equity.fundamental.income_growth(symbol='AAPL', limit=10, period='annual', provider='fmp')\n```\n\n",
         "parameters": {
             "standard": [
                 {
@@ -12328,7 +12328,7 @@
             "message": null
         },
         "description": "Get fundamental metrics for a given company.",
-        "examples": "\nExamples\n--------\n\n```python\nfrom datamart import market\nobb.equity.fundamental.metrics(symbol='AAPL', provider='fmp')\nobb.equity.fundamental.metrics(symbol='AAPL', period='annual', limit=100, provider='intrinio')\n```\n\n",
+        "examples": "\nExamples\n--------\n\n```python\nfrom datamart import market\nmarket.equity.fundamental.metrics(symbol='AAPL', provider='fmp')\nmarket.equity.fundamental.metrics(symbol='AAPL', period='annual', limit=100, provider='intrinio')\n```\n\n",
         "parameters": {
             "standard": [
                 {
@@ -13343,7 +13343,7 @@
             "message": null
         },
         "description": "Get executive management team data for a given company.",
-        "examples": "\nExamples\n--------\n\n```python\nfrom datamart import market\nobb.equity.fundamental.management(symbol='AAPL', provider='fmp')\n```\n\n",
+        "examples": "\nExamples\n--------\n\n```python\nfrom datamart import market\nmarket.equity.fundamental.management(symbol='AAPL', provider='fmp')\n```\n\n",
         "parameters": {
             "standard": [
                 {
@@ -13471,7 +13471,7 @@
             "message": null
         },
         "description": "Get executive management team compensation for a given company over time.",
-        "examples": "\nExamples\n--------\n\n```python\nfrom datamart import market\nobb.equity.fundamental.management_compensation(symbol='AAPL', provider='fmp')\n```\n\n",
+        "examples": "\nExamples\n--------\n\n```python\nfrom datamart import market\nmarket.equity.fundamental.management_compensation(symbol='AAPL', provider='fmp')\n```\n\n",
         "parameters": {
             "standard": [
                 {
@@ -13644,10 +13644,10 @@
     "/equity/fundamental/overview": {
         "deprecated": {
             "flag": true,
-            "message": "This endpoint is deprecated; use `/equity/profile` instead. Deprecated in datamart Platform V4.1 to be removed in V4.3."
+            "message": "This endpoint is deprecated; use `/equity/profile` instead. Deprecated in DataMart Market V4.1 to be removed in V4.3."
         },
         "description": "Get company general business and stock data for a given company.",
-        "examples": "\nExamples\n--------\n\n```python\nfrom datamart import market\nobb.equity.fundamental.overview(symbol='AAPL', provider='fmp')\n```\n\n",
+        "examples": "\nExamples\n--------\n\n```python\nfrom datamart import market\nmarket.equity.fundamental.overview(symbol='AAPL', provider='fmp')\n```\n\n",
         "parameters": {
             "standard": [
                 {
@@ -13961,7 +13961,7 @@
             "message": null
         },
         "description": "Get an extensive set of financial and accounting ratios for a given company over time.",
-        "examples": "\nExamples\n--------\n\n```python\nfrom datamart import market\nobb.equity.fundamental.ratios(symbol='AAPL', provider='fmp')\nobb.equity.fundamental.ratios(symbol='AAPL', period='annual', limit=12, provider='intrinio')\n```\n\n",
+        "examples": "\nExamples\n--------\n\n```python\nfrom datamart import market\nmarket.equity.fundamental.ratios(symbol='AAPL', provider='fmp')\nmarket.equity.fundamental.ratios(symbol='AAPL', period='annual', limit=12, provider='intrinio')\n```\n\n",
         "parameters": {
             "standard": [
                 {
@@ -14461,7 +14461,7 @@
             "message": null
         },
         "description": "Get the revenue geographic breakdown for a given company over time.",
-        "examples": "\nExamples\n--------\n\n```python\nfrom datamart import market\nobb.equity.fundamental.revenue_per_geography(symbol='AAPL', provider='fmp')\nobb.equity.fundamental.revenue_per_geography(symbol='AAPL', period='annual', structure='flat', provider='fmp')\n```\n\n",
+        "examples": "\nExamples\n--------\n\n```python\nfrom datamart import market\nmarket.equity.fundamental.revenue_per_geography(symbol='AAPL', provider='fmp')\nmarket.equity.fundamental.revenue_per_geography(symbol='AAPL', period='annual', structure='flat', provider='fmp')\n```\n\n",
         "parameters": {
             "standard": [
                 {
@@ -14572,7 +14572,7 @@
             "message": null
         },
         "description": "Get the revenue breakdown by business segment for a given company over time.",
-        "examples": "\nExamples\n--------\n\n```python\nfrom datamart import market\nobb.equity.fundamental.revenue_per_segment(symbol='AAPL', provider='fmp')\nobb.equity.fundamental.revenue_per_segment(symbol='AAPL', period='annual', structure='flat', provider='fmp')\n```\n\n",
+        "examples": "\nExamples\n--------\n\n```python\nfrom datamart import market\nmarket.equity.fundamental.revenue_per_segment(symbol='AAPL', provider='fmp')\nmarket.equity.fundamental.revenue_per_segment(symbol='AAPL', period='annual', structure='flat', provider='fmp')\n```\n\n",
         "parameters": {
             "standard": [
                 {
@@ -14683,7 +14683,7 @@
             "message": null
         },
         "description": "Get the URLs to SEC filings reported to EDGAR database, such as 10-K, 10-Q, 8-K, and more. SEC\nfilings include Form 10-K, Form 10-Q, Form 8-K, the proxy statement, Forms 3, 4, and 5, Schedule 13, Form 114,\nForeign Investment Disclosures and others. The annual 10-K report is required to be\nfiled annually and includes the company's financial statements, management discussion and analysis,\nand audited financial statements.",
-        "examples": "\nExamples\n--------\n\n```python\nfrom datamart import market\nobb.equity.fundamental.filings(provider='fmp')\nobb.equity.fundamental.filings(limit=100, provider='fmp')\n```\n\n",
+        "examples": "\nExamples\n--------\n\n```python\nfrom datamart import market\nmarket.equity.fundamental.filings(provider='fmp')\nmarket.equity.fundamental.filings(limit=100, provider='fmp')\n```\n\n",
         "parameters": {
             "standard": [
                 {
@@ -14991,7 +14991,7 @@
             "message": null
         },
         "description": "Get historical stock splits for a given company.",
-        "examples": "\nExamples\n--------\n\n```python\nfrom datamart import market\nobb.equity.fundamental.historical_splits(symbol='AAPL', provider='fmp')\n```\n\n",
+        "examples": "\nExamples\n--------\n\n```python\nfrom datamart import market\nmarket.equity.fundamental.historical_splits(symbol='AAPL', provider='fmp')\n```\n\n",
         "parameters": {
             "standard": [
                 {
@@ -15081,7 +15081,7 @@
             "message": null
         },
         "description": "Get earnings call transcripts for a given company.",
-        "examples": "\nExamples\n--------\n\n```python\nfrom datamart import market\nobb.equity.fundamental.transcript(symbol='AAPL', year=2020, provider='fmp')\n```\n\n",
+        "examples": "\nExamples\n--------\n\n```python\nfrom datamart import market\nmarket.equity.fundamental.transcript(symbol='AAPL', year=2020, provider='fmp')\n```\n\n",
         "parameters": {
             "standard": [
                 {
@@ -15185,7 +15185,7 @@
             "message": null
         },
         "description": "Get the 1 year trailing dividend yield for a given company over time.",
-        "examples": "\nExamples\n--------\n\n```python\nfrom datamart import market\nobb.equity.fundamental.trailing_dividend_yield(symbol='AAPL', provider='tiingo')\nobb.equity.fundamental.trailing_dividend_yield(symbol='AAPL', limit=252, provider='tiingo')\n```\n\n",
+        "examples": "\nExamples\n--------\n\n```python\nfrom datamart import market\nmarket.equity.fundamental.trailing_dividend_yield(symbol='AAPL', provider='tiingo')\nmarket.equity.fundamental.trailing_dividend_yield(symbol='AAPL', limit=252, provider='tiingo')\n```\n\n",
         "parameters": {
             "standard": [
                 {
@@ -15268,7 +15268,7 @@
             "message": null
         },
         "description": "Get data about major holders for a given company over time.",
-        "examples": "\nExamples\n--------\n\n```python\nfrom datamart import market\nobb.equity.ownership.major_holders(symbol='AAPL', provider='fmp')\nobb.equity.ownership.major_holders(symbol='AAPL', page=0, provider='fmp')\n```\n\n",
+        "examples": "\nExamples\n--------\n\n```python\nfrom datamart import market\nmarket.equity.ownership.major_holders(symbol='AAPL', provider='fmp')\nmarket.equity.ownership.major_holders(symbol='AAPL', page=0, provider='fmp')\n```\n\n",
         "parameters": {
             "standard": [
                 {
@@ -15617,7 +15617,7 @@
             "message": null
         },
         "description": "Get data about institutional ownership for a given company over time.",
-        "examples": "\nExamples\n--------\n\n```python\nfrom datamart import market\nobb.equity.ownership.institutional(symbol='AAPL', provider='fmp')\n```\n\n",
+        "examples": "\nExamples\n--------\n\n```python\nfrom datamart import market\nmarket.equity.ownership.institutional(symbol='AAPL', provider='fmp')\n```\n\n",
         "parameters": {
             "standard": [
                 {
@@ -15947,7 +15947,7 @@
             "message": null
         },
         "description": "Get data about trading by a company's management team and board of directors.",
-        "examples": "\nExamples\n--------\n\n```python\nfrom datamart import market\nobb.equity.ownership.insider_trading(symbol='AAPL', provider='fmp')\nobb.equity.ownership.insider_trading(symbol='AAPL', limit=500, provider='intrinio')\n```\n\n",
+        "examples": "\nExamples\n--------\n\n```python\nfrom datamart import market\nmarket.equity.ownership.insider_trading(symbol='AAPL', provider='fmp')\nmarket.equity.ownership.insider_trading(symbol='AAPL', limit=500, provider='intrinio')\n```\n\n",
         "parameters": {
             "standard": [
                 {
@@ -16260,7 +16260,7 @@
             "message": null
         },
         "description": "Get data about share float for a given company.",
-        "examples": "\nExamples\n--------\n\n```python\nfrom datamart import market\nobb.equity.ownership.share_statistics(symbol='AAPL', provider='fmp')\n```\n\n",
+        "examples": "\nExamples\n--------\n\n```python\nfrom datamart import market\nmarket.equity.ownership.share_statistics(symbol='AAPL', provider='fmp')\n```\n\n",
         "parameters": {
             "standard": [
                 {
@@ -16454,7 +16454,7 @@
             "message": null
         },
         "description": "The Securities and Exchange Commission's (SEC) Form 13F is a quarterly report\nthat is required to be filed by all institutional investment managers with at least\n$100 million in assets under management.\nManagers are required to file Form 13F within 45 days after the last day of the calendar quarter.\nMost funds wait until the end of this period in order to conceal\ntheir investment strategy from competitors and the public.",
-        "examples": "\nExamples\n--------\n\n```python\nfrom datamart import market\nobb.equity.ownership.form_13f(symbol='NVDA', provider='sec')\n# Enter a date (calendar quarter ending) for a specific report.\nobb.equity.ownership.form_13f(symbol='BRK-A', date='2016-09-30', provider='sec')\n# Example finding Michael Burry's filings.\ncik = market.regulators.sec.institutions_search(\"Scion Asset Management\").results[0].cik\n# Use the `limit` parameter to return N number of reports from the most recent.\nobb.equity.ownership.form_13f(cik, limit=2).to_df()\n```\n\n",
+        "examples": "\nExamples\n--------\n\n```python\nfrom datamart import market\nmarket.equity.ownership.form_13f(symbol='NVDA', provider='sec')\n# Enter a date (calendar quarter ending) for a specific report.\nmarket.equity.ownership.form_13f(symbol='BRK-A', date='2016-09-30', provider='sec')\n# Example finding Michael Burry's filings.\ncik = market.regulators.sec.institutions_search(\"Scion Asset Management\").results[0].cik\n# Use the `limit` parameter to return N number of reports from the most recent.\nmarket.equity.ownership.form_13f(cik, limit=2).to_df()\n```\n\n",
         "parameters": {
             "standard": [
                 {
@@ -16615,7 +16615,7 @@
             "message": null
         },
         "description": "Get the latest quote for a given stock. Quote includes price, volume, and other data.",
-        "examples": "\nExamples\n--------\n\n```python\nfrom datamart import market\nobb.equity.price.quote(symbol='AAPL', provider='fmp')\n```\n\n",
+        "examples": "\nExamples\n--------\n\n```python\nfrom datamart import market\nmarket.equity.price.quote(symbol='AAPL', provider='fmp')\n```\n\n",
         "parameters": {
             "standard": [
                 {
@@ -17042,7 +17042,7 @@
             "message": null
         },
         "description": "Get the National Best Bid and Offer for a given stock.",
-        "examples": "\nExamples\n--------\n\n```python\nfrom datamart import market\nobb.equity.price.nbbo(symbol='AAPL', provider='polygon')\n```\n\n",
+        "examples": "\nExamples\n--------\n\n```python\nfrom datamart import market\nmarket.equity.price.nbbo(symbol='AAPL', provider='polygon')\n```\n\n",
         "parameters": {
             "standard": [
                 {
@@ -17239,7 +17239,7 @@
             "message": null
         },
         "description": "Get historical price data for a given stock. This includes open, high, low, close, and volume.",
-        "examples": "\nExamples\n--------\n\n```python\nfrom datamart import market\nobb.equity.price.historical(symbol='AAPL', provider='fmp')\nobb.equity.price.historical(symbol='AAPL', interval='1d', provider='intrinio')\n```\n\n",
+        "examples": "\nExamples\n--------\n\n```python\nfrom datamart import market\nmarket.equity.price.historical(symbol='AAPL', provider='fmp')\nmarket.equity.price.historical(symbol='AAPL', interval='1d', provider='intrinio')\n```\n\n",
         "parameters": {
             "standard": [
                 {
@@ -17688,7 +17688,7 @@
             "message": null
         },
         "description": "Get price performance data for a given stock. This includes price changes for different time periods.",
-        "examples": "\nExamples\n--------\n\n```python\nfrom datamart import market\nobb.equity.price.performance(symbol='AAPL', provider='fmp')\n```\n\n",
+        "examples": "\nExamples\n--------\n\n```python\nfrom datamart import market\nmarket.equity.price.performance(symbol='AAPL', provider='fmp')\n```\n\n",
         "parameters": {
             "standard": [
                 {
@@ -17869,7 +17869,7 @@
             "message": null
         },
         "description": "Get reported Fail-to-deliver (FTD) data.",
-        "examples": "\nExamples\n--------\n\n```python\nfrom datamart import market\nobb.equity.shorts.fails_to_deliver(symbol='AAPL', provider='sec')\n```\n\n",
+        "examples": "\nExamples\n--------\n\n```python\nfrom datamart import market\nmarket.equity.shorts.fails_to_deliver(symbol='AAPL', provider='sec')\n```\n\n",
         "parameters": {
             "standard": [
                 {
@@ -17988,7 +17988,7 @@
             "message": null
         },
         "description": "Search for stock symbol, CIK, LEI, or company name.",
-        "examples": "\nExamples\n--------\n\n```python\nfrom datamart import market\nobb.equity.search(provider='intrinio')\n```\n\n",
+        "examples": "\nExamples\n--------\n\n```python\nfrom datamart import market\nmarket.equity.search(provider='intrinio')\n```\n\n",
         "parameters": {
             "standard": [
                 {
@@ -18133,7 +18133,7 @@
             "message": null
         },
         "description": "Screen for companies meeting various criteria. These criteria include\nmarket cap, price, beta, volume, and dividend yield.",
-        "examples": "\nExamples\n--------\n\n```python\nfrom datamart import market\nobb.equity.screener(provider='fmp')\n```\n\n",
+        "examples": "\nExamples\n--------\n\n```python\nfrom datamart import market\nmarket.equity.screener(provider='fmp')\n```\n\n",
         "parameters": {
             "standard": [
                 {
@@ -18407,7 +18407,7 @@
             "message": null
         },
         "description": "Get general information about a company. This includes company name, industry, sector and price data.",
-        "examples": "\nExamples\n--------\n\n```python\nfrom datamart import market\nobb.equity.profile(symbol='AAPL', provider='fmp')\n```\n\n",
+        "examples": "\nExamples\n--------\n\n```python\nfrom datamart import market\nmarket.equity.profile(symbol='AAPL', provider='fmp')\n```\n\n",
         "parameters": {
             "standard": [
                 {
@@ -18917,7 +18917,7 @@
             "message": null
         },
         "description": "Get an updated equity market snapshot. This includes price data for thousands of stocks.",
-        "examples": "\nExamples\n--------\n\n```python\nfrom datamart import market\nobb.equity.market_snapshots(provider='fmp')\n```\n\n",
+        "examples": "\nExamples\n--------\n\n```python\nfrom datamart import market\nmarket.equity.market_snapshots(provider='fmp')\n```\n\n",
         "parameters": {
             "standard": [
                 {
@@ -19345,7 +19345,7 @@
             "message": null
         },
         "description": "Search for ETFs.\n\nAn empty query returns the full list of ETFs from the provider.",
-        "examples": "\nExamples\n--------\n\n```python\nfrom datamart import market\n# An empty query returns the full list of ETFs from the provider.\nobb.etf.search(provider='fmp')\n# The query will return results from text-based fields containing the term.\nobb.etf.search(query='commercial real estate', provider='fmp')\n```\n\n",
+        "examples": "\nExamples\n--------\n\n```python\nfrom datamart import market\n# An empty query returns the full list of ETFs from the provider.\nmarket.etf.search(provider='fmp')\n# The query will return results from text-based fields containing the term.\nmarket.etf.search(query='commercial real estate', provider='fmp')\n```\n\n",
         "parameters": {
             "standard": [
                 {
@@ -19567,7 +19567,7 @@
             "message": null
         },
         "description": "ETF Historical Market Price.",
-        "examples": "\nExamples\n--------\n\n```python\nfrom datamart import market\nobb.etf.historical(symbol='SPY', provider='fmp')\nobb.etf.historical(symbol='SPY', provider='yfinance')\n# This function accepts multiple tickers.\nobb.etf.historical(symbol='SPY,IWM,QQQ,DJIA', provider='yfinance')\n```\n\n",
+        "examples": "\nExamples\n--------\n\n```python\nfrom datamart import market\nmarket.etf.historical(symbol='SPY', provider='fmp')\nmarket.etf.historical(symbol='SPY', provider='yfinance')\n# This function accepts multiple tickers.\nmarket.etf.historical(symbol='SPY,IWM,QQQ,DJIA', provider='yfinance')\n```\n\n",
         "parameters": {
             "standard": [
                 {
@@ -20016,7 +20016,7 @@
             "message": null
         },
         "description": "ETF Information Overview.",
-        "examples": "\nExamples\n--------\n\n```python\nfrom datamart import market\nobb.etf.info(symbol='SPY', provider='fmp')\n# This function accepts multiple tickers.\nobb.etf.info(symbol='SPY,IWM,QQQ,DJIA', provider='fmp')\n```\n\n",
+        "examples": "\nExamples\n--------\n\n```python\nfrom datamart import market\nmarket.etf.info(symbol='SPY', provider='fmp')\n# This function accepts multiple tickers.\nmarket.etf.info(symbol='SPY,IWM,QQQ,DJIA', provider='fmp')\n```\n\n",
         "parameters": {
             "standard": [
                 {
@@ -21212,7 +21212,7 @@
             "message": null
         },
         "description": "ETF Sector weighting.",
-        "examples": "\nExamples\n--------\n\n```python\nfrom datamart import market\nobb.etf.sectors(symbol='SPY', provider='fmp')\n```\n\n",
+        "examples": "\nExamples\n--------\n\n```python\nfrom datamart import market\nmarket.etf.sectors(symbol='SPY', provider='fmp')\n```\n\n",
         "parameters": {
             "standard": [
                 {
@@ -21288,7 +21288,7 @@
             "message": null
         },
         "description": "ETF Country weighting.",
-        "examples": "\nExamples\n--------\n\n```python\nfrom datamart import market\nobb.etf.countries(symbol='VT', provider='fmp')\n```\n\n",
+        "examples": "\nExamples\n--------\n\n```python\nfrom datamart import market\nmarket.etf.countries(symbol='VT', provider='fmp')\n```\n\n",
         "parameters": {
             "standard": [
                 {
@@ -21357,7 +21357,7 @@
             "message": null
         },
         "description": "Price performance as a return, over different periods.",
-        "examples": "\nExamples\n--------\n\n```python\nfrom datamart import market\nobb.etf.price_performance(symbol='QQQ', provider='fmp')\nobb.etf.price_performance(symbol='SPY,QQQ,IWM,DJIA', provider='fmp')\n```\n\n",
+        "examples": "\nExamples\n--------\n\n```python\nfrom datamart import market\nmarket.etf.price_performance(symbol='QQQ', provider='fmp')\nmarket.etf.price_performance(symbol='SPY,QQQ,IWM,DJIA', provider='fmp')\n```\n\n",
         "parameters": {
             "standard": [
                 {
@@ -21661,7 +21661,7 @@
             "message": null
         },
         "description": "Get the holdings for an individual ETF.",
-        "examples": "\nExamples\n--------\n\n```python\nfrom datamart import market\nobb.etf.holdings(symbol='XLK', provider='fmp')\n# Including a date (FMP, SEC) will return the holdings as per NPORT-P filings.\nobb.etf.holdings(symbol='XLK', date=2022-03-31, provider='fmp')\n# The same data can be returned from the SEC directly.\nobb.etf.holdings(symbol='XLK', date=2022-03-31, provider='sec')\n```\n\n",
+        "examples": "\nExamples\n--------\n\n```python\nfrom datamart import market\nmarket.etf.holdings(symbol='XLK', provider='fmp')\n# Including a date (FMP, SEC) will return the holdings as per NPORT-P filings.\nmarket.etf.holdings(symbol='XLK', date=2022-03-31, provider='fmp')\n# The same data can be returned from the SEC directly.\nmarket.etf.holdings(symbol='XLK', date=2022-03-31, provider='sec')\n```\n\n",
         "parameters": {
             "standard": [
                 {
@@ -22551,7 +22551,7 @@
             "message": null
         },
         "description": "Use this function to get the holdings dates, if available.",
-        "examples": "\nExamples\n--------\n\n```python\nfrom datamart import market\nobb.etf.holdings_date(symbol='XLK', provider='fmp')\n```\n\n",
+        "examples": "\nExamples\n--------\n\n```python\nfrom datamart import market\nmarket.etf.holdings_date(symbol='XLK', provider='fmp')\n```\n\n",
         "parameters": {
             "standard": [
                 {
@@ -22628,7 +22628,7 @@
             "message": null
         },
         "description": "Get the recent price performance of each ticker held in the ETF.",
-        "examples": "\nExamples\n--------\n\n```python\nfrom datamart import market\nobb.etf.holdings_performance(symbol='XLK', provider='fmp')\n```\n\n",
+        "examples": "\nExamples\n--------\n\n```python\nfrom datamart import market\nmarket.etf.holdings_performance(symbol='XLK', provider='fmp')\n```\n\n",
         "parameters": {
             "standard": [
                 {
@@ -22809,7 +22809,7 @@
             "message": null
         },
         "description": "Get the exposure to ETFs for a specific stock.",
-        "examples": "\nExamples\n--------\n\n```python\nfrom datamart import market\nobb.etf.equity_exposure(symbol='MSFT', provider='fmp')\n# This function accepts multiple tickers.\nobb.etf.equity_exposure(symbol='MSFT,AAPL', provider='fmp')\n```\n\n",
+        "examples": "\nExamples\n--------\n\n```python\nfrom datamart import market\nmarket.etf.equity_exposure(symbol='MSFT', provider='fmp')\n# This function accepts multiple tickers.\nmarket.etf.equity_exposure(symbol='MSFT,AAPL', provider='fmp')\n```\n\n",
         "parameters": {
             "standard": [
                 {
@@ -22906,7 +22906,7 @@
             "message": null
         },
         "description": "Ameribor.\n\nAmeribor (short for the American interbank offered rate) is a benchmark interest rate that reflects the true cost of\nshort-term interbank borrowing. This rate is based on transactions in overnight unsecured loans conducted on the\nAmerican Financial Exchange (AFX).",
-        "examples": "\nExamples\n--------\n\n```python\nfrom datamart import market\nobb.fixedincome.rate.ameribor(provider='fred')\nobb.fixedincome.rate.ameribor(parameter=30_day_ma, provider='fred')\n```\n\n",
+        "examples": "\nExamples\n--------\n\n```python\nfrom datamart import market\nmarket.fixedincome.rate.ameribor(provider='fred')\nmarket.fixedincome.rate.ameribor(parameter=30_day_ma, provider='fred')\n```\n\n",
         "parameters": {
             "standard": [
                 {
@@ -22997,7 +22997,7 @@
             "message": null
         },
         "description": "Sterling Overnight Index Average.\n\nSONIA (Sterling Overnight Index Average) is an important interest rate benchmark. SONIA is based on actual\ntransactions and reflects the average of the interest rates that banks pay to borrow sterling overnight from other\nfinancial institutions and other institutional investors.",
-        "examples": "\nExamples\n--------\n\n```python\nfrom datamart import market\nobb.fixedincome.rate.sonia(provider='fred')\nobb.fixedincome.rate.sonia(parameter=total_nominal_value, provider='fred')\n```\n\n",
+        "examples": "\nExamples\n--------\n\n```python\nfrom datamart import market\nmarket.fixedincome.rate.sonia(provider='fred')\nmarket.fixedincome.rate.sonia(parameter=total_nominal_value, provider='fred')\n```\n\n",
         "parameters": {
             "standard": [
                 {
@@ -23088,7 +23088,7 @@
             "message": null
         },
         "description": "Interest on Reserve Balances.\n\nGet Interest Rate on Reserve Balances data A bank rate is the interest rate a nation's central bank charges to its\ndomestic banks to borrow money. The rates central banks charge are set to stabilize the economy. In the\nUnited States, the Federal Reserve System's Board of Governors set the bank rate, also known as the discount rate.",
-        "examples": "\nExamples\n--------\n\n```python\nfrom datamart import market\nobb.fixedincome.rate.iorb(provider='fred')\n```\n\n",
+        "examples": "\nExamples\n--------\n\n```python\nfrom datamart import market\nmarket.fixedincome.rate.iorb(provider='fred')\n```\n\n",
         "parameters": {
             "standard": [
                 {
@@ -23171,7 +23171,7 @@
             "message": null
         },
         "description": "Fed Funds Rate.\n\nGet Effective Federal Funds Rate data. A bank rate is the interest rate a nation's central bank charges to its\ndomestic banks to borrow money. The rates central banks charge are set to stabilize the economy. In the\nUnited States, the Federal Reserve System's Board of Governors set the bank rate, also known as the discount rate.",
-        "examples": "\nExamples\n--------\n\n```python\nfrom datamart import market\nobb.fixedincome.rate.effr(provider='fred')\nobb.fixedincome.rate.effr(parameter=daily, provider='fred')\n```\n\n",
+        "examples": "\nExamples\n--------\n\n```python\nfrom datamart import market\nmarket.fixedincome.rate.effr(provider='fred')\nmarket.fixedincome.rate.effr(parameter=daily, provider='fred')\n```\n\n",
         "parameters": {
             "standard": [
                 {
@@ -23264,7 +23264,7 @@
             "message": null
         },
         "description": "Fed Funds Rate Projections.\n\nThe projections for the federal funds rate are the value of the midpoint of the\nprojected appropriate target range for the federal funds rate or the projected\nappropriate target level for the federal funds rate at the end of the specified\ncalendar year or over the longer run.",
-        "examples": "\nExamples\n--------\n\n```python\nfrom datamart import market\nobb.fixedincome.rate.effr_forecast(provider='fred')\nobb.fixedincome.rate.effr_forecast(long_run=True, provider='fred')\n```\n\n",
+        "examples": "\nExamples\n--------\n\n```python\nfrom datamart import market\nmarket.fixedincome.rate.effr_forecast(provider='fred')\nmarket.fixedincome.rate.effr_forecast(long_run=True, provider='fred')\n```\n\n",
         "parameters": {
             "standard": [
                 {
@@ -23383,7 +23383,7 @@
             "message": null
         },
         "description": "Euro Short-Term Rate.\n\nThe euro short-term rate (\u20acSTR) reflects the wholesale euro unsecured overnight borrowing costs of banks located in\nthe euro area. The \u20acSTR is published on each TARGET2 business day based on transactions conducted and settled on\nthe previous TARGET2 business day (the reporting date \u201cT\u201d) with a maturity date of T+1 which are deemed to have been\nexecuted at arm\u2019s length and thus reflect market rates in an unbiased way.",
-        "examples": "\nExamples\n--------\n\n```python\nfrom datamart import market\nobb.fixedincome.rate.estr(provider='fred')\nobb.fixedincome.rate.estr(parameter=number_of_active_banks, provider='fred')\n```\n\n",
+        "examples": "\nExamples\n--------\n\n```python\nfrom datamart import market\nmarket.fixedincome.rate.estr(provider='fred')\nmarket.fixedincome.rate.estr(parameter=number_of_active_banks, provider='fred')\n```\n\n",
         "parameters": {
             "standard": [
                 {
@@ -23474,7 +23474,7 @@
             "message": null
         },
         "description": "European Central Bank Interest Rates.\n\nThe Governing Council of the ECB sets the key interest rates for the euro area:\n\n- The interest rate on the main refinancing operations (MRO), which provide\nthe bulk of liquidity to the banking system.\n- The rate on the deposit facility, which banks may use to make overnight deposits with the Eurosystem.\n- The rate on the marginal lending facility, which offers overnight credit to banks from the Eurosystem.",
-        "examples": "\nExamples\n--------\n\n```python\nfrom datamart import market\nobb.fixedincome.rate.ecb(provider='fred')\nobb.fixedincome.rate.ecb(interest_rate_type='refinancing', provider='fred')\n```\n\n",
+        "examples": "\nExamples\n--------\n\n```python\nfrom datamart import market\nmarket.fixedincome.rate.ecb(provider='fred')\nmarket.fixedincome.rate.ecb(interest_rate_type='refinancing', provider='fred')\n```\n\n",
         "parameters": {
             "standard": [
                 {
@@ -23564,7 +23564,7 @@
             "message": null
         },
         "description": "Discount Window Primary Credit Rate.\n\nA bank rate is the interest rate a nation's central bank charges to its domestic banks to borrow money.\nThe rates central banks charge are set to stabilize the economy.\nIn the United States, the Federal Reserve System's Board of Governors set the bank rate,\nalso known as the discount rate.",
-        "examples": "\nExamples\n--------\n\n```python\nfrom datamart import market\nobb.fixedincome.rate.dpcredit(provider='fred')\nobb.fixedincome.rate.dpcredit(start_date='2023-02-01', end_date='2023-05-01', provider='fred')\n```\n\n",
+        "examples": "\nExamples\n--------\n\n```python\nfrom datamart import market\nmarket.fixedincome.rate.dpcredit(provider='fred')\nmarket.fixedincome.rate.dpcredit(start_date='2023-02-01', end_date='2023-05-01', provider='fred')\n```\n\n",
         "parameters": {
             "standard": [
                 {
@@ -23655,7 +23655,7 @@
             "message": null
         },
         "description": "Treasury Constant Maturity.\n\nGet data for 10-Year Treasury Constant Maturity Minus Selected Treasury Constant Maturity.\nConstant maturity is the theoretical value of a U.S. Treasury that is based on recent values of auctioned U.S.\nTreasuries. The value is obtained by the U.S. Treasury on a daily basis through interpolation of the Treasury\nyield curve which, in turn, is based on closing bid-yields of actively-traded Treasury securities.",
-        "examples": "\nExamples\n--------\n\n```python\nfrom datamart import market\nobb.fixedincome.spreads.tcm(provider='fred')\nobb.fixedincome.spreads.tcm(maturity='2y', provider='fred')\n```\n\n",
+        "examples": "\nExamples\n--------\n\n```python\nfrom datamart import market\nmarket.fixedincome.spreads.tcm(provider='fred')\nmarket.fixedincome.spreads.tcm(maturity='2y', provider='fred')\n```\n\n",
         "parameters": {
             "standard": [
                 {
@@ -23745,7 +23745,7 @@
             "message": null
         },
         "description": "Select Treasury Constant Maturity.\n\nGet data for Selected Treasury Constant Maturity Minus Federal Funds Rate\nConstant maturity is the theoretical value of a U.S. Treasury that is based on recent values of auctioned U.S.\nTreasuries. The value is obtained by the U.S. Treasury on a daily basis through interpolation of the Treasury\nyield curve which, in turn, is based on closing bid-yields of actively-traded Treasury securities.",
-        "examples": "\nExamples\n--------\n\n```python\nfrom datamart import market\nobb.fixedincome.spreads.tcm_effr(provider='fred')\nobb.fixedincome.spreads.tcm_effr(maturity='10y', provider='fred')\n```\n\n",
+        "examples": "\nExamples\n--------\n\n```python\nfrom datamart import market\nmarket.fixedincome.spreads.tcm_effr(provider='fred')\nmarket.fixedincome.spreads.tcm_effr(maturity='10y', provider='fred')\n```\n\n",
         "parameters": {
             "standard": [
                 {
@@ -23835,7 +23835,7 @@
             "message": null
         },
         "description": "Select Treasury Bill.\n\nGet Selected Treasury Bill Minus Federal Funds Rate.\nConstant maturity is the theoretical value of a U.S. Treasury that is based on recent values of\nauctioned U.S. Treasuries.\nThe value is obtained by the U.S. Treasury on a daily basis through interpolation of the Treasury\nyield curve which, in turn, is based on closing bid-yields of actively-traded Treasury securities.",
-        "examples": "\nExamples\n--------\n\n```python\nfrom datamart import market\nobb.fixedincome.spreads.treasury_effr(provider='fred')\nobb.fixedincome.spreads.treasury_effr(maturity='6m', provider='fred')\n```\n\n",
+        "examples": "\nExamples\n--------\n\n```python\nfrom datamart import market\nmarket.fixedincome.spreads.treasury_effr(provider='fred')\nmarket.fixedincome.spreads.treasury_effr(maturity='6m', provider='fred')\n```\n\n",
         "parameters": {
             "standard": [
                 {
@@ -23925,7 +23925,7 @@
             "message": null
         },
         "description": "US Yield Curve. Get United States yield curve.",
-        "examples": "\nExamples\n--------\n\n```python\nfrom datamart import market\nobb.fixedincome.government.us_yield_curve(provider='fred')\nobb.fixedincome.government.us_yield_curve(inflation_adjusted=True, provider='fred')\n```\n\n",
+        "examples": "\nExamples\n--------\n\n```python\nfrom datamart import market\nmarket.fixedincome.government.us_yield_curve(provider='fred')\nmarket.fixedincome.government.us_yield_curve(inflation_adjusted=True, provider='fred')\n```\n\n",
         "parameters": {
             "standard": [
                 {
@@ -24008,7 +24008,7 @@
             "message": null
         },
         "description": "Government Treasury Rates.",
-        "examples": "\nExamples\n--------\n\n```python\nfrom datamart import market\nobb.fixedincome.government.treasury_rates(provider='fmp')\n```\n\n",
+        "examples": "\nExamples\n--------\n\n```python\nfrom datamart import market\nmarket.fixedincome.government.treasury_rates(provider='fmp')\n```\n\n",
         "parameters": {
             "standard": [
                 {
@@ -24177,7 +24177,7 @@
             "message": null
         },
         "description": "ICE BofA US Corporate Bond Indices.\n\nThe ICE BofA US Corporate Index tracks the performance of US dollar denominated investment grade corporate debt\npublicly issued in the US domestic market. Qualifying securities must have an investment grade rating (based on an\naverage of Moody\u2019s, S&P and Fitch), at least 18 months to final maturity at the time of issuance, at least one year\nremaining term to final maturity as of the rebalance date, a fixed coupon schedule and a minimum amount\noutstanding of $250 million. The ICE BofA US Corporate Index is a component of the US Corporate Master Index.",
-        "examples": "\nExamples\n--------\n\n```python\nfrom datamart import market\nobb.fixedincome.corporate.ice_bofa(provider='fred')\nobb.fixedincome.corporate.ice_bofa(index_type='yield_to_worst', provider='fred')\n```\n\n",
+        "examples": "\nExamples\n--------\n\n```python\nfrom datamart import market\nmarket.fixedincome.corporate.ice_bofa(provider='fred')\nmarket.fixedincome.corporate.ice_bofa(index_type='yield_to_worst', provider='fred')\n```\n\n",
         "parameters": {
             "standard": [
                 {
@@ -24296,7 +24296,7 @@
             "message": null
         },
         "description": "Moody Corporate Bond Index.\n\nMoody's Aaa and Baa are investment bonds that acts as an index of\nthe performance of all bonds given an Aaa or Baa rating by Moody's Investors Service respectively.\nThese corporate bonds often are used in macroeconomics as an alternative to the federal ten-year\nTreasury Bill as an indicator of the interest rate.",
-        "examples": "\nExamples\n--------\n\n```python\nfrom datamart import market\nobb.fixedincome.corporate.moody(provider='fred')\nobb.fixedincome.corporate.moody(index_type='baa', provider='fred')\n```\n\n",
+        "examples": "\nExamples\n--------\n\n```python\nfrom datamart import market\nmarket.fixedincome.corporate.moody(provider='fred')\nmarket.fixedincome.corporate.moody(index_type='baa', provider='fred')\n```\n\n",
         "parameters": {
             "standard": [
                 {
@@ -24394,7 +24394,7 @@
             "message": null
         },
         "description": "High Quality Market Corporate Bond.\n\nThe HQM yield curve represents the high quality corporate bond market, i.e.,\ncorporate bonds rated AAA, AA, or A.  The HQM curve contains two regression terms.\nThese terms are adjustment factors that blend AAA, AA, and A bonds into a single HQM yield curve\nthat is the market-weighted average (MWA) quality of high quality bonds.",
-        "examples": "\nExamples\n--------\n\n```python\nfrom datamart import market\nobb.fixedincome.corporate.hqm(provider='fred')\nobb.fixedincome.corporate.hqm(yield_curve='par', provider='fred')\n```\n\n",
+        "examples": "\nExamples\n--------\n\n```python\nfrom datamart import market\nmarket.fixedincome.corporate.hqm(provider='fred')\nmarket.fixedincome.corporate.hqm(yield_curve='par', provider='fred')\n```\n\n",
         "parameters": {
             "standard": [
                 {
@@ -24499,7 +24499,7 @@
             "message": null
         },
         "description": "Spot Rates.\n\nThe spot rates for any maturity is the yield on a bond that provides a single payment at that maturity.\nThis is a zero coupon bond.\nBecause each spot rate pertains to a single cashflow, it is the relevant interest rate\nconcept for discounting a pension liability at the same maturity.",
-        "examples": "\nExamples\n--------\n\n```python\nfrom datamart import market\nobb.fixedincome.corporate.spot_rates(provider='fred')\nobb.fixedincome.corporate.spot_rates(maturity='10,20,30,50', provider='fred')\n```\n\n",
+        "examples": "\nExamples\n--------\n\n```python\nfrom datamart import market\nmarket.fixedincome.corporate.spot_rates(provider='fred')\nmarket.fixedincome.corporate.spot_rates(maturity='10,20,30,50', provider='fred')\n```\n\n",
         "parameters": {
             "standard": [
                 {
@@ -24596,7 +24596,7 @@
             "message": null
         },
         "description": "Commercial Paper.\n\nCommercial paper (CP) consists of short-term, promissory notes issued primarily by corporations.\nMaturities range up to 270 days but average about 30 days.\nMany companies use CP to raise cash needed for current transactions,\nand many find it to be a lower-cost alternative to bank loans.",
-        "examples": "\nExamples\n--------\n\n```python\nfrom datamart import market\nobb.fixedincome.corporate.commercial_paper(provider='fred')\nobb.fixedincome.corporate.commercial_paper(maturity='15d', provider='fred')\n```\n\n",
+        "examples": "\nExamples\n--------\n\n```python\nfrom datamart import market\nmarket.fixedincome.corporate.commercial_paper(provider='fred')\nmarket.fixedincome.corporate.commercial_paper(maturity='15d', provider='fred')\n```\n\n",
         "parameters": {
             "standard": [
                 {
@@ -24700,7 +24700,7 @@
             "message": null
         },
         "description": "Secured Overnight Financing Rate.\n\nThe Secured Overnight Financing Rate (SOFR) is a broad measure of the cost of\nborrowing cash overnight collateralizing by Treasury securities.",
-        "examples": "\nExamples\n--------\n\n```python\nfrom datamart import market\nobb.fixedincome.sofr(provider='fred')\nobb.fixedincome.sofr(period=overnight, provider='fred')\n```\n\n",
+        "examples": "\nExamples\n--------\n\n```python\nfrom datamart import market\nmarket.fixedincome.sofr(provider='fred')\nmarket.fixedincome.sofr(period=overnight, provider='fred')\n```\n\n",
         "parameters": {
             "standard": [
                 {
@@ -24791,7 +24791,7 @@
             "message": null
         },
         "description": "Historical Index Levels.",
-        "examples": "\nExamples\n--------\n\n```python\nfrom datamart import market\nobb.index.price.historical(symbol='^GSPC', provider='fmp')\n# Not all providers have the same symbols.\nobb.index.price.historical(symbol='SPX', provider='intrinio')\n```\n\n",
+        "examples": "\nExamples\n--------\n\n```python\nfrom datamart import market\nmarket.index.price.historical(symbol='^GSPC', provider='fmp')\n# Not all providers have the same symbols.\nmarket.index.price.historical(symbol='SPX', provider='intrinio')\n```\n\n",
         "parameters": {
             "standard": [
                 {
@@ -24972,10 +24972,10 @@
     "/index/market": {
         "deprecated": {
             "flag": true,
-            "message": "This endpoint is deprecated; use `/index/price/historical` instead. Deprecated in datamart Platform V4.1 to be removed in V4.3."
+            "message": "This endpoint is deprecated; use `/index/price/historical` instead. Deprecated in DataMart Market V4.1 to be removed in V4.3."
         },
         "description": "Historical Market Indices.",
-        "examples": "\nExamples\n--------\n\n```python\nfrom datamart import market\nobb.index.market(symbol='^IBEX', provider='fmp')\n```\n\n",
+        "examples": "\nExamples\n--------\n\n```python\nfrom datamart import market\nmarket.index.market(symbol='^IBEX', provider='fmp')\n```\n\n",
         "parameters": {
             "standard": [
                 {
@@ -25159,7 +25159,7 @@
             "message": null
         },
         "description": "Index Constituents.",
-        "examples": "\nExamples\n--------\n\n```python\nfrom datamart import market\nobb.index.constituents(symbol='dowjones', provider='fmp')\n```\n\n",
+        "examples": "\nExamples\n--------\n\n```python\nfrom datamart import market\nmarket.index.constituents(symbol='dowjones', provider='fmp')\n```\n\n",
         "parameters": {
             "standard": [
                 {
@@ -25278,7 +25278,7 @@
             "message": null
         },
         "description": "All indices available from a given provider.",
-        "examples": "\nExamples\n--------\n\n```python\nfrom datamart import market\nobb.index.available(provider='fmp')\nobb.index.available(provider='yfinance')\n```\n\n",
+        "examples": "\nExamples\n--------\n\n```python\nfrom datamart import market\nmarket.index.available(provider='fmp')\nmarket.index.available(provider='yfinance')\n```\n\n",
         "parameters": {
             "standard": [
                 {
@@ -25358,7 +25358,7 @@
                 {
                     "name": "code",
                     "type": "str",
-                    "description": "ID code for keying the index in the datamart Terminal.",
+                    "description": "ID code for keying the index in the DataMart Terminal.",
                     "default": "",
                     "optional": false
                 },
@@ -25379,7 +25379,7 @@
             "message": null
         },
         "description": "World News. Global news data.",
-        "examples": "\nExamples\n--------\n\n```python\nfrom datamart import market\nobb.news.world(provider='fmp')\nobb.news.world(limit=100, provider='intrinio')\n# Get news on the specified dates.\nobb.news.world(start_date='2024-02-01', end_date='2024-02-07', provider='intrinio')\n# Display the headlines of the news.\nobb.news.world(display=headline, provider='benzinga')\n# Get news by topics.\nobb.news.world(topics=finance, provider='benzinga')\n# Get news by source using 'tingo' as provider.\nobb.news.world(provider='tiingo', source=bloomberg)\n```\n\n",
+        "examples": "\nExamples\n--------\n\n```python\nfrom datamart import market\nmarket.news.world(provider='fmp')\nmarket.news.world(limit=100, provider='intrinio')\n# Get news on the specified dates.\nmarket.news.world(start_date='2024-02-01', end_date='2024-02-07', provider='intrinio')\n# Display the headlines of the news.\nmarket.news.world(display=headline, provider='benzinga')\n# Get news by topics.\nmarket.news.world(topics=finance, provider='benzinga')\n# Get news by source using 'tingo' as provider.\nmarket.news.world(provider='tiingo', source=bloomberg)\n```\n\n",
         "parameters": {
             "standard": [
                 {
@@ -25705,7 +25705,7 @@
             "message": null
         },
         "description": "Company News. Get news for one or more companies.",
-        "examples": "\nExamples\n--------\n\n```python\nfrom datamart import market\nobb.news.company(provider='benzinga')\nobb.news.company(limit=100, provider='benzinga')\n# Get news on the specified dates.\nobb.news.company(symbol='AAPL', start_date='2024-02-01', end_date='2024-02-07', provider='intrinio')\n# Display the headlines of the news.\nobb.news.company(symbol='AAPL', display=headline, provider='benzinga')\n# Get news for multiple symbols.\nobb.news.company(symbol='aapl,tsla', provider='fmp')\n# Get news company's ISIN.\nobb.news.company(symbol='NVDA', isin=US0378331005, provider='benzinga')\n```\n\n",
+        "examples": "\nExamples\n--------\n\n```python\nfrom datamart import market\nmarket.news.company(provider='benzinga')\nmarket.news.company(limit=100, provider='benzinga')\n# Get news on the specified dates.\nmarket.news.company(symbol='AAPL', start_date='2024-02-01', end_date='2024-02-07', provider='intrinio')\n# Display the headlines of the news.\nmarket.news.company(symbol='AAPL', display=headline, provider='benzinga')\n# Get news for multiple symbols.\nmarket.news.company(symbol='aapl,tsla', provider='fmp')\n# Get news company's ISIN.\nmarket.news.company(symbol='NVDA', isin=US0378331005, provider='benzinga')\n```\n\n",
         "parameters": {
             "standard": [
                 {
@@ -26095,7 +26095,7 @@
             "message": null
         },
         "description": "Map a ticker symbol to a CIK number.",
-        "examples": "\nExamples\n--------\n\n```python\nfrom datamart import market\nobb.regulators.sec.cik_map(symbol='MSFT', provider='sec')\n```\n\n",
+        "examples": "\nExamples\n--------\n\n```python\nfrom datamart import market\nmarket.regulators.sec.cik_map(symbol='MSFT', provider='sec')\n```\n\n",
         "parameters": {
             "standard": [
                 {
@@ -26164,7 +26164,7 @@
             "message": null
         },
         "description": "Search SEC-regulated institutions by name and return a list of results with CIK numbers.",
-        "examples": "\nExamples\n--------\n\n```python\nfrom datamart import market\nobb.regulators.sec.institutions_search(provider='sec')\nobb.regulators.sec.institutions_search(query='blackstone real estate', provider='sec')\n```\n\n",
+        "examples": "\nExamples\n--------\n\n```python\nfrom datamart import market\nmarket.regulators.sec.institutions_search(provider='sec')\nmarket.regulators.sec.institutions_search(query='blackstone real estate', provider='sec')\n```\n\n",
         "parameters": {
             "standard": [
                 {
@@ -26247,7 +26247,7 @@
             "message": null
         },
         "description": "A tool for navigating the directory of SEC XML schema files by year.",
-        "examples": "\nExamples\n--------\n\n```python\nfrom datamart import market\nobb.regulators.sec.schema_files(provider='sec')\n# Get a list of schema files.\ndata = market.regulators.sec.schema_files().results\ndata.files[0]\n'https://xbrl.fasb.org/us-gaap/'\n# The directory structure can be navigated by constructing a URL from the 'results' list.\nurl = data.files[0]+data.files[-1]\n# The URL base will always be the 0 position in the list, feed  the URL back in as a parameter.\nobb.regulators.sec.schema_files(url=url).results.files\n['https://xbrl.fasb.org/us-gaap/2024/'\n'USGAAP2024FileList.xml'\n'dis/'\n'dqcrules/'\n'ebp/'\n'elts/'\n'entire/'\n'meta/'\n'stm/'\n'us-gaap-2024.zip']\n```\n\n",
+        "examples": "\nExamples\n--------\n\n```python\nfrom datamart import market\nmarket.regulators.sec.schema_files(provider='sec')\n# Get a list of schema files.\ndata = market.regulators.sec.schema_files().results\ndata.files[0]\n'https://xbrl.fasb.org/us-gaap/'\n# The directory structure can be navigated by constructing a URL from the 'results' list.\nurl = data.files[0]+data.files[-1]\n# The URL base will always be the 0 position in the list, feed  the URL back in as a parameter.\nmarket.regulators.sec.schema_files(url=url).results.files\n['https://xbrl.fasb.org/us-gaap/2024/'\n'USGAAP2024FileList.xml'\n'dis/'\n'dqcrules/'\n'ebp/'\n'elts/'\n'entire/'\n'meta/'\n'stm/'\n'us-gaap-2024.zip']\n```\n\n",
         "parameters": {
             "standard": [
                 {
@@ -26331,7 +26331,7 @@
             "message": null
         },
         "description": "Map a CIK number to a ticker symbol, leading 0s can be omitted or included.",
-        "examples": "\nExamples\n--------\n\n```python\nfrom datamart import market\nobb.regulators.sec.symbol_map(query='0000789019', provider='sec')\n```\n\n",
+        "examples": "\nExamples\n--------\n\n```python\nfrom datamart import market\nmarket.regulators.sec.symbol_map(query='0000789019', provider='sec')\n```\n\n",
         "parameters": {
             "standard": [
                 {
@@ -26407,7 +26407,7 @@
             "message": null
         },
         "description": "The RSS feed provides links to litigation releases concerning civil lawsuits brought by the Commission in federal court.",
-        "examples": "\nExamples\n--------\n\n```python\nfrom datamart import market\nobb.regulators.sec.rss_litigation(provider='sec')\n```\n\n",
+        "examples": "\nExamples\n--------\n\n```python\nfrom datamart import market\nmarket.regulators.sec.rss_litigation(provider='sec')\n```\n\n",
         "parameters": {
             "standard": [
                 {
@@ -26497,7 +26497,7 @@
             "message": null
         },
         "description": "Search for Industry Titles, Reporting Office, and SIC Codes. An empty query string returns all results.",
-        "examples": "\nExamples\n--------\n\n```python\nfrom datamart import market\nobb.regulators.sec.sic_search(provider='sec')\nobb.regulators.sec.sic_search(query='real estate investment trusts', provider='sec')\n```\n\n",
+        "examples": "\nExamples\n--------\n\n```python\nfrom datamart import market\nmarket.regulators.sec.sic_search(provider='sec')\nmarket.regulators.sec.sic_search(query='real estate investment trusts', provider='sec')\n```\n\n",
         "parameters": {
             "standard": [
                 {

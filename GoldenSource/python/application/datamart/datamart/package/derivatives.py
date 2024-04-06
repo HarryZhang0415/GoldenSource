@@ -1,7 +1,6 @@
 ### THIS FILE IS AUTO-GENERATED. DO NOT EDIT. ###
 
-
-from market_core.app.static.container import Container
+from datamart_core.app.static.container import Container
 
 
 class ROUTER_derivatives(Container):

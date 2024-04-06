@@ -1,16 +1,17 @@
 ### THIS FILE IS AUTO-GENERATED. DO NOT EDIT. ###
 
+from datamart_core.app.static.container import Container
+from datamart_core.app.model.obbject import OBBject
+from datamart_core.app.model.custom_parameter import DataMartCustomParameter
 import datetime
-from typing import List, Literal, Optional, Union
-from warnings import simplefilter, warn
-
-from market_core.app.deprecation import DataMartDeprecationWarning
-from market_core.app.model.custom_parameter import DataMartCustomParameter
-from market_core.app.model.obbject import OBBject
-from market_core.app.static.container import Container
-from market_core.app.static.utils.decorators import exception_handler, validate
-from market_core.app.static.utils.filters import filter_inputs
+from typing import List, Union, Optional, Literal
+from warnings import warn, simplefilter
 from typing_extensions import Annotated, deprecated
+from datamart_core.app.static.utils.decorators import exception_handler, validate
+
+from datamart_core.app.static.utils.filters import filter_inputs
+
+from datamart_core.app.deprecation import DataMartDeprecationWarning
 
 
 class ROUTER_index(Container):
@@ -181,7 +182,7 @@ class ROUTER_index(Container):
     @exception_handler
     @validate
     @deprecated(
-        "This endpoint is deprecated; use `/index/price/historical` instead. Deprecated in DataMart Platform V4.1 to be removed in V4.3.",
+        "This endpoint is deprecated; use `/index/price/historical` instead. Deprecated in DataMart Market V4.1 to be removed in V4.3.",
         category=DataMartDeprecationWarning,
     )
     def market(
@@ -282,7 +283,7 @@ class ROUTER_index(Container):
 
         simplefilter("always", DeprecationWarning)
         warn(
-            "This endpoint is deprecated; use `/index/price/historical` instead. Deprecated in DataMart Platform V4.1 to be removed in V4.3.",
+            "This endpoint is deprecated; use `/index/price/historical` instead. Deprecated in DataMart Market V4.1 to be removed in V4.3.",
             category=DeprecationWarning,
             stacklevel=2,
         )
