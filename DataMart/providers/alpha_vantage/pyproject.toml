@@ -1,0 +1,18 @@
+[tool.poetry]
+name = "datamart-alpha-vantage"
+version = "1.1.4"
+description = "Alpha Vantage extension for DataMart"
+authors = ["DataMart Team <hello@datamart.co>"]
+readme = "README.md"
+packages = [{ include = "datamart_alpha_vantage" }]
+
+[tool.poetry.dependencies]
+python = "^3.8"
+datamart-core = "^1.1.5"
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
+
+[tool.poetry.plugins."datamart_provider_extension"]
+alpha_vantage = "datamart_alpha_vantage:alpha_vantage_provider"

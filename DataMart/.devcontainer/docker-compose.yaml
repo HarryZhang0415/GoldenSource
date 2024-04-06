@@ -1,0 +1,14 @@
+version: '1.0'
+services:
+  datamart:
+    volumes:
+      - type: bind
+        source: C:\\Git\\GoldenSource\\cfg
+        target: /root/src/GoldenSource/cfg
+      - type: bind
+        source: C:\\Git\\GoldenSource\\DataMart
+        target: /root/src/GoldenSource/DataMart
+    platform: linux/amd64
+    build:
+      dockerfile: datamart/.devcontainer/Dockerfile
+      context: ../../

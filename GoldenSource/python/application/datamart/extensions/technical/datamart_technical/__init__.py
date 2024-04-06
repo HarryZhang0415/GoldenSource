@@ -1,1 +1,0 @@
-"""DataMart Technical Analysis Extension."""

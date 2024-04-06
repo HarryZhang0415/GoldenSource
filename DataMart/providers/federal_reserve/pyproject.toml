@@ -1,0 +1,18 @@
+[tool.poetry]
+name = "datamart-federal-reserve"
+version = "1.1.4"
+description = "US Federal Reserve Data Extension for DataMart"
+authors = ["DataMart <hello@datamart.co>"]
+readme = "README.md"
+packages = [{ include = "datamart_federal_reserve" }]
+
+[tool.poetry.dependencies]
+python = "^3.8"
+datamart-core = "^1.1.5"
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
+
+[tool.poetry.plugins."datamart_provider_extension"]
+federal_reserve = "datamart_federal_reserve:federal_reserve_provider"

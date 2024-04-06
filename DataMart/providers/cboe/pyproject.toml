@@ -1,0 +1,20 @@
+[tool.poetry]
+name = "datamart-cboe"
+version = "1.1.4"
+description = "CBOE extension for DataMart"
+authors = ["DataMart Team <hello@datamart.co>"]
+readme = "README.md"
+packages = [{ include = "datamart_cboe" }]
+
+[tool.poetry.dependencies]
+python = "^3.8"
+aiohttp-client-cache = "^0.10.0"
+aiosqlite = "^0.19.0"
+datamart-core = "^1.1.5"
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
+
+[tool.poetry.plugins."datamart_provider_extension"]
+cboe = "datamart_cboe:cboe_provider"

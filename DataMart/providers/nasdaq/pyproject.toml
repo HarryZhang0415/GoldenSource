@@ -1,0 +1,20 @@
+[tool.poetry]
+name = "datamart-nasdaq"
+version = "1.1.5"
+description = "Nasdaq extension for DataMart"
+authors = ["DataMart Team <hello@datamart.co>"]
+readme = "README.md"
+packages = [{ include = "datamart_nasdaq" }]
+
+[tool.poetry.dependencies]
+python = "^3.8"
+datamart-core = "^1.1.5"
+random-user-agent = "^1.0.1"
+nasdaq-data-link = "^1.0.4"
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
+
+[tool.poetry.plugins."datamart_provider_extension"]
+nasdaq = "datamart_nasdaq:nasdaq_provider"

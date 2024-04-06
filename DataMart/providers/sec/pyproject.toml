@@ -1,0 +1,21 @@
+[tool.poetry]
+name = "datamart-sec"
+version = "1.1.4"
+description = "SEC extension for DataMart"
+authors = ["DataMart Team <hello@datamart.co>"]
+readme = "README.md"
+packages = [{ include = "datamart_sec" }]
+
+[tool.poetry.dependencies]
+python = ">=3.8,<3.12"
+datamart-core = "^1.1.5"
+requests-cache = "^1.1.0"
+xmltodict = "^0.13.0"
+pytest-freezegun = "^0.4.2"
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
+
+[tool.poetry.plugins."datamart_provider_extension"]
+sec = "datamart_sec:sec_provider"

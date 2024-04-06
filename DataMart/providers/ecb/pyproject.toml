@@ -1,0 +1,19 @@
+[tool.poetry]
+name = "datamart-ecb"
+version = "1.1.4"
+description = "ECB extension for DataMart"
+authors = ["DataMart Team <hello@datamart.co>"]
+readme = "README.md"
+packages = [{ include = "datamart_ecb" }]
+
+[tool.poetry.dependencies]
+python = "^3.8"
+datamart-core = "^1.1.5"
+xmltodict = "^0.13.0"
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
+
+[tool.poetry.plugins."datamart_provider_extension"]
+ecb = "datamart_ecb:ecb_provider"

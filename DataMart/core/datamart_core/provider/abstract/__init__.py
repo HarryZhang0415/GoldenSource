@@ -1,0 +1,1 @@
+"""DataMart Provider Abstract Class."""

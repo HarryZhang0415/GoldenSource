@@ -1,0 +1,25 @@
+[tool.poetry]
+name = "datamart"
+version = "4.1.6"
+description = "GoldenSource datamart"
+authors = []
+readme = "README.md"
+packages = [{ include = "datamart" }]
+
+[tool.poetry.dependencies]
+python = ">=3.8,<3.12"
+datamart-core = "^1.1.5"
+wrapt = "^1.16.0"
+toml = "^0.10.2"
+
+[tool.poetry.extras]
+alpha_vantage = ["datamart-alpha-vantage"]
+
+
+all = [
+    "datamart-alpha-vantage",
+]
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"

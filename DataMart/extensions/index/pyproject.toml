@@ -1,0 +1,18 @@
+[tool.poetry]
+name = "datamart-index"
+version = "1.1.4"
+description = "Index extension for datamart"
+authors = ["datamart Team <hello@datamart.co>"]
+readme = "README.md"
+packages = [{ include = "datamart_index" }]
+
+[tool.poetry.dependencies]
+python = "^3.8"
+datamart-core = "^1.1.5"
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
+
+[tool.poetry.plugins."datamart_core_extension"]
+index = "datamart_index.index_router:router"

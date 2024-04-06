@@ -1,0 +1,18 @@
+[tool.poetry]
+name = "datamart-seeking-alpha"
+version = "1.1.4"
+description = "Seeking Alpha extension for DataMart"
+authors = ["DataMart Team <hello@datamart.co>"]
+readme = "README.md"
+packages = [{ include = "datamart_seeking_alpha" }]
+
+[tool.poetry.dependencies]
+python = "^3.8"
+datamart-core = "^1.1.5"
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
+
+[tool.poetry.plugins."datamart_provider_extension"]
+seeking_alpha = "datamart_seeking_alpha:seeking_alpha_provider"
