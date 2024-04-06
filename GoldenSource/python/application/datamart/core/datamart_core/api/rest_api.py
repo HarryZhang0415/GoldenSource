@@ -124,4 +124,4 @@ async def datamart_exception_handler(_: Request, exc: DataMartError):
 if __name__ == "__main__":
     import uvicorn
 
-    uvicorn.run("market.api.rest_api:app", reload=True)
+    uvicorn.run("datamart_core.api.rest_api:app", reload=True)
