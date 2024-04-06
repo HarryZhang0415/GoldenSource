@@ -3,7 +3,7 @@
 {
 	"dockerComposeFile": "./docker-compose.yaml",
 	"service": "datamart",
-	"workspaceFolder": "/root/src/GoldenSource/DataMart",
+	"workspaceFolder": "/root/src/GoldenSource",
 	"name": "datamart",
 	"customizations": {
 		"settings": {
