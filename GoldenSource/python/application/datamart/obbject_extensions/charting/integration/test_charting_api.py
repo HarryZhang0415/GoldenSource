@@ -37,7 +37,7 @@ def get_equity_data():
     if "stocks_data" in data:
         return data["stocks_data"]
 
-    url = "http://0.0.0.0:8000/api/v1/equity/price/historical?symbol=AAPL&provider=fmp"
+    url = "http://localhost:8001/api/v1/equity/price/historical?symbol=AAPL&provider=fmp"
     result = requests.get(url, headers=get_headers(), timeout=10)
     data["stocks_data"] = result.json()["results"]
 
@@ -62,7 +62,7 @@ def test_charting_equity_price_historical(params, headers):
     params = {p: v for p, v in params.items() if v}
 
     query_str = get_querystring(params, [])
-    url = f"http://0.0.0.0:8000/api/v1/equity/price/historical?{query_str}"
+    url = f"http://localhost:8001/api/v1/equity/price/historical?{query_str}"
     result = requests.get(url, headers=headers, timeout=40)
     assert isinstance(result, requests.Response)
     assert result.status_code == 200
@@ -97,7 +97,7 @@ def test_charting_technical_adx(params, headers):
     body = json.dumps(get_equity_data())
 
     query_str = get_querystring(params, [])
-    url = f"http://0.0.0.0:8000/api/v1/technical/adx?{query_str}"
+    url = f"http://localhost:8001/api/v1/technical/adx?{query_str}"
     result = requests.post(url, headers=headers, timeout=10, data=body)
     assert isinstance(result, requests.Response)
     assert result.status_code == 200
@@ -121,7 +121,7 @@ def test_charting_technical_aroon(params, headers):
     body = json.dumps(get_equity_data())
 
     query_str = get_querystring(params, [])
-    url = f"http://0.0.0.0:8000/api/v1/technical/aroon?{query_str}"
+    url = f"http://localhost:8001/api/v1/technical/aroon?{query_str}"
     result = requests.post(url, headers=headers, timeout=10, data=body)
     assert isinstance(result, requests.Response)
     assert result.status_code == 200
@@ -156,7 +156,7 @@ def test_charting_technical_ema(params, headers):
     body = json.dumps(get_equity_data())
 
     query_str = get_querystring(params, [])
-    url = f"http://0.0.0.0:8000/api/v1/technical/ema?{query_str}"
+    url = f"http://localhost:8001/api/v1/technical/ema?{query_str}"
     result = requests.post(url, headers=headers, timeout=10, data=body)
     assert isinstance(result, requests.Response)
     assert result.status_code == 200
@@ -191,7 +191,7 @@ def test_charting_technical_hma(params, headers):
     body = json.dumps(get_equity_data())
 
     query_str = get_querystring(params, [])
-    url = f"http://0.0.0.0:8000/api/v1/technical/hma?{query_str}"
+    url = f"http://localhost:8001/api/v1/technical/hma?{query_str}"
     result = requests.post(url, headers=headers, timeout=10, data=body)
     assert isinstance(result, requests.Response)
     assert result.status_code == 200
@@ -227,7 +227,7 @@ def test_charting_technical_macd(params, headers):
     body = json.dumps(get_equity_data())
 
     query_str = get_querystring(params, [])
-    url = f"http://0.0.0.0:8000/api/v1/technical/macd?{query_str}"
+    url = f"http://localhost:8001/api/v1/technical/macd?{query_str}"
     result = requests.post(url, headers=headers, timeout=10, data=body)
     assert isinstance(result, requests.Response)
     assert result.status_code == 200
@@ -263,7 +263,7 @@ def test_charting_technical_rsi(params, headers):
     body = json.dumps(get_equity_data())
 
     query_str = get_querystring(params, [])
-    url = f"http://0.0.0.0:8000/api/v1/technical/rsi?{query_str}"
+    url = f"http://localhost:8001/api/v1/technical/rsi?{query_str}"
     result = requests.post(url, headers=headers, timeout=10, data=body)
     assert isinstance(result, requests.Response)
     assert result.status_code == 200
@@ -298,7 +298,7 @@ def test_charting_technical_sma(params, headers):
     body = json.dumps(get_equity_data())
 
     query_str = get_querystring(params, [])
-    url = f"http://0.0.0.0:8000/api/v1/technical/sma?{query_str}"
+    url = f"http://localhost:8001/api/v1/technical/sma?{query_str}"
     result = requests.post(url, headers=headers, timeout=10, data=body)
     assert isinstance(result, requests.Response)
     assert result.status_code == 200
@@ -333,7 +333,7 @@ def test_charting_technical_wma(params, headers):
     body = json.dumps(get_equity_data())
 
     query_str = get_querystring(params, [])
-    url = f"http://0.0.0.0:8000/api/v1/technical/wma?{query_str}"
+    url = f"http://localhost:8001/api/v1/technical/wma?{query_str}"
     result = requests.post(url, headers=headers, timeout=10, data=body)
     assert isinstance(result, requests.Response)
     assert result.status_code == 200
@@ -368,7 +368,7 @@ def test_charting_technical_zlma(params, headers):
     body = json.dumps(get_equity_data())
 
     query_str = get_querystring(params, [])
-    url = f"http://0.0.0.0:8000/api/v1/technical/zlma?{query_str}"
+    url = f"http://localhost:8001/api/v1/technical/zlma?{query_str}"
     result = requests.post(url, headers=headers, timeout=10, data=body)
     assert isinstance(result, requests.Response)
     assert result.status_code == 200
@@ -400,7 +400,7 @@ def test_charting_technical_cones(params, headers):
     body = json.dumps(get_equity_data())
 
     query_str = get_querystring(params, [])
-    url = f"http://0.0.0.0:8000/api/v1/technical/cones?{query_str}"
+    url = f"http://localhost:8001/api/v1/technical/cones?{query_str}"
     result = requests.post(url, headers=headers, timeout=10, data=body)
     assert isinstance(result, requests.Response)
     assert result.status_code == 200
@@ -433,7 +433,7 @@ def test_charting_economy_fred_series(params, headers):
     params = {p: v for p, v in params.items() if v}
 
     query_str = get_querystring(params, [])
-    url = f"http://0.0.0.0:8000/api/v1/economy/fred_series?{query_str}"
+    url = f"http://localhost:8001/api/v1/economy/fred_series?{query_str}"
     result = requests.get(url, headers=headers, timeout=10)
     assert isinstance(result, requests.Response)
     assert result.status_code == 200
