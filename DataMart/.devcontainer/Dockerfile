@@ -77,4 +77,5 @@ WORKDIR ${PROJECT_SRC_DIR}
 COPY ./DataMart ./
 
 RUN python dev_install.py
+RUN python -c "import datamart; datamart.build()"
 

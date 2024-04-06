@@ -25,7 +25,10 @@
 				"ms-toolsai.jupyter",
 				"ms-toolsai.vscode-jupyter-slideshow",
 				"twxs.cmake",
-				"ms-vscode.cmake-tools"
+				"ms-vscode.cmake-tools",
+				"ms-python.python",
+				"ms-python.vscode-pylance",
+				"redhat.vscode-yaml"
 			]
 		}
 	},
