@@ -20,7 +20,7 @@ class Servers(BaseModel):
 
     model_config = ConfigDict(frozen=True)
 
-    url: str = "http://localhost:8000"
+    url: str = "http://localhost:8001"
     description: str = "Local DataMart development server"
 
 
