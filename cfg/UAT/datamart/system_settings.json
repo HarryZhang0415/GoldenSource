@@ -13,7 +13,7 @@
         "license_url": "https://github.com/DataMart-finance/DataMartTerminal/blob/develop/LICENSE",
         "servers": [
             {
-                "url": "http://localhost:8000",
+                "url": "http://localhost:8001",
                 "description": "Local DataMart development server"
             }
         ],
