@@ -1,0 +1,12 @@
+# DataMart Biztoc Provider
+
+This extension integrates the Biztoc data provider
+into the DataMart Platform.
+
+## Installation
+
+To install the extension, run the following command in this folder:
+
+```bash
+pip install .
+```

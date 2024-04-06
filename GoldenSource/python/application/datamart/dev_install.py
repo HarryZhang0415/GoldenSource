@@ -40,26 +40,23 @@ datamart-fixedincome = { path = "./extensions/fixedincome", develop = true }
 datamart-index = { path = "./extensions/index", develop = true }
 datamart-news = { path = "./extensions/news", develop = true }
 datamart-regulators = { path = "./extensions/regulators", develop = true }
-
-# Community dependencies
-datamart-alpha-vantage = { path = "./providers/alpha_vantage", optional = true, develop = true }
-datamart-biztoc = { path = "./providers/biztoc", optional = true, develop = true }
-datamart-cboe = { path = "./providers/cboe", optional = true, develop = true }
-datamart-ecb = { path = "./providers/ecb", optional = true, develop = true }
-datamart-finra = { path = "./providers/finra", optional = true, develop = true }
-datamart-finviz = { path = "./providers/finviz", optional = true, develop = true }
-datamart-government-us = { path = "./providers/government_us", optional = true, develop = true }
-datamart-nasdaq = { path = "./providers/nasdaq", optional = true, develop = true }
-datamart-seeking-alpha = { path = "./providers/seeking_alpha", optional = true, develop = true }
-datamart-stockgrid = { path = "./providers/stockgrid" , optional = true,  develop = true }
-datamart_tmx = { path = "./providers/tmx", optional = true, develop = true }
-datamart_tradier = { path = "./providers/tradier", optional = true, develop = true }
-datamart-wsj = { path = "./providers/wsj", optional = true, develop = true }
-
-datamart-charting = { path = "./obbject_extensions/charting", optional = true, develop = true }
-datamart-econometrics = { path = "./extensions/econometrics", optional = true, develop = true }
-datamart-quantitative = { path = "./extensions/quantitative", optional = true, develop = true }
-datamart-technical = { path = "./extensions/technical", optional = true, develop = true }
+datamart-alpha-vantage = { path = "./providers/alpha_vantage", develop = true }
+datamart-biztoc = { path = "./providers/biztoc", develop = true }
+datamart-cboe = { path = "./providers/cboe", develop = true }
+datamart-ecb = { path = "./providers/ecb", develop = true }
+datamart-finra = { path = "./providers/finra", develop = true }
+datamart-finviz = { path = "./providers/finviz", develop = true }
+datamart-government-us = { path = "./providers/government_us", develop = true }
+datamart-nasdaq = { path = "./providers/nasdaq", develop = true }
+datamart-seeking-alpha = { path = "./providers/seeking_alpha", develop = true }
+datamart-stockgrid = { path = "./providers/stockgrid" ,  develop = true }
+datamart_tmx = { path = "./providers/tmx", develop = true }
+datamart_tradier = { path = "./providers/tradier", develop = true }
+datamart-wsj = { path = "./providers/wsj", develop = true }
+datamart-charting = { path = "./obbject_extensions/charting", develop = true }
+datamart-econometrics = { path = "./extensions/econometrics", develop = true }
+datamart-quantitative = { path = "./extensions/quantitative", develop = true }
+datamart-technical = { path = "./extensions/technical", develop = true }
 """
 
 

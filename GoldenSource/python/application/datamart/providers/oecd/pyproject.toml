@@ -1,0 +1,20 @@
+[tool.poetry]
+name = "datamart-oecd"
+version = "1.1.4"
+description = "OECD extension for DataMart"
+authors = ["DataMart Team <hello@datamart.co>"]
+readme = "README.md"
+packages = [{ include = "datamart_oecd" }]
+
+[tool.poetry.dependencies]
+python = "^3.8"
+datamart-core = "^1.1.5"
+urllib3 = ">1.26.16"
+defusedxml = "^0.8.0rc2"
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
+
+[tool.poetry.plugins."datamart_provider_extension"]
+oecd = "datamart_oecd:oecd_provider"

@@ -32,9 +32,9 @@ class ROUTER_derivatives_futures(Container):
             DataMartCustomParameter(description="A specific date to get data for."),
         ] = None,
         provider: Annotated[
-            Optional[Literal["yfinance"]],
+            Optional[Literal["cboe", "yfinance"]],
             DataMartCustomParameter(
-                description="The provider to use for the query, by default None.\n    If None, the provider specified in defaults is selected or 'yfinance' if there is\n    no default."
+                description="The provider to use for the query, by default None.\n    If None, the provider specified in defaults is selected or 'cboe' if there is\n    no default."
             ),
         ] = None,
         **kwargs
@@ -47,9 +47,9 @@ class ROUTER_derivatives_futures(Container):
             Symbol to get data for.
         date : Union[datetime.date, None, str]
             A specific date to get data for.
-        provider : Optional[Literal['yfinance']]
+        provider : Optional[Literal['cboe', 'yfinance']]
             The provider to use for the query, by default None.
-            If None, the provider specified in defaults is selected or 'yfinance' if there is
+            If None, the provider specified in defaults is selected or 'cboe' if there is
             no default.
 
         Returns
@@ -57,7 +57,7 @@ class ROUTER_derivatives_futures(Container):
         OBBject
             results : List[FuturesCurve]
                 Serializable results.
-            provider : Optional[Literal['yfinance']]
+            provider : Optional[Literal['cboe', 'yfinance']]
                 Provider name.
             warnings : Optional[List[Warning_]]
                 List of warnings.
@@ -72,10 +72,13 @@ class ROUTER_derivatives_futures(Container):
             Futures expiration month.
         price : Optional[float]
             The close price.
+        symbol : Optional[str]
+            The trading symbol for the tenor of future. (provider: cboe)
 
         Examples
         --------
         >>> from datamart import market
+        >>> market.derivatives.futures.curve(symbol='VX', provider='cboe')
         >>> # Enter a date to get the term structure from a historical date.
         >>> market.derivatives.futures.curve(symbol='NG', provider='yfinance', date='2023-01-01')
         """  # noqa: E501
@@ -87,7 +90,7 @@ class ROUTER_derivatives_futures(Container):
                     "provider": self._get_provider(
                         provider,
                         "/derivatives/futures/curve",
-                        ("yfinance",),
+                        ("cboe", "yfinance"),
                     )
                 },
                 standard_params={

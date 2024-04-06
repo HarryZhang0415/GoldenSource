@@ -1,0 +1,19 @@
+[tool.poetry]
+name = "datamart-biztoc"
+version = "1.1.4"
+description = ""
+authors = ["DataMart Team <hello@datamart.co>"]
+readme = "README.md"
+packages = [{ include = "datamart_biztoc" }]
+
+[tool.poetry.dependencies]
+python = "^3.8"
+datamart-core = "^1.1.5"
+requests-cache = "^1.1.0"
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
+
+[tool.poetry.plugins."datamart_provider_extension"]
+biztoc = "datamart_biztoc:biztoc_provider"

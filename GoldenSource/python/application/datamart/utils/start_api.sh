@@ -1,0 +1,1 @@
+uvicorn datamart_core.api.rest_api:app --port 8001 --reload

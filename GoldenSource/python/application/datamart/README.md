@@ -36,13 +36,13 @@ To fully leverage the GoldenSource Platform you need to get some API keys to con
 >>> market.user.credentials.fmp_api_key = "REPLACE_ME"
 >>> market.user.credentials.polygon_api_key = "REPLACE_ME"
 
->>> # Persist changes in ~/.datamart_platform/user_settings.json
+>>> # Persist changes in datamart/user_settings.json
 >>> market.account.save()
 ```
 
 ### 2. Local file
 
-You can specify the keys directly in the `~/.datamart_platform/user_settings.json` file.
+You can specify the keys directly in the `datamart/user_settings.json` file.
 
 Populate this file with the following template and replace the values with your keys:
 

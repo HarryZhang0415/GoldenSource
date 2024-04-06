@@ -26,7 +26,7 @@ class ROUTER_index_price(Container):
         symbol: Annotated[
             Union[str, List[str]],
             DataMartCustomParameter(
-                description="Symbol to get data for. Multiple comma separated items allowed for provider(s): fmp, intrinio, polygon, yfinance."
+                description="Symbol to get data for. Multiple comma separated items allowed for provider(s): cboe, fmp, intrinio, polygon, yfinance."
             ),
         ],
         start_date: Annotated[
@@ -46,9 +46,9 @@ class ROUTER_index_price(Container):
             DataMartCustomParameter(description="Time interval of the data to return."),
         ] = "1d",
         provider: Annotated[
-            Optional[Literal["fmp", "intrinio", "polygon", "yfinance"]],
+            Optional[Literal["cboe", "fmp", "intrinio", "polygon", "yfinance"]],
             DataMartCustomParameter(
-                description="The provider to use for the query, by default None.\n    If None, the provider specified in defaults is selected or 'fmp' if there is\n    no default."
+                description="The provider to use for the query, by default None.\n    If None, the provider specified in defaults is selected or 'cboe' if there is\n    no default."
             ),
         ] = None,
         **kwargs
@@ -58,17 +58,19 @@ class ROUTER_index_price(Container):
         Parameters
         ----------
         symbol : Union[str, List[str]]
-            Symbol to get data for. Multiple comma separated items allowed for provider(s): fmp, intrinio, polygon, yfinance.
+            Symbol to get data for. Multiple comma separated items allowed for provider(s): cboe, fmp, intrinio, polygon, yfinance.
         start_date : Union[datetime.date, None, str]
             Start date of the data, in YYYY-MM-DD format.
         end_date : Union[datetime.date, None, str]
             End date of the data, in YYYY-MM-DD format.
         interval : Optional[str]
             Time interval of the data to return.
-        provider : Optional[Literal['fmp', 'intrinio', 'polygon', 'yfinance']]
+        provider : Optional[Literal['cboe', 'fmp', 'intrinio', 'polygon', 'yfinance'...
             The provider to use for the query, by default None.
-            If None, the provider specified in defaults is selected or 'fmp' if there is
+            If None, the provider specified in defaults is selected or 'cboe' if there is
             no default.
+        use_cache : bool
+            When True, the company directories will be cached for 24 hours and are used to validate symbols. The results of the function are not cached. Set as False to bypass. (provider: cboe)
         limit : Optional[int]
             The number of data entries to return. (provider: intrinio, polygon)
         sort : Literal['asc', 'desc']
@@ -79,7 +81,7 @@ class ROUTER_index_price(Container):
         OBBject
             results : List[IndexHistorical]
                 Serializable results.
-            provider : Optional[Literal['fmp', 'intrinio', 'polygon', 'yfinance']]
+            provider : Optional[Literal['cboe', 'fmp', 'intrinio', 'polygon', 'yfinance']]
                 Provider name.
             warnings : Optional[List[Warning_]]
                 List of warnings.
@@ -102,6 +104,12 @@ class ROUTER_index_price(Container):
             The close price.
         volume : Optional[int]
             The trading volume.
+        calls_volume : Optional[float]
+            Number of calls traded during the most recent trading period. Only valid if interval is 1m. (provider: cboe)
+        puts_volume : Optional[float]
+            Number of puts traded during the most recent trading period. Only valid if interval is 1m. (provider: cboe)
+        total_options_volume : Optional[float]
+            Total number of options traded during the most recent trading period. Only valid if interval is 1m. (provider: cboe)
         vwap : Optional[float]
             Volume Weighted Average Price over the period. (provider: fmp)
         change : Optional[float]
@@ -126,7 +134,7 @@ class ROUTER_index_price(Container):
                     "provider": self._get_provider(
                         provider,
                         "/index/price/historical",
-                        ("fmp", "intrinio", "polygon", "yfinance"),
+                        ("cboe", "fmp", "intrinio", "polygon", "yfinance"),
                     )
                 },
                 standard_params={
@@ -139,6 +147,7 @@ class ROUTER_index_price(Container):
                 info={
                     "symbol": {
                         "multiple_items_allowed": [
+                            "cboe",
                             "fmp",
                             "intrinio",
                             "polygon",

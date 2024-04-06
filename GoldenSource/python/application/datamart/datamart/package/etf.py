@@ -14,6 +14,7 @@ from datamart_core.app.static.utils.filters import filter_inputs
 class ROUTER_etf(Container):
     """/etf
     countries
+    /discovery
     equity_exposure
     historical
     holdings
@@ -35,11 +36,11 @@ class ROUTER_etf(Container):
         symbol: Annotated[
             Union[str, List[str]],
             DataMartCustomParameter(
-                description="Symbol to get data for. (ETF) Multiple comma separated items allowed for provider(s): fmp."
+                description="Symbol to get data for. (ETF) Multiple comma separated items allowed for provider(s): fmp, tmx."
             ),
         ],
         provider: Annotated[
-            Optional[Literal["fmp"]],
+            Optional[Literal["fmp", "tmx"]],
             DataMartCustomParameter(
                 description="The provider to use for the query, by default None.\n    If None, the provider specified in defaults is selected or 'fmp' if there is\n    no default."
             ),
@@ -51,18 +52,20 @@ class ROUTER_etf(Container):
         Parameters
         ----------
         symbol : Union[str, List[str]]
-            Symbol to get data for. (ETF) Multiple comma separated items allowed for provider(s): fmp.
-        provider : Optional[Literal['fmp']]
+            Symbol to get data for. (ETF) Multiple comma separated items allowed for provider(s): fmp, tmx.
+        provider : Optional[Literal['fmp', 'tmx']]
             The provider to use for the query, by default None.
             If None, the provider specified in defaults is selected or 'fmp' if there is
             no default.
+        use_cache : bool
+            Whether to use a cached request. All ETF data comes from a single JSON file that is updated daily. To bypass, set to False. If True, the data will be cached for 4 hours. (provider: tmx)
 
         Returns
         -------
         OBBject
             results : List[EtfCountries]
                 Serializable results.
-            provider : Optional[Literal['fmp']]
+            provider : Optional[Literal['fmp', 'tmx']]
                 Provider name.
             warnings : Optional[List[Warning_]]
                 List of warnings.
@@ -89,16 +92,23 @@ class ROUTER_etf(Container):
                     "provider": self._get_provider(
                         provider,
                         "/etf/countries",
-                        ("fmp",),
+                        ("fmp", "tmx"),
                     )
                 },
                 standard_params={
                     "symbol": symbol,
                 },
                 extra_params=kwargs,
-                info={"symbol": {"multiple_items_allowed": ["fmp"]}},
+                info={"symbol": {"multiple_items_allowed": ["fmp", "tmx"]}},
             )
         )
+
+    @property
+    def discovery(self):
+        # pylint: disable=import-outside-toplevel
+        from . import etf_discovery
+
+        return etf_discovery.ROUTER_etf_discovery(command_runner=self._command_runner)
 
     @exception_handler
     @validate
@@ -153,7 +163,7 @@ class ROUTER_etf(Container):
             The number of shares held in the ETF.
         weight : Optional[float]
             The weight of the equity in the ETF, as a normalized percent.
-        market_value : Optional[Union[float, int]]
+        market_value : Optional[Union[int, float]]
             The market value of the equity position in the ETF.
 
         Examples
@@ -189,7 +199,7 @@ class ROUTER_etf(Container):
         symbol: Annotated[
             Union[str, List[str]],
             DataMartCustomParameter(
-                description="Symbol to get data for. Multiple comma separated items allowed for provider(s): fmp, polygon, tiingo, yfinance."
+                description="Symbol to get data for. Multiple comma separated items allowed for provider(s): alpha_vantage, cboe, fmp, polygon, tiingo, tmx, tradier, yfinance."
             ),
         ],
         interval: Annotated[
@@ -209,9 +219,21 @@ class ROUTER_etf(Container):
             ),
         ] = None,
         provider: Annotated[
-            Optional[Literal["fmp", "intrinio", "polygon", "tiingo", "yfinance"]],
+            Optional[
+                Literal[
+                    "alpha_vantage",
+                    "cboe",
+                    "fmp",
+                    "intrinio",
+                    "polygon",
+                    "tiingo",
+                    "tmx",
+                    "tradier",
+                    "yfinance",
+                ]
+            ],
             DataMartCustomParameter(
-                description="The provider to use for the query, by default None.\n    If None, the provider specified in defaults is selected or 'fmp' if there is\n    no default."
+                description="The provider to use for the query, by default None.\n    If None, the provider specified in defaults is selected or 'alpha_vantage' if there is\n    no default."
             ),
         ] = None,
         **kwargs
@@ -221,17 +243,28 @@ class ROUTER_etf(Container):
         Parameters
         ----------
         symbol : Union[str, List[str]]
-            Symbol to get data for. Multiple comma separated items allowed for provider(s): fmp, polygon, tiingo, yfinance.
+            Symbol to get data for. Multiple comma separated items allowed for provider(s): alpha_vantage, cboe, fmp, polygon, tiingo, tmx, tradier, yfinance.
         interval : Optional[str]
             Time interval of the data to return.
         start_date : Union[datetime.date, None, str]
             Start date of the data, in YYYY-MM-DD format.
         end_date : Union[datetime.date, None, str]
             End date of the data, in YYYY-MM-DD format.
-        provider : Optional[Literal['fmp', 'intrinio', 'polygon', 'tiingo', 'yfinanc...
+        provider : Optional[Literal['alpha_vantage', 'cboe', 'fmp', 'intrinio', 'pol...
             The provider to use for the query, by default None.
-            If None, the provider specified in defaults is selected or 'fmp' if there is
+            If None, the provider specified in defaults is selected or 'alpha_vantage' if there is
             no default.
+        adjustment : Union[Literal['splits_only', 'splits_and_dividends', 'unadjusted'], Literal['splits_only', 'unadjusted'], Literal['splits_only', 'splits_and_dividends']]
+            The adjustment factor to apply. 'splits_only' is not supported for intraday data. (provider: alpha_vantage);
+            The adjustment factor to apply. Default is splits only. (provider: polygon);
+            The adjustment factor to apply. Only valid for daily data. (provider: tmx);
+            The adjustment factor to apply. Default is splits only. (provider: yfinance)
+        extended_hours : Optional[bool]
+            Include Pre and Post market data. (provider: alpha_vantage, polygon, tradier, yfinance)
+        adjusted : bool
+            This field is deprecated (4.1.5) and will be removed in a future version. Use 'adjustment' set as 'splits_and_dividends' instead. (provider: alpha_vantage, yfinance)
+        use_cache : bool
+            When True, the company directories will be cached for 24 hours and are used to validate symbols. The results of the function are not cached. Set as False to bypass. (provider: cboe)
         start_time : Optional[datetime.time]
             Return intervals starting at the specified time on the `start_date` formatted as 'HH:MM:SS'. (provider: intrinio)
         end_time : Optional[datetime.time]
@@ -240,18 +273,12 @@ class ROUTER_etf(Container):
             Timezone of the data, in the IANA format (Continent/City). (provider: intrinio)
         source : Literal['realtime', 'delayed', 'nasdaq_basic']
             The source of the data. (provider: intrinio)
-        adjustment : Union[Literal['splits_only', 'unadjusted'], Literal['splits_only', 'splits_and_dividends']]
-            The adjustment factor to apply. Default is splits only. (provider: polygon, yfinance)
-        extended_hours : bool
-            Include Pre and Post market data. (provider: polygon, yfinance)
         sort : Literal['asc', 'desc']
             Sort order of the data. This impacts the results in combination with the 'limit' parameter. The results are always returned in ascending order by date. (provider: polygon)
         limit : int
             The number of data entries to return. (provider: polygon)
         include_actions : bool
             Include dividends and stock splits in results. (provider: yfinance)
-        adjusted : bool
-            This field is deprecated (4.1.5) and will be removed in a future version. Use 'adjustment' set as 'splits_and_dividends' instead. (provider: yfinance)
         prepost : bool
             This field is deprecated (4.1.5) and will be removed in a future version. Use 'extended_hours' as True instead. (provider: yfinance)
 
@@ -260,7 +287,7 @@ class ROUTER_etf(Container):
         OBBject
             results : List[EtfHistorical]
                 Serializable results.
-            provider : Optional[Literal['fmp', 'intrinio', 'polygon', 'tiingo', 'yfinance']]
+            provider : Optional[Literal['alpha_vantage', 'cboe', 'fmp', 'intrinio', 'polygon', 'tiingo', 'tmx', 'tradier', 'yfinance']]
                 Provider name.
             warnings : Optional[List[Warning_]]
                 List of warnings.
@@ -285,16 +312,31 @@ class ROUTER_etf(Container):
             The trading volume.
         vwap : Optional[float]
             Volume Weighted Average Price over the period.
-        adj_close : Optional[float]
-            The adjusted close price. (provider: fmp, intrinio, tiingo)
+        adj_close : Optional[Union[Annotated[float, Gt(gt=0)], float]]
+            The adjusted close price. (provider: alpha_vantage, fmp, intrinio, tiingo)
+        dividend : Optional[Union[Annotated[float, Ge(ge=0)], float]]
+            Dividend amount, if a dividend was paid. (provider: alpha_vantage, intrinio, tiingo, yfinance)
+        split_ratio : Optional[Union[Annotated[float, Ge(ge=0)], float]]
+            Split coefficient, if a split occurred. (provider: alpha_vantage);
+            Ratio of the equity split, if a split occurred. (provider: intrinio);
+            Ratio of the equity split, if a split occurred. (provider: tiingo);
+            Ratio of the equity split, if a split occurred. (provider: yfinance)
+        calls_volume : Optional[int]
+            Number of calls traded during the most recent trading period. Only valid if interval is 1m. (provider: cboe)
+        puts_volume : Optional[int]
+            Number of puts traded during the most recent trading period. Only valid if interval is 1m. (provider: cboe)
+        total_options_volume : Optional[int]
+            Total number of options traded during the most recent trading period. Only valid if interval is 1m. (provider: cboe)
         unadjusted_volume : Optional[float]
             Unadjusted volume of the symbol. (provider: fmp)
         change : Optional[float]
             Change in the price from the previous close. (provider: fmp);
-            Change in the price of the symbol from the previous day. (provider: intrinio)
+            Change in the price of the symbol from the previous day. (provider: intrinio);
+            Change in price. (provider: tmx)
         change_percent : Optional[float]
             Change in the price from the previous close, as a normalized percent. (provider: fmp);
-            Percent change in the price of the symbol from the previous day. (provider: intrinio)
+            Percent change in the price of the symbol from the previous day. (provider: intrinio);
+            Change in price, as a normalized percentage. (provider: tmx)
         average : Optional[float]
             Average trade price of an individual equity during the interval. (provider: intrinio)
         adj_open : Optional[float]
@@ -311,18 +353,19 @@ class ROUTER_etf(Container):
             52 week low price for the symbol. (provider: intrinio)
         factor : Optional[float]
             factor by which to multiply equity prices before this date, in order to calculate historically-adjusted equity prices. (provider: intrinio)
-        split_ratio : Optional[float]
-            Ratio of the equity split, if a split occurred. (provider: intrinio, tiingo, yfinance)
-        dividend : Optional[float]
-            Dividend amount, if a dividend was paid. (provider: intrinio, tiingo, yfinance)
         close_time : Optional[datetime]
             The timestamp that represents the end of the interval span. (provider: intrinio)
         interval : Optional[str]
             The data time frequency. (provider: intrinio)
         intra_period : Optional[bool]
             If true, the equity price represents an unfinished period (be it day, week, quarter, month, or year), meaning that the close price is the latest price available, not the official close price for the period (provider: intrinio)
-        transactions : Optional[Annotated[int, Gt(gt=0)]]
-            Number of transactions for the symbol in the time period. (provider: polygon)
+        transactions : Optional[Union[Annotated[int, Gt(gt=0)], int]]
+            Number of transactions for the symbol in the time period. (provider: polygon);
+            Total number of transactions recorded. (provider: tmx)
+        transactions_value : Optional[float]
+            Nominal value of recorded transactions. (provider: tmx)
+        last_price : Optional[float]
+            The last price of the equity. (provider: tradier)
 
         Examples
         --------
@@ -340,7 +383,17 @@ class ROUTER_etf(Container):
                     "provider": self._get_provider(
                         provider,
                         "/etf/historical",
-                        ("fmp", "intrinio", "polygon", "tiingo", "yfinance"),
+                        (
+                            "alpha_vantage",
+                            "cboe",
+                            "fmp",
+                            "intrinio",
+                            "polygon",
+                            "tiingo",
+                            "tmx",
+                            "tradier",
+                            "yfinance",
+                        ),
                     )
                 },
                 standard_params={
@@ -353,13 +406,16 @@ class ROUTER_etf(Container):
                 info={
                     "symbol": {
                         "multiple_items_allowed": [
+                            "alpha_vantage",
+                            "cboe",
                             "fmp",
                             "polygon",
                             "tiingo",
+                            "tmx",
+                            "tradier",
                             "yfinance",
                         ]
                     },
-                    "adjusted": {"deprecated": True},
                     "prepost": {"deprecated": True},
                 },
             )
@@ -373,7 +429,7 @@ class ROUTER_etf(Container):
             str, DataMartCustomParameter(description="Symbol to get data for. (ETF)")
         ],
         provider: Annotated[
-            Optional[Literal["fmp", "intrinio", "sec"]],
+            Optional[Literal["fmp", "intrinio", "sec", "tmx"]],
             DataMartCustomParameter(
                 description="The provider to use for the query, by default None.\n    If None, the provider specified in defaults is selected or 'fmp' if there is\n    no default."
             ),
@@ -386,7 +442,7 @@ class ROUTER_etf(Container):
         ----------
         symbol : str
             Symbol to get data for. (ETF)
-        provider : Optional[Literal['fmp', 'intrinio', 'sec']]
+        provider : Optional[Literal['fmp', 'intrinio', 'sec', 'tmx']]
             The provider to use for the query, by default None.
             If None, the provider specified in defaults is selected or 'fmp' if there is
             no default.
@@ -396,14 +452,15 @@ class ROUTER_etf(Container):
         cik : Optional[str]
             The CIK of the filing entity. Overrides symbol. (provider: fmp)
         use_cache : bool
-            Whether or not to use cache for the request. (provider: sec)
+            Whether or not to use cache for the request. (provider: sec);
+            Whether to use a cached request. All ETF data comes from a single JSON file that is updated daily. To bypass, set to False. If True, the data will be cached for 4 hours. (provider: tmx)
 
         Returns
         -------
         OBBject
             results : List[EtfHoldings]
                 Serializable results.
-            provider : Optional[Literal['fmp', 'intrinio', 'sec']]
+            provider : Optional[Literal['fmp', 'intrinio', 'sec', 'tmx']]
                 Provider name.
             warnings : Optional[List[Warning_]]
                 List of warnings.
@@ -434,12 +491,13 @@ class ROUTER_etf(Container):
             The type of units. (provider: fmp);
             The units of the holding. (provider: sec)
         currency : Optional[str]
-            The currency of the holding. (provider: fmp, sec)
+            The currency of the holding. (provider: fmp, sec, tmx)
         value : Optional[float]
             The value of the holding, in dollars. (provider: fmp, intrinio, sec)
         weight : Optional[float]
             The weight of the holding, as a normalized percent. (provider: fmp, intrinio);
-            The weight of the holding in ETF in %. (provider: sec)
+            The weight of the holding in ETF in %. (provider: sec);
+            The weight of the asset in the portfolio, as a normalized percentage. (provider: tmx)
         payoff_profile : Optional[str]
             The payoff profile of the holding. (provider: fmp, sec)
         asset_category : Optional[str]
@@ -447,7 +505,7 @@ class ROUTER_etf(Container):
         issuer_category : Optional[str]
             The issuer category of the holding. (provider: fmp, sec)
         country : Optional[str]
-            The country of the holding. (provider: fmp, intrinio, sec)
+            The country of the holding. (provider: fmp, intrinio, sec, tmx)
         is_restricted : Optional[str]
             Whether the holding is restricted. (provider: fmp, sec)
         fair_value_level : Optional[int]
@@ -597,6 +655,20 @@ class ROUTER_etf(Container):
             The currency of the derivative's notional amount. (provider: sec)
         unrealized_gain : Optional[float]
             The unrealized gain or loss on the derivative. (provider: sec)
+        shares : Optional[Union[int, str]]
+            The value of the assets under management. (provider: tmx)
+        market_value : Optional[Union[str, float]]
+            The market value of the holding. (provider: tmx)
+        share_percentage : Optional[float]
+            The share percentage of the holding, as a normalized percentage. (provider: tmx)
+        share_change : Optional[Union[str, float]]
+            The change in shares of the holding. (provider: tmx)
+        exchange : Optional[str]
+            The exchange code of the holding. (provider: tmx)
+        type_id : Optional[str]
+            The holding type ID of the asset. (provider: tmx)
+        fund_id : Optional[str]
+            The fund ID of the asset. (provider: tmx)
 
         Examples
         --------
@@ -615,7 +687,7 @@ class ROUTER_etf(Container):
                     "provider": self._get_provider(
                         provider,
                         "/etf/holdings",
-                        ("fmp", "intrinio", "sec"),
+                        ("fmp", "intrinio", "sec", "tmx"),
                     )
                 },
                 standard_params={
@@ -806,11 +878,11 @@ class ROUTER_etf(Container):
         symbol: Annotated[
             Union[str, List[str]],
             DataMartCustomParameter(
-                description="Symbol to get data for. (ETF) Multiple comma separated items allowed for provider(s): fmp, intrinio, yfinance."
+                description="Symbol to get data for. (ETF) Multiple comma separated items allowed for provider(s): fmp, intrinio, tmx, yfinance."
             ),
         ],
         provider: Annotated[
-            Optional[Literal["fmp", "intrinio", "yfinance"]],
+            Optional[Literal["fmp", "intrinio", "tmx", "yfinance"]],
             DataMartCustomParameter(
                 description="The provider to use for the query, by default None.\n    If None, the provider specified in defaults is selected or 'fmp' if there is\n    no default."
             ),
@@ -822,18 +894,20 @@ class ROUTER_etf(Container):
         Parameters
         ----------
         symbol : Union[str, List[str]]
-            Symbol to get data for. (ETF) Multiple comma separated items allowed for provider(s): fmp, intrinio, yfinance.
-        provider : Optional[Literal['fmp', 'intrinio', 'yfinance']]
+            Symbol to get data for. (ETF) Multiple comma separated items allowed for provider(s): fmp, intrinio, tmx, yfinance.
+        provider : Optional[Literal['fmp', 'intrinio', 'tmx', 'yfinance']]
             The provider to use for the query, by default None.
             If None, the provider specified in defaults is selected or 'fmp' if there is
             no default.
+        use_cache : bool
+            Whether to use a cached request. All ETF data comes from a single JSON file that is updated daily. To bypass, set to False. If True, the data will be cached for 4 hours. (provider: tmx)
 
         Returns
         -------
         OBBject
             results : List[EtfInfo]
                 Serializable results.
-            provider : Optional[Literal['fmp', 'intrinio', 'yfinance']]
+            provider : Optional[Literal['fmp', 'intrinio', 'tmx', 'yfinance']]
                 Provider name.
             warnings : Optional[List[Warning_]]
                 List of warnings.
@@ -854,7 +928,8 @@ class ROUTER_etf(Container):
             Inception date of the ETF.
         issuer : Optional[str]
             Company of the ETF. (provider: fmp);
-            Issuer of the ETF. (provider: intrinio)
+            Issuer of the ETF. (provider: intrinio);
+            The issuer of the ETF. (provider: tmx)
         cusip : Optional[str]
             CUSIP of the ETF. (provider: fmp)
         isin : Optional[str]
@@ -867,7 +942,8 @@ class ROUTER_etf(Container):
             Asset class of the ETF. (provider: fmp);
             Captures the underlying nature of the securities in the Exchanged Traded Product (ETP). (provider: intrinio)
         aum : Optional[float]
-            Assets under management. (provider: fmp)
+            Assets under management. (provider: fmp);
+            The AUM of the ETF. (provider: tmx)
         nav : Optional[float]
             Net asset value of the ETF. (provider: fmp)
         nav_currency : Optional[str]
@@ -876,10 +952,12 @@ class ROUTER_etf(Container):
             The expense ratio, as a normalized percent. (provider: fmp)
         holdings_count : Optional[int]
             Number of holdings. (provider: fmp)
-        avg_volume : Optional[float]
-            Average daily trading volume. (provider: fmp)
+        avg_volume : Optional[Union[float, int]]
+            Average daily trading volume. (provider: fmp);
+            The average daily volume of the ETF. (provider: tmx)
         website : Optional[str]
-            Website of the issuer. (provider: fmp)
+            Website of the issuer. (provider: fmp);
+            The website of the ETF. (provider: tmx)
         fund_listing_date : Optional[date]
             The date on which the Exchange Traded Product (ETP) or share class of the ETP is listed on a specific exchange. (provider: intrinio)
         data_change_date : Optional[date]
@@ -921,7 +999,7 @@ class ROUTER_etf(Container):
             This field identifies the fund family to which the ETF belongs, as categorized by the ETF Sponsor. (provider: intrinio);
             The fund family. (provider: yfinance)
         investment_style : Optional[str]
-            Investment style of the ETF. (provider: intrinio)
+            Investment style of the ETF. (provider: intrinio, tmx)
         derivatives_based : Optional[str]
             This field is populated if the ETF holds either listed or over-the-counter derivatives in its portfolio. (provider: intrinio)
         income_category : Optional[str]
@@ -1102,14 +1180,55 @@ class ROUTER_etf(Container):
             Gross expense net of Fee Waivers, as a percentage of net assets as published by the ETF issuer. (provider: intrinio)
         etf_portfolio_turnover : Optional[float]
             The percentage of positions turned over in the last 12 months. (provider: intrinio)
+        esg : Optional[bool]
+            Whether the ETF qualifies as an ESG fund. (provider: tmx)
+        currency : Optional[str]
+            The currency of the ETF. (provider: tmx);
+            The currency in which the fund is listed. (provider: yfinance)
+        unit_price : Optional[float]
+            The unit price of the ETF. (provider: tmx)
+        close : Optional[float]
+            The closing price of the ETF. (provider: tmx)
+        prev_close : Optional[float]
+            The previous closing price of the ETF. (provider: tmx, yfinance)
+        return_1m : Optional[float]
+            The one-month return of the ETF, as a normalized percent (provider: tmx)
+        return_3m : Optional[float]
+            The three-month return of the ETF, as a normalized percent. (provider: tmx)
+        return_6m : Optional[float]
+            The six-month return of the ETF, as a normalized percent. (provider: tmx)
+        return_ytd : Optional[float]
+            The year-to-date return of the ETF, as a normalized percent. (provider: tmx, yfinance)
+        return_1y : Optional[float]
+            The one-year return of the ETF, as a normalized percent. (provider: tmx)
+        return_3y : Optional[float]
+            The three-year return of the ETF, as a normalized percent. (provider: tmx)
+        return_5y : Optional[float]
+            The five-year return of the ETF, as a normalized percent. (provider: tmx)
+        return_10y : Optional[float]
+            The ten-year return of the ETF, as a normalized percent. (provider: tmx)
+        return_from_inception : Optional[float]
+            The return from inception of the ETF, as a normalized percent. (provider: tmx)
+        avg_volume_30d : Optional[int]
+            The 30-day average volume of the ETF. (provider: tmx)
+        pe_ratio : Optional[float]
+            The price-to-earnings ratio of the ETF. (provider: tmx)
+        pb_ratio : Optional[float]
+            The price-to-book ratio of the ETF. (provider: tmx)
+        management_fee : Optional[float]
+            The management fee of the ETF, as a normalized percent. (provider: tmx)
+        mer : Optional[float]
+            The management expense ratio of the ETF, as a normalized percent. (provider: tmx)
+        distribution_yield : Optional[float]
+            The distribution yield of the ETF, as a normalized percent. (provider: tmx)
+        dividend_frequency : Optional[str]
+            The dividend payment frequency of the ETF. (provider: tmx)
         fund_type : Optional[str]
             The legal type of fund. (provider: yfinance)
         category : Optional[str]
             The fund category. (provider: yfinance)
         exchange_timezone : Optional[str]
             The timezone of the exchange. (provider: yfinance)
-        currency : Optional[str]
-            The currency in which the fund is listed. (provider: yfinance)
         nav_price : Optional[float]
             The net asset value per unit of the fund. (provider: yfinance)
         total_assets : Optional[int]
@@ -1130,8 +1249,6 @@ class ROUTER_etf(Container):
             50-day moving average price. (provider: yfinance)
         ma_200d : Optional[float]
             200-day moving average price. (provider: yfinance)
-        return_ytd : Optional[float]
-            The year-to-date return of the fund, as a normalized percent. (provider: yfinance)
         return_3y_avg : Optional[float]
             The three year average return of the fund, as a normalized percent. (provider: yfinance)
         return_5y_avg : Optional[float]
@@ -1158,8 +1275,6 @@ class ROUTER_etf(Container):
             The lowest price of the most recent trading session. (provider: yfinance)
         volume : Optional[int]
             The trading volume of the most recent trading session. (provider: yfinance)
-        prev_close : Optional[float]
-            The previous closing price. (provider: yfinance)
 
         Examples
         --------
@@ -1176,7 +1291,7 @@ class ROUTER_etf(Container):
                     "provider": self._get_provider(
                         provider,
                         "/etf/info",
-                        ("fmp", "intrinio", "yfinance"),
+                        ("fmp", "intrinio", "tmx", "yfinance"),
                     )
                 },
                 standard_params={
@@ -1185,7 +1300,7 @@ class ROUTER_etf(Container):
                 extra_params=kwargs,
                 info={
                     "symbol": {
-                        "multiple_items_allowed": ["fmp", "intrinio", "yfinance"]
+                        "multiple_items_allowed": ["fmp", "intrinio", "tmx", "yfinance"]
                     }
                 },
             )
@@ -1198,13 +1313,13 @@ class ROUTER_etf(Container):
         symbol: Annotated[
             Union[str, List[str]],
             DataMartCustomParameter(
-                description="Symbol to get data for. Multiple comma separated items allowed for provider(s): fmp, intrinio."
+                description="Symbol to get data for. Multiple comma separated items allowed for provider(s): finviz, fmp, intrinio."
             ),
         ],
         provider: Annotated[
-            Optional[Literal["fmp", "intrinio"]],
+            Optional[Literal["finviz", "fmp", "intrinio"]],
             DataMartCustomParameter(
-                description="The provider to use for the query, by default None.\n    If None, the provider specified in defaults is selected or 'fmp' if there is\n    no default."
+                description="The provider to use for the query, by default None.\n    If None, the provider specified in defaults is selected or 'finviz' if there is\n    no default."
             ),
         ] = None,
         **kwargs
@@ -1214,10 +1329,10 @@ class ROUTER_etf(Container):
         Parameters
         ----------
         symbol : Union[str, List[str]]
-            Symbol to get data for. Multiple comma separated items allowed for provider(s): fmp, intrinio.
-        provider : Optional[Literal['fmp', 'intrinio']]
+            Symbol to get data for. Multiple comma separated items allowed for provider(s): finviz, fmp, intrinio.
+        provider : Optional[Literal['finviz', 'fmp', 'intrinio']]
             The provider to use for the query, by default None.
-            If None, the provider specified in defaults is selected or 'fmp' if there is
+            If None, the provider specified in defaults is selected or 'finviz' if there is
             no default.
         return_type : Literal['trailing', 'calendar']
             The type of returns to return, a trailing or calendar window. (provider: intrinio)
@@ -1229,7 +1344,7 @@ class ROUTER_etf(Container):
         OBBject
             results : List[EtfPricePerformance]
                 Serializable results.
-            provider : Optional[Literal['fmp', 'intrinio']]
+            provider : Optional[Literal['finviz', 'fmp', 'intrinio']]
                 Provider name.
             warnings : Optional[List[Warning_]]
                 List of warnings.
@@ -1274,6 +1389,21 @@ class ROUTER_etf(Container):
             Ten-year return.
         max : Optional[float]
             Return from the beginning of the time series.
+        volatility_week : Optional[float]
+            One-week realized volatility, as a normalized percent. (provider: finviz)
+        volatility_month : Optional[float]
+            One-month realized volatility, as a normalized percent. (provider: finviz)
+        price : Optional[float]
+            Last Price. (provider: finviz)
+        volume : Optional[Union[float, int]]
+            Current volume. (provider: finviz);
+            The trading volume. (provider: intrinio)
+        average_volume : Optional[float]
+            Average daily volume. (provider: finviz)
+        relative_volume : Optional[float]
+            Relative volume as a ratio of current volume to average volume. (provider: finviz)
+        analyst_recommendation : Optional[float]
+            The analyst consensus, on a scale of 1-5 where 1 is a buy and 5 is a sell. (provider: finviz)
         max_annualized : Optional[float]
             Annualized rate of return from inception. (provider: intrinio)
         volatility_one_year : Optional[float]
@@ -1282,8 +1412,6 @@ class ROUTER_etf(Container):
             Trailing three-year annualized volatility. (provider: intrinio)
         volatility_five_year : Optional[float]
             Trailing five-year annualized volatility. (provider: intrinio)
-        volume : Optional[int]
-            The trading volume. (provider: intrinio)
         volume_avg_30 : Optional[float]
             The one-month average daily volume. (provider: intrinio)
         volume_avg_90 : Optional[float]
@@ -1319,14 +1447,16 @@ class ROUTER_etf(Container):
                     "provider": self._get_provider(
                         provider,
                         "/etf/price_performance",
-                        ("fmp", "intrinio"),
+                        ("finviz", "fmp", "intrinio"),
                     )
                 },
                 standard_params={
                     "symbol": symbol,
                 },
                 extra_params=kwargs,
-                info={"symbol": {"multiple_items_allowed": ["fmp", "intrinio"]}},
+                info={
+                    "symbol": {"multiple_items_allowed": ["finviz", "fmp", "intrinio"]}
+                },
             )
         )
 
@@ -1338,7 +1468,7 @@ class ROUTER_etf(Container):
             Optional[str], DataMartCustomParameter(description="Search query.")
         ] = "",
         provider: Annotated[
-            Optional[Literal["fmp", "intrinio"]],
+            Optional[Literal["fmp", "intrinio", "tmx"]],
             DataMartCustomParameter(
                 description="The provider to use for the query, by default None.\n    If None, the provider specified in defaults is selected or 'fmp' if there is\n    no default."
             ),
@@ -1354,7 +1484,7 @@ class ROUTER_etf(Container):
         ----------
         query : Optional[str]
             Search query.
-        provider : Optional[Literal['fmp', 'intrinio']]
+        provider : Optional[Literal['fmp', 'intrinio', 'tmx']]
             The provider to use for the query, by default None.
             If None, the provider specified in defaults is selected or 'fmp' if there is
             no default.
@@ -1363,13 +1493,19 @@ class ROUTER_etf(Container):
             Target a specific exchange by providing the MIC code. (provider: intrinio)
         is_active : Optional[Literal[True, False]]
             Whether the ETF is actively trading. (provider: fmp)
+        div_freq : Optional[Literal['monthly', 'annually', 'quarterly']]
+            The dividend payment frequency. (provider: tmx)
+        sort_by : Optional[Literal['nav', 'return_1m', 'return_3m', 'return_6m', 'return_1y', 'return_3y', 'return_ytd', 'beta_1y', 'volume_avg_daily', 'management_fee', 'distribution_yield', 'pb_ratio', 'pe_ratio']]
+            The column to sort by. (provider: tmx)
+        use_cache : bool
+            Whether to use a cached request. All ETF data comes from a single JSON file that is updated daily. To bypass, set to False. If True, the data will be cached for 4 hours. (provider: tmx)
 
         Returns
         -------
         OBBject
             results : List[EtfSearch]
                 Serializable results.
-            provider : Optional[Literal['fmp', 'intrinio']]
+            provider : Optional[Literal['fmp', 'intrinio', 'tmx']]
                 Provider name.
             warnings : Optional[List[Warning_]]
                 List of warnings.
@@ -1417,6 +1553,70 @@ class ROUTER_etf(Container):
             The Stock Exchange Daily Official List. (provider: intrinio)
         intrinio_id : Optional[str]
             The unique Intrinio ID for the security. (provider: intrinio)
+        short_name : Optional[str]
+            The short name of the ETF. (provider: tmx)
+        inception_date : Optional[str]
+            The inception date of the ETF. (provider: tmx)
+        issuer : Optional[str]
+            The issuer of the ETF. (provider: tmx)
+        investment_style : Optional[str]
+            The investment style of the ETF. (provider: tmx)
+        esg : Optional[bool]
+            Whether the ETF qualifies as an ESG fund. (provider: tmx)
+        currency : Optional[str]
+            The currency of the ETF. (provider: tmx)
+        unit_price : Optional[float]
+            The unit price of the ETF. (provider: tmx)
+        close : Optional[float]
+            The closing price of the ETF. (provider: tmx)
+        prev_close : Optional[float]
+            The previous closing price of the ETF. (provider: tmx)
+        return_1m : Optional[float]
+            The one-month return of the ETF, as a normalized percent. (provider: tmx)
+        return_3m : Optional[float]
+            The three-month return of the ETF, as a normalized percent. (provider: tmx)
+        return_6m : Optional[float]
+            The six-month return of the ETF, as a normalized percent. (provider: tmx)
+        return_ytd : Optional[float]
+            The year-to-date return of the ETF, as a normalized percent. (provider: tmx)
+        return_1y : Optional[float]
+            The one-year return of the ETF, as a normalized percent. (provider: tmx)
+        beta_1y : Optional[float]
+            The one-year beta of the ETF, as a normalized percent. (provider: tmx)
+        return_3y : Optional[float]
+            The three-year return of the ETF, as a normalized percent. (provider: tmx)
+        beta_3y : Optional[float]
+            The three-year beta of the ETF, as a normalized percent. (provider: tmx)
+        return_5y : Optional[float]
+            The five-year return of the ETF, as a normalized percent. (provider: tmx)
+        beta_5y : Optional[float]
+            The five-year beta of the ETF, as a normalized percent. (provider: tmx)
+        return_10y : Optional[float]
+            The ten-year return of the ETF, as a normalized percent. (provider: tmx)
+        beta_10y : Optional[float]
+            The ten-year beta of the ETF. (provider: tmx)
+        beta_15y : Optional[float]
+            The fifteen-year beta of the ETF. (provider: tmx)
+        return_from_inception : Optional[float]
+            The return from inception of the ETF, as a normalized percent. (provider: tmx)
+        avg_volume : Optional[int]
+            The average daily volume of the ETF. (provider: tmx)
+        avg_volume_30d : Optional[int]
+            The 30-day average volume of the ETF. (provider: tmx)
+        aum : Optional[float]
+            The AUM of the ETF. (provider: tmx)
+        pe_ratio : Optional[float]
+            The price-to-earnings ratio of the ETF. (provider: tmx)
+        pb_ratio : Optional[float]
+            The price-to-book ratio of the ETF. (provider: tmx)
+        management_fee : Optional[float]
+            The management fee of the ETF, as a normalized percent. (provider: tmx)
+        mer : Optional[float]
+            The management expense ratio of the ETF, as a normalized percent. (provider: tmx)
+        distribution_yield : Optional[float]
+            The distribution yield of the ETF, as a normalized percent. (provider: tmx)
+        dividend_frequency : Optional[str]
+            The dividend payment frequency of the ETF. (provider: tmx)
 
         Examples
         --------
@@ -1434,7 +1634,7 @@ class ROUTER_etf(Container):
                     "provider": self._get_provider(
                         provider,
                         "/etf/search",
-                        ("fmp", "intrinio"),
+                        ("fmp", "intrinio", "tmx"),
                     )
                 },
                 standard_params={
@@ -1452,7 +1652,7 @@ class ROUTER_etf(Container):
             str, DataMartCustomParameter(description="Symbol to get data for. (ETF)")
         ],
         provider: Annotated[
-            Optional[Literal["fmp"]],
+            Optional[Literal["fmp", "tmx"]],
             DataMartCustomParameter(
                 description="The provider to use for the query, by default None.\n    If None, the provider specified in defaults is selected or 'fmp' if there is\n    no default."
             ),
@@ -1465,17 +1665,19 @@ class ROUTER_etf(Container):
         ----------
         symbol : str
             Symbol to get data for. (ETF)
-        provider : Optional[Literal['fmp']]
+        provider : Optional[Literal['fmp', 'tmx']]
             The provider to use for the query, by default None.
             If None, the provider specified in defaults is selected or 'fmp' if there is
             no default.
+        use_cache : bool
+            Whether to use a cached request. All ETF data comes from a single JSON file that is updated daily. To bypass, set to False. If True, the data will be cached for 4 hours. (provider: tmx)
 
         Returns
         -------
         OBBject
             results : List[EtfSectors]
                 Serializable results.
-            provider : Optional[Literal['fmp']]
+            provider : Optional[Literal['fmp', 'tmx']]
                 Provider name.
             warnings : Optional[List[Warning_]]
                 List of warnings.
@@ -1504,7 +1706,7 @@ class ROUTER_etf(Container):
                     "provider": self._get_provider(
                         provider,
                         "/etf/sectors",
-                        ("fmp",),
+                        ("fmp", "tmx"),
                     )
                 },
                 standard_params={
