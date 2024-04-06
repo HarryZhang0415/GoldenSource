@@ -22,9 +22,9 @@ def market(pytestconfig):
     """Fixture to setup market."""
 
     if pytestconfig.getoption("markexpr") != "not integration":
-        import datamart_core  # pylint: disable=import-outside-toplevel
+        import datamart  # pylint: disable=import-outside-toplevel
 
-        return datamart_core.market
+        return datamart.market
 
 
 # pylint: disable=redefined-outer-name

@@ -328,9 +328,9 @@ class ImportDefinition:
     def build(cls, path: str) -> str:
         """Build the import definition."""
         hint_type_list = cls.get_path_hint_type_list(path=path)
-        code = "from market.app.static.container import Container"
-        code += "\nfrom market.app.model.obbject import OBBject"
-        code += "\nfrom market.app.model.custom_parameter import DataMartCustomParameter, DataMartCustomChoices"
+        code = "from datamart_core.app.static.container import Container"
+        code += "\nfrom datamart_core.app.model.obbject import OBBject"
+        code += "\nfrom datamart_core.app.model.custom_parameter import DataMartCustomParameter, DataMartCustomChoices"
 
         # These imports were not detected before build, so we add them manually and
         # ruff --fix the resulting code to remove unused imports.
@@ -350,11 +350,11 @@ class ImportDefinition:
             code += "\nimport typing_extensions"
         else:
             code += "\nfrom typing_extensions import Annotated, deprecated"
-        code += "\nfrom market.app.utils import df_to_basemodel"
-        code += "\nfrom market.app.static.utils.decorators import exception_handler, validate\n"
-        code += "\nfrom market.app.static.utils.filters import filter_inputs\n"
-        code += "\nfrom market.provider.abstract.data import Data"
-        code += "\nfrom market.app.deprecation import DataMartDeprecationWarning\n"
+        code += "\nfrom datamart_core.app.utils import df_to_basemodel"
+        code += "\nfrom datamart_core.app.static.utils.decorators import exception_handler, validate\n"
+        code += "\nfrom datamart_core.app.static.utils.filters import filter_inputs\n"
+        code += "\nfrom datamart_core.provider.abstract.data import Data"
+        code += "\nfrom datamart_core.app.deprecation import DataMartDeprecationWarning\n"
         if path.startswith("/quantitative"):
             code += "\nfrom datamart_quantitative.models import "
             code += "(CAPMModel,NormalityModel,OmegaModel,SummaryModel,UnitRootModel)"
