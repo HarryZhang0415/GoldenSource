@@ -32,7 +32,7 @@ class ndict(dict):
         :returns A List containing the items at the leaves
         """
         if extracted is None:
-            return []
+            extracted = []
         for k, v in self.items():
             if isinstance(v, ndict):
                 v.extract(extracted)
@@ -49,7 +49,7 @@ class ndict(dict):
         :return A list containing the items at the leaves
         """
         if extracted is None:
-            return []
+            extracted = []
         for k, v in d.items():
             if isinstance(v, dict):
                 ndict.extract_all(v, extracted)
@@ -67,7 +67,7 @@ class ndict(dict):
         : returns A flattened, single-level dictionary
         """
         if flattened is None:
-            return {}
+            flattened = {}
         for k, v in self.items():
             new_key = parent_key + sep + str(k) if parent_key else str(k)
             if isinstance(v, ndict):
@@ -88,7 +88,7 @@ class ndict(dict):
         : returns a flattened, single-level dictionary
         """
         if flattened is None:
-            return {}
+            flattened = {}
         for k, v in d.items():
             new_key = parent_key + sep + str(k) if parent_key else str(k)
             if isinstance(v, dict):

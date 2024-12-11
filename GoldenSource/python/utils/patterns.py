@@ -20,16 +20,17 @@ def cache_result(wrapped_func):
     @functools.wraps(wrapped_func)
     def wrapper_func(*args, **kwargs):
         key = (args, tuple(sorted(kwargs.items())))
-        res = wrapper_func.__results_cache.get(key)
+        res = wrapper_func._results_cache.get(key)
         if res is None:
-            res = wrapper_func.__results_cache[key] = wrapped_func(*args, **kwargs)
+            res = wrapper_func._results_cache[key] = wrapped_func(
+                *args, **kwargs)
         return res
-    
-    wrapper_func.__results_cache = {}
+
+    wrapper_func._results_cache  = {}
 
     def reset_cache():
-        wrapper_func.__results_cache = {}
-    
+        wrapper_func._results_cache  = {}
+
     wrapper_func.reset_cache = reset_cache
 
     return wrapper_func
@@ -55,7 +56,7 @@ class ReadOnlyDescriptor(object):
         return getattr(instance, self._attr_name)
 
     def __set__(self, instance, value):
-        raise ValueError("{} is read-only".format(self.attr_name))
+        raise self.ex_type("{attr} is read-only".format(attr=self.attr_name))
 
 
 class TimeIt(object):
@@ -116,14 +117,17 @@ class TimeIt(object):
         self._time = None
 
         if self._on_enter:
-            assert callable(self._on_enter), 'on_enter must be callable'
-            assert self._on_enter.__code__.co_argcount == 0, 'on_enter must have 0 arguments'
+            assert callable(self._on_enter), "on_enter must be a callable"
+            if hasattr(self._on_enter, "__code__"):
+                assert self._on_enter.__code__.co_argcount == 0, "on_enter must have 0 argument"
+
         if self._on_exit:
-            assert callable(self._on_exit), 'on_exit must be callable'
-            assert self._on_exit.__code__.co_argcount == 1, 'on_exit must have 1 argument'
-        
+            assert callable(self._on_exit), "on_exit must be a callable"
+            if hasattr(self._on_exit, "__code__"):
+                assert self._on_exit.__code__.co_argcount == 1, "on_exit must have 1 argument"
+
         if not (self._on_enter or self._on_exit) and self._tag is not None:
-            assert isinstance(level, str), 'level must be a string'
+            assert isinstance(level, str), "level must be a string"
             self._level = level.upper()
 
             if self._logger:

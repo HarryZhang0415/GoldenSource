@@ -15,6 +15,7 @@ tzlocal = "^5.2"
 jupyter = "^1.0.0"
 pyodbc = "^5.1.0"
 mysql-connector-python = "^8.3.0"
+pytest = "^8.3.4"
 
 
 [build-system]

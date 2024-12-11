@@ -1,1 +1,0 @@
-python ../dev_install.py
